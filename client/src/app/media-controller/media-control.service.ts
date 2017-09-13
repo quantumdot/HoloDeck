@@ -9,8 +9,28 @@ import {Media} from '../media-items/mediaInventory.service';
 const MEDIA_CONTROL_URL = 'ws://localhost:5000/status';
 
 export interface PlayerState {
+  able: PlayerAbilities;
   currentMedia: Media;
-  elapsed: string;
+
+  duration: number;
+  source: string;
+  identity: boolean;
+  is_playing: boolean;
+  maximum_rate: string;
+  minimum_rate: string;
+  playback_status: string;
+  position: number;
+  volume: number;
+}
+export interface PlayerAbilities {
+  control: boolean;
+  go_next: boolean;
+  go_previous: boolean;
+  pause: boolean;
+  play: boolean;
+  quit: boolean;
+  seek: boolean;
+  set_fullscreen: boolean;
 }
 
 
@@ -24,11 +44,8 @@ export class MediaControlService {
       .map((response: MessageEvent): PlayerState => {
         console.log(response)
         let data = JSON.parse(response.data);
-        console.log(data);
-        return {
-          currentMedia : data.media,
-          elapsed: data.elapsed
-        };
+        // console.log(data);
+        return data;
       });
   }
 }

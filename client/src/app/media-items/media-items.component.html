@@ -1,18 +1,17 @@
 <h2>Available Holograms</h2>
 
 
-<div>
+<div class="itemscontiner">
 	<md-card *ngFor="let media of mediaItems">
 		<md-card-header>
 			<md-card-title>{{media.name}}</md-card-title>
 			<md-card-subtitle>{{media.description}}</md-card-subtitle>
 		</md-card-header>
 		<md-card-content>
-			<i>{{media.id}}</i>
-			<img src="{{media.thumb}}" />
+			<img src="http://localhost:5000/{{media.thumb}}" />
 		</md-card-content>
 		<md-card-actions>
-			<button md-button>Play</button>
+			<button md-raised-button color="primary" (click)="requestPlay($event, media)">Play</button>
 		</md-card-actions>
 	</md-card>
 

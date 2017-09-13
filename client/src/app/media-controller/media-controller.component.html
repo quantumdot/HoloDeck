@@ -5,7 +5,8 @@
 
 <div id="control_buttons">
 	<span>{{currentState}}</span>
-	<md-progress-spinner mode="indeterminate"></md-progress-spinner>
+	<span>{{currentState.position / currentState.duration}}</span>
+	<md-progress-spinner mode="determinate" value="{{currentState.position / currentState.duration * 100}}"></md-progress-spinner>
 	<a class="material-icons">play_circle_filled</a>
 	<a class="material-icons">pause</a>
 	<md-slider thumbLabel="true"></md-slider>
