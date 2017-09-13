@@ -1,7 +1,19 @@
 <h2>Available Holograms</h2>
-<ul>
-	<li *ngFor="let media of mediaItems">
-		<i>{{media.id}}</i>
-		<strong>{{media.name}}</strong>
-	</li>
-</ul>
+
+
+<div>
+	<md-card *ngFor="let media of mediaItems">
+		<md-card-header>
+			<md-card-title>{{media.name}}</md-card-title>
+			<md-card-subtitle>{{media.description}}</md-card-subtitle>
+		</md-card-header>
+		<md-card-content>
+			<i>{{media.id}}</i>
+			<img src="{{media.thumb}}" />
+		</md-card-content>
+		<md-card-actions>
+			<button md-button>Play</button>
+		</md-card-actions>
+	</md-card>
+
+</div>

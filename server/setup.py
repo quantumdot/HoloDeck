@@ -11,6 +11,7 @@ setup(  name='HoloServe',
         install_requires=[
             'gevent',
             'flask',
+            'flask-sockets'
             
         ],
         scripts=[

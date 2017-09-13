@@ -4,6 +4,11 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { MediaItemsComponent } from './media-items/media-items.component';
 import { MediaControllerComponent } from './media-controller/media-controller.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+import { MaterialModule } from './material.module';
+import {HttpClientModule} from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -12,7 +17,10 @@ import { MediaControllerComponent } from './media-controller/media-controller.co
     MediaControllerComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
