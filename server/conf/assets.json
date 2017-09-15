@@ -3,21 +3,27 @@
 		"id": 0, 
 		"name": "Pika Default", 
 		"description": "Watch Pikachu thow thunder bolts and lightning... Very, very frightning!",
-		"thumb": "assets/hqdefault.jpg",
+		"thumbs": [
+			"assets/hqdefault.jpg"
+		],
 		"source": "assets/Pikachu Hologram 3 side electric effects Extra.mp4"
 	},
 	{
 		"id": 1, 
 		"name": "Pika 1",
 		"description": "Watch Pikachu thow thunder bolts and lightning... Very, very frightning!",
-		"thumb": "assets/hqdefault.jpg",
+		"thumbs": [
+			"assets/hqdefault.jpg"
+		],
 		"source": "assets/Pikachu Hologram 3 side electric effects Extra.mp4"
 	},
 	{
 		"id": 2, 
 		"name": "Pika 2",
 		"description": "Watch Pikachu thow thunder bolts and lightning... Very, very frightning!",
-		"thumb": "assets/hqdefault.jpg",
+		"thumbs": [
+			"assets/hqdefault.jpg"
+		],
 		"source": "assets/Pikachu Hologram 3 side electric effects Extra.mp4"
 	}
 ]

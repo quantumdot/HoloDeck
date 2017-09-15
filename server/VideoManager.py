@@ -40,7 +40,7 @@ class VideoLibrary(object):
             items.append(VideoSource(len(items), 
                                      itm['name'], 
                                      itm['description'],
-                                     itm['thumb'],
+                                     itm['thumbs'],
                                      itm['source']))
         return items
     #end __load_items()
@@ -48,11 +48,11 @@ class VideoLibrary(object):
 
 class VideoSource(object):
     
-    def __init__(self, id, name, desc, thumb, source):
+    def __init__(self, id, name, desc, thumbs, source):
         self.id = id
         self.name = name
         self.description = desc
-        self.thumb = thumb
+        self.thumbs = list(thumbs)
         self.source = source
     #end __init__()
     
@@ -61,7 +61,7 @@ class VideoSource(object):
             'id': self.id,
             'name': self.name,
             'description': self.description,
-            'thumb': self.thumb,
+            'thumbs': self.thumbs,
             'source': self.source
         }
     #end serialize()    
@@ -71,20 +71,34 @@ class VideoManager(object):
     
     def __init__(self):
         self.player = OMXPlayer()
+        self.currentItem = None;
     
     def get_status(self):
-        return PlayerStatus(self.player)
+        return PlayerStatus(self.player, self.currentItem)
+
     
     def set_source(self, VideoSource):
+        self.currentItem = VideoSource
         self.player.load(VideoSource.source)
+        
+    def toggle_mute(self):
+        status = self.get_status()
+        if status["volume"] == 0:
+            self.player.unmute()
+        else:
+            self.player.mute()
 #end class VideoManager
 
 
 class PlayerStatus(object):
     
-    def __init__(self, player):
+    def __init__(self, player, currentMedia):
         self.player = player
-        
+        self.currentMedia = currentMedia
+    
+    def __getitem__(self, attr):
+        return getattr(self.player, attr)()
+    
     def serialize(self):  
         return {
             "able": {
@@ -97,7 +111,7 @@ class PlayerStatus(object):
                 "seek": self.player.can_seek(),
                 "set_fullscreen": self.player.can_set_fullscreen(),
             },
-            
+            "media": self.currentMedia.serialize(),
             "source": self.player.get_source(),
             "identity": self.player.identity(),
             "is_playing": self.player.is_playing(),

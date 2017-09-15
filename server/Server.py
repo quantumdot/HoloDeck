@@ -1,9 +1,10 @@
 import sys
 from gevent import pywsgi, sleep as sock_sleep
 from geventwebsocket.handler import WebSocketHandler
-from flask import Flask, Response, jsonify, send_from_directory
+from flask import Flask, request, Response, jsonify, send_from_directory
 import json
-from flaskCORS import crossdomain
+from flask_cors import CORS, cross_origin
+#from flaskCORS import crossdomain
 
 from flask_sockets import Sockets
 
@@ -13,10 +14,12 @@ from VideoManager import VideoManager, VideoLibrary
 
 
 app = Flask(__name__)
+CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
 sockets = Sockets(app)
 vid_library = VideoLibrary('conf/assets.json')
 vid_manager = VideoManager()
+vid_manager.set_source(vid_library.items[0])
 
 
 @app.route('/')
@@ -30,13 +33,11 @@ def send_assets(path):
 
 
 @app.route('/getmediaitems')
-@crossdomain(origin='*')
 def handle_getmediaitems():
     sys.stderr.write("Requested getmediaitems\n")
     return jsonify([itm.serialize() for itm in vid_library.items])
 
-@app.route('/playitem/<int:id>')
-@crossdomain(origin='*')
+@app.route('/playitem/<int:id>', )
 def handle_playrequest(id):
     sys.stderr.write("Requested /playitem/{}\n".format(id))
     itm = vid_library.find_id(id)
@@ -44,7 +45,23 @@ def handle_playrequest(id):
         vid_manager.set_source(itm)
         return jsonify({'success':True})
     return jsonify({'success':False, 'message': 'Video with id {} not found!'.format(id) })
+
+@app.route('/action/<string:action>', methods=['POST'])
+def handle_actionrequest(action):
+    sys.stderr.write("Requested /action/{} with args ({})\n".format(action, request.data))
+    data = list(json.loads(request.data))
+    if hasattr(vid_manager, action) and callable(getattr(vid_manager, action)):
+        sys.stderr.write("  -> Caught by VideoManager\n")
+        getattr(vid_manager, action)(*data)
+        return jsonify({'success':True})
     
+    elif hasattr(vid_manager.player, action) and callable(getattr(vid_manager.player, action)):
+        sys.stderr.write("  -> Caught by OMXPlayer\n")
+        getattr(vid_manager.player, action)(*data)
+        return jsonify({'success':True})
+    
+    return jsonify({'success':False, 'message': 'Action {} is not valid!'.format(action) })
+        
 
     
 @sockets.route('/status')

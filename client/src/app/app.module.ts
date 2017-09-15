@@ -8,13 +8,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { MaterialModule } from './material.module';
 import {HttpClientModule} from '@angular/common/http';
+import { SecondsToHmsPipe } from './seconds-to-hms.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MediaItemsComponent,
-    MediaControllerComponent
+    MediaControllerComponent,
+    SecondsToHmsPipe
   ],
   imports: [
     BrowserModule,

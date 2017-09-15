@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(  name='HoloServe',
         version='0.1',
-        description='Libraries for process management, pipelineing, and other goodies.',
+        description='HoloDeck Server',
         url='https://github.com/quantumdot/ThackTech',
         author='Joshua K. Thackray',
         author_email='thackray@rutgers.edu',
@@ -11,8 +11,8 @@ setup(  name='HoloServe',
         install_requires=[
             'gevent',
             'flask',
-            'flask-sockets'
-            
+            'flask-sockets',
+            'flask-cors'
         ],
         scripts=[
         ],

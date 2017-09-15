@@ -8,6 +8,7 @@ class MockOMXPlayer(object):
         self._position = 0
         self._state = 1 # 0: stop; 1: play; 2: pause;
         self._statemap = ['Stopped', 'Playing', 'Paused']
+        self._volume = 25.0
         
         thread = threading.Thread(target=self.__run_background, args=())
         thread.daemon = True
@@ -16,10 +17,11 @@ class MockOMXPlayer(object):
     def __run_background(self):
         while(True):
             time.sleep(1)
-            if self._position < self._duration:
-                self._position += 1
-            else:
-                self._position = 0
+            if self._state == 1:
+                if self._position < self._duration:
+                    self._position += 1
+                else:
+                    self._position = 0
         
     def load(self, source, pause=False):    
         self._position = 0
@@ -58,29 +60,37 @@ class MockOMXPlayer(object):
     def position(self):
         return self._position
     def volume(self):
-        return 25.0
+        return self._volume
     
     #actions
     def action(self, code):
         return None
     def mute(self):
+        self._volume = 0
         return None
     def unmute(self):
+        self._volume = 25.0
         return None
     def pause(self):
-        this._state = 2
+        self._state = 2
     def play(self):
-        this._state = 1
+        self._state = 1
     def play_pause(self):
-        if this._state == 1:
-            this._state = 2
+        if self._state == 1:
+            self._state = 2
         else:
-            this._state = 1
+            self._state = 1
     def stop(self):
-        this._state = 0
+        self._state = 0
     def quit(self):
         return None
-    def seek(self):
+    def seek(self, relative_position):
+        if self._position + relative_position < 0:
+            self._position = 0
+        elif self._position + relative_position > self._duration:
+            self._position = self._duration
+        else:
+            self._position += relative_position
         return None
     def set_alpha(self):
         return None
@@ -92,5 +102,6 @@ class MockOMXPlayer(object):
         return None
     def set_video_pos(self):
         return None
-    def set_volume(self):
+    def set_volume(self, volume):
+        self._volume = volume
         return None
