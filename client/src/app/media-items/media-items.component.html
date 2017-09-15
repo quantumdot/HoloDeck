@@ -2,17 +2,28 @@
 
 
 <div class="itemscontiner">
-	<md-card *ngFor="let media of mediaItems">
-		<md-card-header>
-			<md-card-title>{{media.name}}</md-card-title>
-			<md-card-subtitle>{{media.description}}</md-card-subtitle>
-		</md-card-header>
-		<md-card-content>
-			<img src="http://localhost:5000/{{media.thumbs[0]}}" />
-		</md-card-content>
-		<md-card-actions>
-			<button md-raised-button color="primary" (click)="requestPlay($event, media)">Play</button>
-		</md-card-actions>
-	</md-card>
-
+	<swiper [config]="swiperConfig">
+        <div class="swiper-wrapper">
+        	<div class="swiper-slide" *ngFor="let media of mediaItems">
+				<md-card>
+					<md-card-header>
+						<md-card-title>{{media.name}}</md-card-title>
+						<md-card-subtitle>{{media.description}}</md-card-subtitle>
+					</md-card-header>
+					<md-card-content>
+						<swiper [config]="swiperConfig">
+					        <div class="swiper-wrapper">
+					        	<div class="swiper-slide" *ngFor="let thumb of media.thumbs">
+									<img src="http://localhost:5000/{{thumb}}" />
+								</div>
+							</div>
+						</swiper>	
+					</md-card-content>
+					<md-card-actions>
+						<button md-raised-button color="primary" (click)="requestPlay($event, media)">Play</button>
+					</md-card-actions>
+				</md-card>
+			</div>
+		</div>
+	</swiper>
 </div>

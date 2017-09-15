@@ -4,7 +4,7 @@ from geventwebsocket.handler import WebSocketHandler
 from flask import Flask, request, Response, jsonify, send_from_directory
 import json
 from flask_cors import CORS, cross_origin
-#from flaskCORS import crossdomain
+
 
 from flask_sockets import Sockets
 

@@ -8,7 +8,7 @@ import {MdIconRegistry, MdSliderChange} from '@angular/material';
   templateUrl: './media-controller.component.html',
   providers: [MediaControlService, WebSocketService],
   styles: [
-    ':host{ display:block; position: fixed; top:0; left:0; height:30%; width:100%; background:#3f3f3f; z-index:999; border-bottom: 5px solid rgba(0, 0, 0, 0.8);  -webkit-background-clip: padding-box; background-clip: padding-box;} ',
+    ':host{ display:block; position: fixed; top:0; left:0; height:200px; width:100%; background:#3f3f3f; z-index:999; border-bottom: 5px solid rgba(0, 0, 0, 0.8);  -webkit-background-clip: padding-box; background-clip: padding-box;} ',
     '#volume_controls{ position:absolute; top:0; right:0; }',
     '#volume_controls button{ display:block; clear:both; margin-top:10px; }',
     'md-progress-spinner{ float:left; margin-right:20px; }',

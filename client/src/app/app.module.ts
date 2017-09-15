@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import {HttpClientModule} from '@angular/common/http';
 import { SecondsToHmsPipe } from './seconds-to-hms.pipe';
+import { SwiperModule } from 'angular2-useful-swiper';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { SecondsToHmsPipe } from './seconds-to-hms.pipe';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    SwiperModule
   ],
   providers: [],
   bootstrap: [AppComponent]
