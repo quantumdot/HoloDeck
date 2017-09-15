@@ -10,12 +10,12 @@ import {MdIconRegistry, MdSliderChange} from '@angular/material';
   styles: [
     ':host{ display:block; position: fixed; top:0; left:0; height:200px; width:100%; background:#3f3f3f; z-index:999; border-bottom: 5px solid rgba(0, 0, 0, 0.8);  -webkit-background-clip: padding-box; background-clip: padding-box;} ',
     '#volume_controls{ position:absolute; top:0; right:0; }',
-    '#volume_controls button{ display:block; clear:both; margin-top:10px; }',
+    '#volume_controls button{ display:block; clear:both; margin-top:10px; margin-right:0; }',
     'md-progress-spinner{ float:left; margin-right:20px; }',
-    '#media_state{}',
+    '#media_state #media_info{float: left;margin-top:20px;}',
     '#media_state span{ display: block; }',
-    '#media_state span.title{  }',
-    '#media_state span.time{ font-style: italic; }',
+    '#media_state span.title{ font-size:24px; color:#efefef;  }',
+    '#media_state span.time{ font-style: italic; color:#afafaf; }',
     '#control_buttons{ clear:both; margin-left:120px; }'
   ],
 })

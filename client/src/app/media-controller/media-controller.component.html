@@ -4,9 +4,11 @@
 
 <div id="media_state">
 	<md-progress-spinner mode="determinate" value="{{currentState.position / currentState.duration * 100}}"></md-progress-spinner>
-	<h3>Now Playing:</h3>
-	<span class="title">{{currentState.media.name}}</span>
-	<span class="time">{{currentState.position | secondsToHms}} / {{currentState.duration | secondsToHms}}</span>
+	<!-- <h3>Now Playing:</h3>-->
+	<div id="media_info">
+		<span class="title">{{currentState.media.name}}</span>
+		<span class="time">{{currentState.position | secondsToHms}} / {{currentState.duration | secondsToHms}}</span>
+	</div>
 </div>
 <div id="control_buttons">
 	<!-- <span>{{currentState.position / currentState.duration}}</span> -->
@@ -32,7 +34,7 @@
 	<div id="volume_controls">
 		<md-slider thumbLabel="true" vertical="true" value="{{currentState.volume}}" (change)="volume_slider_changed($event)" ></md-slider>
 		<button md-icon-button>
-		    <md-icon class="md-24 md-light" aria-label="Toggle Mute" (click)="requestAction('toggle_mute',[])">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>
+		    <md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="requestAction('toggle_mute',[])">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>
 		</button>
 	</div>
 	

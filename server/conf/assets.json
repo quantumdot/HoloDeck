@@ -4,7 +4,9 @@
 		"name": "Pika Default", 
 		"description": "Watch Pikachu thow thunder bolts and lightning... Very, very frightning!",
 		"thumbs": [
-			"assets/hqdefault.jpg"
+			"assets/1.jpg",
+			"assets/2.jpg",
+			"assets/3.jpg"
 		],
 		"source": "assets/Pikachu Hologram 3 side electric effects Extra.mp4"
 	},
