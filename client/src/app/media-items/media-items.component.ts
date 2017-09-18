@@ -10,13 +10,8 @@ import {ImgCyclerComponent} from '../img-cycler/img-cycler.component';
   selector: 'app-media-items',
   providers: [MediaInventoryService],
   templateUrl: './media-items.component.html',
-  styles: [
-    // ':host{ height:70%; margin-top:50%; display: block; }',
-    ':host{ position: fixed; top: 220px; }',
-    // '.itemscontiner{ background:#3f3f3f; padding:20px; }',
-    'md-card{ margin-bottom:10px; width: 80%; }',
-    // 'md-card-content img{width:100%}'
-    '@media screen and (max-device-width: 1000px) and (orientation:landscape){ md-card-content{ display: none; }}'
+  styleUrls: [
+   './media-items.component.scss'
   ]
 })
 
@@ -28,7 +23,8 @@ export class MediaItemsComponent implements OnInit, AfterViewInit {
     direction: 'horizontal',
     speed: 300,
     effect: 'slide',
-    spaceBetween: 30
+    spaceBetween: 30,
+    centeredSlides: true
   };
 
   constructor(private mediaItemService: MediaInventoryService) {

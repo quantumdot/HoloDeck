@@ -11,15 +11,13 @@ export interface PlayerState {
   able: PlayerAbilities;
   media: Media;
 
-  duration: number;
-  source: string;
-  identity: boolean;
   is_playing: boolean;
-  maximum_rate: string;
-  minimum_rate: string;
   playback_status: string;
   position: number;
+  duration: number;
+  rate: number;
   volume: number;
+  fullscreen: boolean;
 }
 export interface PlayerAbilities {
   control: boolean;
@@ -30,6 +28,8 @@ export interface PlayerAbilities {
   quit: boolean;
   seek: boolean;
   set_fullscreen: boolean;
+  maximum_rate: string;
+  minimum_rate: string;
 }
 
 
@@ -69,7 +69,9 @@ export class MediaControlService {
         play: false,
         quit: false,
         seek: false,
-        set_fullscreen: false
+        set_fullscreen: false,
+        maximum_rate: '',
+        minimum_rate: '',
       },
       media: {
         id: NaN,
@@ -78,14 +80,12 @@ export class MediaControlService {
         source: '',
         thumbs: []
       },
-      duration: 1,
-      source: '',
-      identity: false,
       is_playing: false,
-      maximum_rate: '',
-      minimum_rate: '',
       playback_status: 'Stopped',
       position: 0,
+      duration: 1,
+      rate: 1,
+      fullscreen: true,
       volume: 0
     };
   }

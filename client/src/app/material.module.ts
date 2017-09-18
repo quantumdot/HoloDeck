@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 
 import {
+  MdDialogModule,
+  MdRadioModule,
+  MdListModule,
+  MdInputModule,
+  MdSelectModule,
   MdButtonModule,
   MdMenuModule,
   MdToolbarModule,
@@ -12,6 +17,11 @@ import {
 
 @NgModule({
   imports: [
+    MdDialogModule,
+    MdRadioModule,
+    MdListModule,
+    MdInputModule,
+    MdSelectModule,
     MdButtonModule,
     MdMenuModule,
     MdToolbarModule,
@@ -21,6 +31,11 @@ import {
     MdProgressSpinnerModule,
   ],
   exports: [
+    MdDialogModule,
+    MdListModule,
+    MdRadioModule,
+    MdInputModule,
+    MdSelectModule,
     MdButtonModule,
     MdMenuModule,
     MdToolbarModule,

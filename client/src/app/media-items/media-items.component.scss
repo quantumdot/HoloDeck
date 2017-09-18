@@ -1,0 +1,15 @@
+:host{ 
+	
+}
+md-card{ 
+	 margin:20px;
+}
+app-img-cycler{
+	width:100%;
+	display: block;
+}
+@media screen and (max-device-width: 1000px) and (orientation:landscape){ 
+	md-card-content{ 
+		display: none; 
+	}
+}

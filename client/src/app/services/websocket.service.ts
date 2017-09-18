@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
-import {Observer} from "rxjs/Observer";
+import {Observer} from 'rxjs/Observer';
 
 @Injectable()
 export class WebSocketService {
   private subject: Subject<MessageEvent>;
   private subjectData: Subject<number>;
 
-  // For chat box
   public connect(url: string): Subject<MessageEvent> {
     if (!this.subject) {
       this.subject = this.create(url);

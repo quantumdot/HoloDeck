@@ -1,3 +1,18 @@
-<p>
-  add-media works!
-</p>
+<h1 md-dialog-title>Add Media Source</h1>
+<md-dialog-content>
+	<form>
+		<md-form-field class="">
+	    	<input mdInput placeholder="Name" value="">
+		</md-form-field>
+		<md-form-field class="">
+	    	<input mdInput type="url" placeholder="Source" value="">
+		</md-form-field>
+		<md-form-field class="">
+	    	<textarea mdInput placeholder="Description" value=""></textarea>
+		</md-form-field>
+	</form>
+</md-dialog-content>
+<md-dialog-actions>
+	<button md-raised-button color="primary" [md-dialog-close]="true">Add Media</button>
+	<button md-raised-button color="primary" [md-dialog-close]="false">Cancel</button>
+</md-dialog-actions>
