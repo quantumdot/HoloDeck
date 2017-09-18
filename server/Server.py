@@ -1,15 +1,17 @@
 import sys
+import json
+import time
+import logging
+
 from gevent import pywsgi, sleep as sock_sleep
 from geventwebsocket.handler import WebSocketHandler
 from flask import Flask, request, Response, jsonify, send_from_directory
-import json
+from flask_sockets import Sockets
 from flask_cors import CORS, cross_origin
 
-
-from flask_sockets import Sockets
-
-import time
 from VideoManager import VideoManager, VideoLibrary
+
+logger = logging.getLogger('HoloServe')
 
 
 
@@ -49,18 +51,22 @@ def handle_playrequest(id):
 @app.route('/action/<string:action>', methods=['POST'])
 def handle_actionrequest(action):
     sys.stderr.write("Requested /action/{} with args ({})\n".format(action, request.data))
-    data = list(json.loads(request.data))
-    if hasattr(vid_manager, action) and callable(getattr(vid_manager, action)):
-        sys.stderr.write("  -> Caught by VideoManager\n")
-        getattr(vid_manager, action)(*data)
-        return jsonify({'success':True})
+    try:
+        data = list(json.loads(request.data))
+        if hasattr(vid_manager, action) and callable(getattr(vid_manager, action)):
+            sys.stderr.write("  -> Caught by VideoManager\n")
+            getattr(vid_manager, action)(*data)
+            return jsonify({'success':True})
+        
+        elif hasattr(vid_manager.player, action) and callable(getattr(vid_manager.player, action)):
+            sys.stderr.write("  -> Caught by OMXPlayer\n")
+            getattr(vid_manager.player, action)(*data)
+            return jsonify({'success':True})
     
-    elif hasattr(vid_manager.player, action) and callable(getattr(vid_manager.player, action)):
-        sys.stderr.write("  -> Caught by OMXPlayer\n")
-        getattr(vid_manager.player, action)(*data)
-        return jsonify({'success':True})
-    
-    return jsonify({'success':False, 'message': 'Action {} is not valid!'.format(action) })
+        else:
+            raise ValueError('Action {} is not valid!'.format(action))
+    except BaseException as e:
+        return jsonify({'success':False, 'message': str(e) })
         
 
     
@@ -72,8 +78,8 @@ def update_player_status(socket):
             #sys.stderr.write("Sending status....\n")
             socket.send(json.dumps(vid_manager.get_status().serialize()))
             sock_sleep(0.5)
-    except e:
-        sys.stderr.write("SOCKET ERROR: {}\n".format(e))
+    except BaseException as e:
+        sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
 
 
 

@@ -110,16 +110,17 @@ class PlayerStatus(object):
                 "quit": self.player.can_quit(),
                 "seek": self.player.can_seek(),
                 "set_fullscreen": self.player.can_set_fullscreen(),
+                "maximum_rate": self.player.maximum_rate(),
+                "minimum_rate": self.player.minimum_rate(),
             },
             "media": self.currentMedia.serialize(),
-            "source": self.player.get_source(),
-            "identity": self.player.identity(),
+            # "source": self.player.get_source(),
             "is_playing": self.player.is_playing(),
             "playback_status": self.player.playback_status(),
             "duration": self.player.duration(),
             "position": self.player.position(),
-            "maximum_rate": self.player.maximum_rate(),
-            "minimum_rate": self.player.minimum_rate(),
+            "rate": self.player.rate(),
+            "fullscreen": self.player.fullscreen(),
             "volume": self.player.volume()
         }
     #end serialize()

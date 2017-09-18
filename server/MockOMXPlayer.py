@@ -61,6 +61,10 @@ class MockOMXPlayer(object):
         return self._position
     def volume(self):
         return self._volume
+    def rate(self):
+        return 1
+    def fullscreen(self):
+        return True
     
     #actions
     def action(self, code):
