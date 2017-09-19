@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SecondsToHmsPipe } from './seconds-to-hms.pipe';
 import { SwiperModule } from 'angular2-useful-swiper';
 import { AddMediaComponent } from './add-media/add-media.component';
+import { VolumeControlComponent } from './media-controller/volume-control.component';
 import { VideoSettingsComponent } from './video-settings/video-settings.component';
 import { ImageCropperComponent } from 'ng2-img-cropper';
 
@@ -23,6 +24,7 @@ import { ImageCropperComponent } from 'ng2-img-cropper';
     MediaControllerComponent,
     AddMediaComponent,
     VideoSettingsComponent,
+    VolumeControlComponent,
     SecondsToHmsPipe,
     ImgCyclerComponent,
     ImageCropperComponent
@@ -36,7 +38,8 @@ import { ImageCropperComponent } from 'ng2-img-cropper';
   ],
   entryComponents: [
     AddMediaComponent,
-    VideoSettingsComponent
+    VideoSettingsComponent,
+    VolumeControlComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

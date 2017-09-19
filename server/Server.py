@@ -25,7 +25,7 @@ vid_manager.set_source(vid_library.items[0])
 
 @app.route('/')
 @app.route('/<path:path>')
-def home(path):
+def home(path="index.html"):
     sys.stderr.write("Requested /client/{}\n".format(path))
     return send_from_directory('../client/dist/', path)
 

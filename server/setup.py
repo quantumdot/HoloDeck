@@ -13,7 +13,9 @@ setup(  name='HoloServe',
             'gevent-websocket',
             'flask',
             'flask-sockets',
-            'flask-cors'
+            'flask-cors',
+            
+            'omxplayer-wrapper',
         ],
         scripts=[
         ],

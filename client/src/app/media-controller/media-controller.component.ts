@@ -1,9 +1,10 @@
 import { WebSocketService } from '../services/websocket.service';
 import { MediaControlService, PlayerState } from './media-control.service';
 import { Component, OnInit } from '@angular/core';
-import { MdIconRegistry, MdSliderChange } from '@angular/material';
+import { MdIconRegistry, MdSliderChange, OverlayContainer } from '@angular/material';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { VolumeControlComponent } from './volume-control.component';
+
 
 @Component({
   selector: 'app-media-controller',
@@ -17,7 +18,7 @@ import { VolumeControlComponent } from './volume-control.component';
 export class MediaControllerComponent implements OnInit {
 
   currentState: PlayerState;
-  constructor(private mediaControlService: MediaControlService, public dialog: MdDialog) { }
+  constructor(private mediaControlService: MediaControlService, private overlayContainer: OverlayContainer, public dialog: MdDialog) { }
 
   ngOnInit() {
     this.currentState = this.mediaControlService.getEmptyState();

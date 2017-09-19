@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
 @Component({
-  selector: 'app-video-settings',
+  selector: 'volume-control',
   templateUrl: './volume-control.component.html',
   //styleUrls: ['./video-settings.component.css'],
   providers: [MediaControlService, WebSocketService],
@@ -14,8 +14,7 @@ export class VolumeControlComponent implements OnInit {
   
   pstate: PlayerState;
 
-  constructor(private mediaControlService: MediaControlService,
-  			  public dialogRef: MdDialogRef<VolumeControlComponent>) {
+  constructor(private mediaControlService: MediaControlService) {
 
    }
 

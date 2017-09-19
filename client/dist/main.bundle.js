@@ -192,14 +192,16 @@ var _a, _b;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angular2_useful_swiper__ = __webpack_require__("../../../../angular2-useful-swiper/lib/swiper.module.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angular2_useful_swiper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_angular2_useful_swiper__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__add_media_add_media_component__ = __webpack_require__("../../../../../src/app/add-media/add-media.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__video_settings_video_settings_component__ = __webpack_require__("../../../../../src/app/video-settings/video-settings.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_ng2_img_cropper__ = __webpack_require__("../../../../ng2-img-cropper/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__media_controller_volume_control_component__ = __webpack_require__("../../../../../src/app/media-controller/volume-control.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__video_settings_video_settings_component__ = __webpack_require__("../../../../../src/app/video-settings/video-settings.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_ng2_img_cropper__ = __webpack_require__("../../../../ng2-img-cropper/index.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -223,10 +225,11 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_4__media_items_media_items_component__["a" /* MediaItemsComponent */],
             __WEBPACK_IMPORTED_MODULE_5__media_controller_media_controller_component__["a" /* MediaControllerComponent */],
             __WEBPACK_IMPORTED_MODULE_11__add_media_add_media_component__["a" /* AddMediaComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__video_settings_video_settings_component__["a" /* VideoSettingsComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__video_settings_video_settings_component__["a" /* VideoSettingsComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__media_controller_volume_control_component__["a" /* VolumeControlComponent */],
             __WEBPACK_IMPORTED_MODULE_9__seconds_to_hms_pipe__["a" /* SecondsToHmsPipe */],
             __WEBPACK_IMPORTED_MODULE_3__img_cycler_img_cycler_component__["a" /* ImgCyclerComponent */],
-            __WEBPACK_IMPORTED_MODULE_13_ng2_img_cropper__["b" /* ImageCropperComponent */]
+            __WEBPACK_IMPORTED_MODULE_14_ng2_img_cropper__["b" /* ImageCropperComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -237,7 +240,8 @@ AppModule = __decorate([
         ],
         entryComponents: [
             __WEBPACK_IMPORTED_MODULE_11__add_media_add_media_component__["a" /* AddMediaComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__video_settings_video_settings_component__["a" /* VideoSettingsComponent */]
+            __WEBPACK_IMPORTED_MODULE_13__video_settings_video_settings_component__["a" /* VideoSettingsComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__media_controller_volume_control_component__["a" /* VolumeControlComponent */]
         ],
         providers: [],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */]]
@@ -512,7 +516,7 @@ var _a, _b;
 /***/ "../../../../../src/app/media-controller/media-controller.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n\r\n\r\n\r\n<div id=\"media_state\">\r\n\t<md-progress-spinner mode=\"determinate\" value=\"{{currentState.position / currentState.duration * 100}}\"></md-progress-spinner>\r\n\t<!-- <h3>Now Playing:</h3>-->\r\n\t<div id=\"media_info\">\r\n\t\t<span class=\"title\">{{currentState.media.name}}</span>\r\n\t\t<span class=\"time\">{{currentState.position | secondsToHms}} / {{currentState.duration | secondsToHms}}</span>\r\n\t</div>\r\n</div>\r\n<div id=\"control_buttons\">\r\n\r\n\t\r\n\t<button md-icon-button>\r\n\t    <md-icon class=\"md-36 md-light\" aria-label=\"Toggle Mute\" (click)=\"requestAction('seek',[-10])\">fast_rewind</md-icon>\r\n\t</button>\r\n\t<button md-icon-button>\r\n\t    <md-icon class=\"md-36 md-light\" aria-label=\"Play/Pause\" (click)=\"requestAction('play_pause',[])\">{{currentState.is_playing == 0 ? 'play_arrow' : 'pause'}}</md-icon>\r\n\t</button>\r\n\t<button md-icon-button>\r\n\t    <md-icon class=\"md-36 md-light\" aria-label=\"Toggle Mute\" (click)=\"requestAction('seek',[10])\">fast_forward</md-icon>\r\n\t</button>\r\n</div>\t\r\n\t\r\n<div id=\"volume_controls\">\r\n\t<button md-icon-button>\r\n\t\t<md-icon class=\"md-36 md-light\" aria-label=\"Toggle Mute\" (click)=\"requestAction('toggle_mute',[])\">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>\r\n\t</button>\r\n\t<md-slider thumbLabel=\"true\" vertical=\"true\" value=\"{{currentState.volume}}\" (change)=\"volume_slider_changed($event)\" ></md-slider>\r\n\t\r\n\t<div id=\"volume_overlay\">\r\n\t\t<md-slider thumbLabel=\"true\" vertical=\"true\" value=\"{{currentState.volume}}\" (change)=\"volume_slider_changed($event)\" ></md-slider>\r\n\t\t<button md-icon-button>\r\n\t\t\t<md-icon class=\"md-36 md-light\" aria-label=\"Toggle Mute\" (click)=\"requestAction('toggle_mute',[])\">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>\r\n\t\t</button>\r\n\t</div>\r\n</div>\r\n\t\r\n\r\n"
+module.exports = "\r\n\r\n\r\n\r\n<div id=\"media_state\">\r\n\t<md-progress-spinner mode=\"determinate\" value=\"{{currentState.position / currentState.duration * 100}}\"></md-progress-spinner>\r\n\t<!-- <h3>Now Playing:</h3>-->\r\n\t<div id=\"media_info\">\r\n\t\t<span class=\"title\">{{currentState.media.name}}</span>\r\n\t\t<span class=\"time\">{{currentState.position | secondsToHms}} / {{currentState.duration | secondsToHms}}</span>\r\n\t</div>\r\n</div>\r\n<div id=\"control_buttons\">\r\n\r\n\t\r\n\t<button md-icon-button>\r\n\t    <md-icon class=\"md-36 md-light\" aria-label=\"Toggle Mute\" (click)=\"requestAction('seek',[-10])\">fast_rewind</md-icon>\r\n\t</button>\r\n\t<button md-icon-button>\r\n\t    <md-icon class=\"md-36 md-light\" aria-label=\"Play/Pause\" (click)=\"requestAction('play_pause',[])\">{{currentState.is_playing == 0 ? 'play_arrow' : 'pause'}}</md-icon>\r\n\t</button>\r\n\t<button md-icon-button>\r\n\t    <md-icon class=\"md-36 md-light\" aria-label=\"Toggle Mute\" (click)=\"requestAction('seek',[10])\">fast_forward</md-icon>\r\n\t</button>\r\n</div>\t\r\n\t\r\n<div id=\"volume_controls\">\r\n\t<button md-icon-button>\r\n\t\t<md-icon class=\"md-36 md-light\" aria-label=\"Toggle Mute\" (click)=\"requestAction('toggle_mute',[])\">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>\r\n\t</button>\r\n\t\r\n\t<volume-control></volume-control>\r\n\t\r\n\t<!-- <md-slider thumbLabel=\"true\" vertical=\"true\" value=\"{{currentState.volume}}\" (change)=\"volume_slider_changed($event)\" ></md-slider>\r\n\t\r\n\t<div id=\"volume_overlay\">\r\n\t\t<md-slider thumbLabel=\"true\" vertical=\"true\" value=\"{{currentState.volume}}\" (change)=\"volume_slider_changed($event)\" ></md-slider>\r\n\t\t<button md-icon-button>\r\n\t\t\t<md-icon class=\"md-36 md-light\" aria-label=\"Toggle Mute\" (click)=\"requestAction('toggle_mute',[])\">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>\r\n\t\t</button>\r\n\t</div>-->\r\n</div>\r\n\t\r\n\r\n"
 
 /***/ }),
 
@@ -558,9 +562,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 let MediaControllerComponent = class MediaControllerComponent {
-    constructor(mediaControlService, dialog) {
+    constructor(mediaControlService, overlayContainer, dialog) {
         this.mediaControlService = mediaControlService;
+        this.overlayContainer = overlayContainer;
         this.dialog = dialog;
     }
     ngOnInit() {
@@ -593,10 +599,10 @@ MediaControllerComponent = __decorate([
         providers: [__WEBPACK_IMPORTED_MODULE_1__media_control_service__["a" /* MediaControlService */], __WEBPACK_IMPORTED_MODULE_0__services_websocket_service__["a" /* WebSocketService */]],
         styles: [__webpack_require__("../../../../../src/app/media-controller/media-controller.component.scss")],
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__media_control_service__["a" /* MediaControlService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__media_control_service__["a" /* MediaControlService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdDialog */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__media_control_service__["a" /* MediaControlService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__media_control_service__["a" /* MediaControlService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["p" /* OverlayContainer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["p" /* OverlayContainer */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MdDialog */]) === "function" && _c || Object])
 ], MediaControllerComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=media-controller.component.js.map
 
 /***/ }),
@@ -604,7 +610,7 @@ var _a, _b;
 /***/ "../../../../../src/app/media-controller/volume-control.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div id=\"volume_overlay\">\r\n\t<md-slider thumbLabel=\"true\" vertical=\"true\" value=\"{{pstate.volume}}\" (change)=\"volume_slider_changed($event)\" ></md-slider>\r\n\t<button md-icon-button>\r\n\t\t<md-icon class=\"md-36 md-light\" aria-label=\"Toggle Mute\" (click)=\"requestAction('toggle_mute',[])\">{{{{pstate.volume}}.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>\r\n\t</button>\r\n</div>"
+module.exports = "\r\n<div id=\"volume_overlay\">\r\n\t<md-slider thumbLabel=\"true\" vertical=\"true\" value=\"{{pstate.volume}}\" (change)=\"volume_slider_changed($event)\" ></md-slider>\r\n\t<button md-icon-button>\r\n\t\t<md-icon class=\"md-36 md-light\" aria-label=\"Toggle Mute\" (click)=\"requestAction('toggle_mute',[])\">{{pstate.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>\r\n\t</button>\r\n</div>"
 
 /***/ }),
 
@@ -616,7 +622,6 @@ module.exports = "\r\n<div id=\"volume_overlay\">\r\n\t<md-slider thumbLabel=\"t
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__media_controller_media_control_service__ = __webpack_require__("../../../../../src/app/media-controller/media-control.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_websocket_service__ = __webpack_require__("../../../../../src/app/services/websocket.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__("../../../material/@angular/material.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -629,11 +634,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 let VolumeControlComponent = class VolumeControlComponent {
-    constructor(mediaControlService, dialogRef) {
+    constructor(mediaControlService) {
         this.mediaControlService = mediaControlService;
-        this.dialogRef = dialogRef;
     }
     ngOnInit() {
         this.pstate = this.mediaControlService.getEmptyState();
@@ -649,15 +652,15 @@ let VolumeControlComponent = class VolumeControlComponent {
 };
 VolumeControlComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Component"])({
-        selector: 'app-video-settings',
+        selector: 'volume-control',
         template: __webpack_require__("../../../../../src/app/media-controller/volume-control.component.html"),
         //styleUrls: ['./video-settings.component.css'],
         providers: [__WEBPACK_IMPORTED_MODULE_0__media_controller_media_control_service__["a" /* MediaControlService */], __WEBPACK_IMPORTED_MODULE_1__services_websocket_service__["a" /* WebSocketService */]],
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__media_controller_media_control_service__["a" /* MediaControlService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__media_controller_media_control_service__["a" /* MediaControlService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["f" /* MdDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["f" /* MdDialogRef */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__media_controller_media_control_service__["a" /* MediaControlService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__media_controller_media_control_service__["a" /* MediaControlService */]) === "function" && _a || Object])
 ], VolumeControlComponent);
 
-var _a, _b;
+var _a;
 //# sourceMappingURL=volume-control.component.js.map
 
 /***/ }),
