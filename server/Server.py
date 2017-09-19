@@ -10,6 +10,7 @@ from flask_sockets import Sockets
 from flask_cors import CORS, cross_origin
 
 from VideoManager import VideoManager, VideoLibrary
+import argparse
 
 logger = logging.getLogger('HoloServe')
 
@@ -87,9 +88,14 @@ def update_player_status(socket):
 if __name__ == "__main__":
     sys.stderr.write("Starting server...\n")
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--host', default="0.0.0.0", help="hostname to run the server on")
+    parser.add_argument('--port', type=int, default=5000, help="Port to listen on")
+    parser.add_argument('--debug', action='store_true', help="Enable debug mode on the server")
+    args = parser.parse_args()
     
-    app.debug = True
-    server = pywsgi.WSGIServer(("", 5000), app, handler_class=WebSocketHandler)
-    sys.stderr.write("Server listening on localhost port 5000\n")
+    app.debug = args.debug
+    server = pywsgi.WSGIServer((args.host, args.port), app, handler_class=WebSocketHandler)
+    
+    sys.stderr.write("Server listening on {} port {}\n".format(args.host, args.port))
     server.serve_forever()
-    # Then visit http://localhost:5000
