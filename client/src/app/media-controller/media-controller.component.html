@@ -30,7 +30,12 @@
 	</button>
 	<md-slider thumbLabel="true" vertical="true" value="{{currentState.volume}}" (change)="volume_slider_changed($event)" ></md-slider>
 	
-	
+	<div id="volume_overlay">
+		<md-slider thumbLabel="true" vertical="true" value="{{currentState.volume}}" (change)="volume_slider_changed($event)" ></md-slider>
+		<button md-icon-button>
+			<md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="requestAction('toggle_mute',[])">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>
+		</button>
+	</div>
 </div>
 	
 

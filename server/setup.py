@@ -10,6 +10,7 @@ setup(  name='HoloServe',
         license='MIT',
         install_requires=[
             'gevent',
+            'gevent-websocket',
             'flask',
             'flask-sockets',
             'flask-cors'

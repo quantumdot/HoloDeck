@@ -1,8 +1,9 @@
 import { WebSocketService } from '../services/websocket.service';
 import { MediaControlService, PlayerState } from './media-control.service';
 import { Component, OnInit } from '@angular/core';
-import {MdIconRegistry, MdSliderChange} from '@angular/material';
-// import { SmdFabSpeedDialComponent } from '../smd-fab-speed-dial/fab-speed-dial.module';
+import { MdIconRegistry, MdSliderChange } from '@angular/material';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { VolumeControlComponent } from './volume-control.component';
 
 @Component({
   selector: 'app-media-controller',
@@ -13,12 +14,10 @@ import {MdIconRegistry, MdSliderChange} from '@angular/material';
   ],
 })
 
-
-
 export class MediaControllerComponent implements OnInit {
 
   currentState: PlayerState;
-  constructor(private mediaControlService: MediaControlService) { }
+  constructor(private mediaControlService: MediaControlService, public dialog: MdDialog) { }
 
   ngOnInit() {
     this.currentState = this.mediaControlService.getEmptyState();
@@ -30,6 +29,10 @@ export class MediaControllerComponent implements OnInit {
       }
     });
   }
+  open_volume_controls(): void {
+  	console.log('got open_volume_controls');
+  	let dialogRef = this.dialog.open(VolumeControlComponent, {});
+  }
   volume_slider_changed(event: MdSliderChange): void {
     console.log(event);
     this.requestAction('set_volume', [event.value]);
@@ -40,3 +43,6 @@ export class MediaControllerComponent implements OnInit {
   }
 
 }
+
+
+

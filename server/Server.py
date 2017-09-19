@@ -23,10 +23,11 @@ vid_library = VideoLibrary('conf/assets.json')
 vid_manager = VideoManager()
 vid_manager.set_source(vid_library.items[0])
 
-
 @app.route('/')
-def home():
-    return "home2!"
+@app.route('/<path:path>')
+def home(path):
+    sys.stderr.write("Requested /client/{}\n".format(path))
+    return send_from_directory('../client/dist/', path)
 
 @app.route('/assets/<path:path>')
 def send_assets(path):
