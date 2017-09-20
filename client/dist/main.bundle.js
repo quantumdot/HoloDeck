@@ -336,8 +336,8 @@ BytesToHumanPipe = __decorate([
 var config = {
     title: "Hello World",
     Endpoints: {
-        ControlStatus: "ws://localhost:5000/status",
-        Main: "http://localhost:5000/"
+        ControlStatus: "status",
+        Main: "" // "http://localhost:5000/"
     }
 };
 //# sourceMappingURL=config.js.map
