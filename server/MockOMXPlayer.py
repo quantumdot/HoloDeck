@@ -2,6 +2,15 @@ import time
 import threading
 
 class MockOMXPlayer(object):
+    """ Mock OMXPlayer for use during development, particularly on machines where 
+        OMXPlayer is not readily available (i.e. windows).
+        
+        The mock player attempts to keep some basic state with a similar API.
+        The following abilities are present:
+            - play/pause/stop with position/duration and state tracking
+            - volume control
+            - playback rate
+    """
     
     def __init__(self):
         self._duration = 300.0
@@ -9,6 +18,7 @@ class MockOMXPlayer(object):
         self._state = 1 # 0: stop; 1: play; 2: pause;
         self._statemap = ['Stopped', 'Playing', 'Paused']
         self._volume = 25.0
+        self._rate = 1
         
         thread = threading.Thread(target=self.__run_background, args=())
         thread.daemon = True
@@ -16,7 +26,7 @@ class MockOMXPlayer(object):
         
     def __run_background(self):
         while(True):
-            time.sleep(1)
+            time.sleep(1.0 / self._rate)
             if self._state == 1:
                 if self._position < self._duration:
                     self._position += 1
@@ -62,7 +72,7 @@ class MockOMXPlayer(object):
     def volume(self):
         return self._volume
     def rate(self):
-        return 1
+        return self._rate
     def fullscreen(self):
         return True
     

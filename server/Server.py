@@ -2,6 +2,7 @@ import sys
 import json
 import time
 import logging
+import argparse
 
 from gevent import pywsgi, sleep as sock_sleep
 from geventwebsocket.handler import WebSocketHandler
@@ -9,8 +10,10 @@ from flask import Flask, request, Response, jsonify, send_from_directory, stream
 from flask_sockets import Sockets
 from flask_cors import CORS, cross_origin
 
-from VideoManager import VideoManager, VideoLibrary, VideoSource, DownloadHelper
-import argparse
+from VideoManager import VideoManager
+from VideoLibrary import VideoLibrary
+from DownloadHelper import DownloadHelper
+
 
 logger = logging.getLogger('HoloServe')
 

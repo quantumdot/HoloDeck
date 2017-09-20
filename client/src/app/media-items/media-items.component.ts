@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, AfterViewInit, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChildren, AfterViewInit, QueryList, ElementRef, Output, EventEmitter } from '@angular/core';
 import { Media, MediaInventoryService } from '../services/media-inventory.service';
 import { SwiperModule } from 'angular2-useful-swiper';
 import { ImgCyclerComponent } from '../img-cycler/img-cycler.component';
@@ -8,7 +8,7 @@ import { ImgCyclerComponent } from '../img-cycler/img-cycler.component';
 
 @Component({
   selector: 'app-media-items',
-  providers: [MediaInventoryService],
+  providers: [],
   templateUrl: './media-items.component.html',
   styleUrls: [
    './media-items.component.scss'
@@ -40,6 +40,10 @@ export class MediaItemsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.mediaItemService.suggestInventoryQuery.subscribe(() => {
+      console.log('I heard that you want a media requery');
+      this.fetchMedia();
+    });
     this.fetchMedia();
   }
   ngAfterViewInit(): void {

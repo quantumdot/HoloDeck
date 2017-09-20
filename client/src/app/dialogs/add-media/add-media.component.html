@@ -1,0 +1,35 @@
+<h1 md-dialog-title>Add Media Source</h1>
+<md-dialog-content>
+	<form>
+		<md-form-field class="">
+	    	<input mdInput type="url" name="source" placeholder="Source" [(ngModel)]="media_url" [disabled]="is_submitted">
+		</md-form-field>
+	</form>
+
+	<div id="progress_container" *ngIf="progress"><!--  -->
+		<div class="download" *ngIf="progress.task == 'download'"><!-- -->
+			<span class="task">Downloading....</span>
+			<md-progress-bar color="primary" mode="determinate" [value]="progress.ratio * 100"></md-progress-bar>
+			<span class="rate">{{progress.recieved | bytesToHuman}} / {{progress.total | bytesToHuman}} ({{progress.rate | bytesToHuman}}/s)</span>
+			<span class="eta">{{ progress.eta | secondsToHms }} remaining</span>
+		</div>
+		<div class="thumbnail" *ngIf="progress.task == 'thumbnail'"> <!--  -->
+			<span class="task">{{progress.task}}</span>
+			<md-progress-bar color="primary" mode="determinate" [value]="progress.ratio * 100"></md-progress-bar>
+			<span class="rate">{{progress.recieved}} / {{progress.total}}</span>
+		</div>
+		<div class="complete" *ngIf="progress.task == 'success'"><!--  -->
+			<md-icon class="md-36" aria-label="Done" color="primary" >cloud_done</md-icon>
+			<span>Finished!</span>
+		</div>
+		<div class="complete" *ngIf="progress.task == 'failure'">
+			<md-icon class="md-36" aria-label="Error!" color="warn">error</md-icon>
+			<span>Error!</span>
+			<p>{{progress.help}}</p>
+		</div>
+	</div>
+</md-dialog-content>
+<md-dialog-actions>
+	<button md-raised-button color="primary" [disabled]="is_submitted" (click)="add_media()">Add Media</button>
+	<button md-raised-button color="primary" (click)="cancel()">Cancel</button>
+</md-dialog-actions>

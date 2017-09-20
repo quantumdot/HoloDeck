@@ -43,7 +43,7 @@ export class MediaControlService {
     this.State = <BehaviorSubject<PlayerState>>this.wsService
       .connect(config.Endpoints.ControlStatus)
       .map((response: MessageEvent): PlayerState => {
-        console.log(response);
+        // console.log(response);
         let data = JSON.parse(response.data);
         // console.log(data);
         return data;

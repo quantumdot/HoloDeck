@@ -51,7 +51,12 @@ md-progress-spinner{
 }
 
 #media_state span.title{ 
-	font-size:24px; color:#efefef; 
+	font-size:24px;
+	color:#efefef; 
+	white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
+    max-width:230px;
 }
 
 #media_state span.time{ 

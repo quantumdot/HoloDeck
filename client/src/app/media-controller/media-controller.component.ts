@@ -8,7 +8,7 @@ import { MdIconRegistry, MdSliderChange } from '@angular/material';
 @Component({
   selector: 'app-media-controller',
   templateUrl: './media-controller.component.html',
-  providers: [MediaControlService, WebSocketService],
+  providers: [],
   styleUrls: [
    './media-controller.component.scss'
   ],

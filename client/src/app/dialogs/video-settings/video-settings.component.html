@@ -1,0 +1,24 @@
+<h1 md-dialog-title>Video Settings</h1>
+<md-dialog-content>
+	<md-list>
+		<md-list-item>
+			 <md-icon md-list-icon class="md-48">aspect_ratio</md-icon>
+			 <!-- <h3 md-line>Aspect Mode</h3>-->
+			 <md-select placeholder="Aspect Mode" (change)="settingsValueChanged('set_aspect_mode', $event);" value="">
+				<md-option value="letterbox">Letter Box</md-option>
+			  	<md-option value="fill">Fill</md-option>
+			  	<md-option value="stretch">Stretch</md-option>
+			</md-select>
+		</md-list-item>
+		<md-list-item>
+			 <md-icon md-list-icon class="md-48">opacity</md-icon>
+			 <!-- <h3 md-line>Opacity</h3>-->
+			 <md-slider color="primary" min="0" max="255" thumbLabel="true" value="" (change)="settingsValueChanged('set_alpha', $event);"></md-slider>
+		</md-list-item>
+		<md-list-item>
+			<!-- <img src="{{pstate.media.thumbs[0]}}" />
+			<img-cropper [image]="pstate.media.thumbs[0]" ></img-cropper>
+			<img [src]="cropperData.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">-->
+		</md-list-item>
+	</md-list>
+</md-dialog-content>

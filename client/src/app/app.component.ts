@@ -1,8 +1,9 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { OverlayContainer } from '@angular/material';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
-import { AddMediaComponent } from './add-media/add-media.component';
-import { VideoSettingsComponent } from './video-settings/video-settings.component';
+import { AddMediaComponent } from './dialogs/add-media/add-media.component';
+import { VideoSettingsComponent } from './dialogs/video-settings/video-settings.component';
+import { DialogsService } from './services/dialogs.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent implements OnInit {
   title = 'HoloDeck';
   themeClass: string;
 
-  constructor(private overlayContainer: OverlayContainer, public dialog: MdDialog) {}
+  constructor(public dialog: DialogsService) {}
 
   ngOnInit(): void {
     // subscribe to some source of theme change events, then...
@@ -22,19 +23,11 @@ export class AppComponent implements OnInit {
   }
 
   showAddMediaDialog(): void {
-    console.log('opening add dialog!');
-    let dialogRef = this.dialog.open(AddMediaComponent, {
-      // height: '400px',
-      // width: '600px',
-    });
+    this.dialog.showAddMediaDialog();
   }
 
   showVideoSettingsDialog(): void {
-    console.log('opening video settings!');
-    let dialogRef = this.dialog.open(VideoSettingsComponent, {
-      // height: '400px',
-      width: '300px',
-    });
+    this.dialog.showVideoSettingsDialog();
   }
 }
 

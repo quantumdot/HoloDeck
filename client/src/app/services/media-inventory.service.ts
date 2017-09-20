@@ -1,5 +1,5 @@
 import { config } from '../config';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
@@ -26,7 +26,11 @@ export interface AddMediaProgress {
 @Injectable()
 export class MediaInventoryService {
 
-  constructor(private http: HttpClient) {}
+  @Output() suggestInventoryQuery: EventEmitter<any> = new EventEmitter();
+
+  constructor(private http: HttpClient) {
+    this.suggestInventoryQuery.subscribe(() => console.log('service saw requery request'));
+  }
 
   getMediaItems(): Promise<Media[]> {
     return this.http.get(config.Endpoints.Main + 'getmediaitems'/*, { headers: headers }*/)

@@ -1,0 +1,33 @@
+#progress_container{
+	
+}
+#progress_container span.task{
+	font-weight:bold;
+}
+#progress_container span.rate,
+#progress_container span.eta{
+	float:right;
+	clear:right;
+	display:block;
+	font-size:12px;
+	
+}
+
+#progress_container .complete span{
+	font-size:1.2em;
+	font-weight:bold;
+	vertical-align:middle;
+	line-height:36px;
+	padding-left:10px;
+}
+#progress_container .complete md-icon{
+	float:left;	
+}
+#progress_container .complete p{
+	
+}
+
+#progress_container .thumbnail{
+	
+}
+
