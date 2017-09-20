@@ -1,5 +1,9 @@
+import sys
 import json
-from numpy import rate
+import glob
+import time
+import subprocess
+from conf import ffmpeg_path
 
 
 def module_exists(mod):
@@ -40,7 +44,7 @@ class VideoLibrary(object):
     
     def save(self, manifest):
         with open(manifest, 'w') as mfp:
-            json.dump([i.serialize() for i in self.items], mfp)
+            json.dump([i.serialize() for i in self.items], mfp, indent=4)
     
     def __load_items(self, manifest):
         with open(manifest, 'r') as mfp:
@@ -199,6 +203,8 @@ class DownloadHelper(object):
         try:
             self.download()
             self.extract_thumbs()
+            self.progress.task = "Done!"
+            time.sleep(3)
             self.progress.complete = True
             #del DownloadHelper.processes[self.id]
             self.__callback(self)
@@ -215,10 +221,33 @@ class DownloadHelper(object):
     
     def extract_thumbs(self):
         self.progress.task = "Generating thumbnails...."
-        pass
-        
+        duration = self.__to_seconds(self.video.duration)
+        self.progress.total = int(duration * 0.1)
+        self.progress.recieved = 0
+        self.progress.ratio = 0
+        args = [
+            ffmpeg_path,
+            '-i', self.vfname,
+            '-vf', 'fps=1/10',
+            'assets/{}_%03d.png'.format(self.id)
+        ]
+        sys.stderr.write(" ".join(args))
+        sys.stderr.flush()
+        p = subprocess.Popen(args, stderr=sys.stderr, stdout=sys.stderr)
+        while p.poll() is None:
+            self.thumbs = glob.glob('assets/{}_*.png'.format(self.id))
+            self.progress.recieved = len(self.thumbs)
+            self.progress.ratio = float(self.progress.recieved) / float(self.progress.total)
+            time.sleep(0.1)
+            
+    def __to_seconds(self, timestr):
+        seconds= 0
+        for part in timestr.split(':'):
+            seconds= seconds*60 + int(part)
+        return seconds
+    
     def create_source(self):
-        return VideoSource(self.id, self.video.title, self.video.description, [], self.vfname)
+        return VideoSource(self.id, self.video.title, self.video.description, self.thumbs, self.vfname)
 
 
 

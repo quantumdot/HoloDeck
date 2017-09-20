@@ -18,6 +18,9 @@
 		<span class="">{{progress.task}}</span>
 		<span>{{progress.recieved}} / {{progress.total}}</span>
 	</div>
+	<div *ngIf="progress.task == 'Done!'">
+		<h3>Finished!</h3>
+	</div>
 </div>
 <md-dialog-actions>
 	<button md-raised-button color="primary" (click)="add_media()">Add Media</button>

@@ -20,7 +20,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 /***/ "../../../../../src/app/add-media/add-media.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 md-dialog-title>Add Media Source</h1>\r\n<md-dialog-content>\r\n\t<form>\r\n\t\t<md-form-field class=\"\">\r\n\t    \t<input mdInput type=\"url\" name=\"source\" placeholder=\"Source\" [(ngModel)]=\"media_url\">\r\n\t\t</md-form-field>\r\n\t</form>\r\n</md-dialog-content>\r\n<div id=\"progress_container\" *ngIf=\"progress\">\r\n\t<div *ngIf=\"progress.task == 'Downloading....'\">\r\n\t\t<md-progress-bar color=\"primary\" mode=\"determinate\" [value]=\"progress.ratio * 100\"></md-progress-bar>\r\n\t\t<span class=\"\">{{progress.task}}</span>\r\n\t\t<span>{{progress.recieved | bytesToHuman}} / {{progress.total | bytesToHuman}} ({{progress.rate | bytesToHuman}}/s)</span>\r\n\t\t<span>{{progress.eta}} s</span>\r\n\t</div>\r\n\t<div *ngIf=\"progress.task == 'Generating thumbnails....'\">\r\n\t\t<md-progress-bar color=\"primary\" mode=\"determinate\" [value]=\"progress.ratio * 100\"></md-progress-bar>\r\n\t\t<span class=\"\">{{progress.task}}</span>\r\n\t\t<span>{{progress.recieved}} / {{progress.total}}</span>\r\n\t</div>\r\n</div>\r\n<md-dialog-actions>\r\n\t<button md-raised-button color=\"primary\" (click)=\"add_media()\">Add Media</button>\r\n\t<button md-raised-button color=\"primary\" (click)=\"cancel()\">Cancel</button>\r\n</md-dialog-actions>\r\n"
+module.exports = "<h1 md-dialog-title>Add Media Source</h1>\r\n<md-dialog-content>\r\n\t<form>\r\n\t\t<md-form-field class=\"\">\r\n\t    \t<input mdInput type=\"url\" name=\"source\" placeholder=\"Source\" [(ngModel)]=\"media_url\">\r\n\t\t</md-form-field>\r\n\t</form>\r\n</md-dialog-content>\r\n<div id=\"progress_container\" *ngIf=\"progress\">\r\n\t<div *ngIf=\"progress.task == 'Downloading....'\">\r\n\t\t<md-progress-bar color=\"primary\" mode=\"determinate\" [value]=\"progress.ratio * 100\"></md-progress-bar>\r\n\t\t<span class=\"\">{{progress.task}}</span>\r\n\t\t<span>{{progress.recieved | bytesToHuman}} / {{progress.total | bytesToHuman}} ({{progress.rate | bytesToHuman}}/s)</span>\r\n\t\t<span>{{progress.eta}} s</span>\r\n\t</div>\r\n\t<div *ngIf=\"progress.task == 'Generating thumbnails....'\">\r\n\t\t<md-progress-bar color=\"primary\" mode=\"determinate\" [value]=\"progress.ratio * 100\"></md-progress-bar>\r\n\t\t<span class=\"\">{{progress.task}}</span>\r\n\t\t<span>{{progress.recieved}} / {{progress.total}}</span>\r\n\t</div>\r\n\t<div *ngIf=\"progress.task == 'Done!'\">\r\n\t\t<h3>Finished!</h3>\r\n\t</div>\r\n</div>\r\n<md-dialog-actions>\r\n\t<button md-raised-button color=\"primary\" (click)=\"add_media()\">Add Media</button>\r\n\t<button md-raised-button color=\"primary\" (click)=\"cancel()\">Cancel</button>\r\n</md-dialog-actions>\r\n"
 
 /***/ }),
 
@@ -347,7 +347,7 @@ var config = {
 /***/ "../../../../../src/app/img-cycler/img-cycler.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"thumbs_container\" >\r\n\t<img #img *ngFor=\"let i of images\" src=\"http://localhost:5000/{{i}}\" />\r\n</div>"
+module.exports = "<div class=\"thumbs_container\" >\r\n\t<img #img *ngFor=\"let i of images\" src=\"{{i}}\" />\r\n</div>"
 
 /***/ }),
 
