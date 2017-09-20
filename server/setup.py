@@ -14,8 +14,10 @@ setup(  name='HoloServe',
             'flask',
             'flask-sockets',
             'flask-cors',
-            
-            'omxplayer-wrapper',
+            'omxplayer',
+            #'google-api-python-client',
+            'youtube-dl',
+            'pafy'
         ],
         scripts=[
         ],

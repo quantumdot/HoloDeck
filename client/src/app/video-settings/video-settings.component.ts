@@ -1,4 +1,4 @@
-import { MediaControlService, PlayerState } from '../media-controller/media-control.service';
+import { MediaControlService, PlayerState } from '../services/media-control.service';
 import { WebSocketService } from '../services/websocket.service';
 import { Component, OnInit } from '@angular/core';
 import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';

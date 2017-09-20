@@ -1,9 +1,8 @@
 import { WebSocketService } from '../services/websocket.service';
-import { MediaControlService, PlayerState } from './media-control.service';
+import { MediaControlService, PlayerState } from '../services/media-control.service';
 import { Component, OnInit } from '@angular/core';
-import { MdIconRegistry, MdSliderChange, OverlayContainer } from '@angular/material';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
-import { VolumeControlComponent } from './volume-control.component';
+import { MdIconRegistry, MdSliderChange } from '@angular/material';
+
 
 
 @Component({
@@ -17,8 +16,9 @@ import { VolumeControlComponent } from './volume-control.component';
 
 export class MediaControllerComponent implements OnInit {
 
+  vover_open = false;
   currentState: PlayerState;
-  constructor(private mediaControlService: MediaControlService, private overlayContainer: OverlayContainer, public dialog: MdDialog) { }
+  constructor(private mediaControlService: MediaControlService) { }
 
   ngOnInit() {
     this.currentState = this.mediaControlService.getEmptyState();
@@ -31,9 +31,17 @@ export class MediaControllerComponent implements OnInit {
     });
   }
   open_volume_controls(): void {
-  	console.log('got open_volume_controls');
-  	let dialogRef = this.dialog.open(VolumeControlComponent, {});
+    this.vover_open = true;
   }
+  toggle_volume_controls(): void {
+    this.vover_open = !this.vover_open;
+  }
+  close_volume_controls(): void {
+    this.vover_open = false;
+  }
+  
+  
+  
   volume_slider_changed(event: MdSliderChange): void {
     console.log(event);
     this.requestAction('set_volume', [event.value]);

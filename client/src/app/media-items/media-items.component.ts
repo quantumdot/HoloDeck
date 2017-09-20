@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChildren, AfterViewInit, QueryList, ElementRef } from '@angular/core';
-import { Media, MediaInventoryService } from './mediaInventory.service';
+import { Media, MediaInventoryService } from '../services/media-inventory.service';
 import { SwiperModule } from 'angular2-useful-swiper';
-import {ImgCyclerComponent} from '../img-cycler/img-cycler.component';
+import { ImgCyclerComponent } from '../img-cycler/img-cycler.component';
 
 
 

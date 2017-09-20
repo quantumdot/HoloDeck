@@ -5,11 +5,11 @@ import logging
 
 from gevent import pywsgi, sleep as sock_sleep
 from geventwebsocket.handler import WebSocketHandler
-from flask import Flask, request, Response, jsonify, send_from_directory
+from flask import Flask, request, Response, jsonify, send_from_directory, stream_with_context
 from flask_sockets import Sockets
 from flask_cors import CORS, cross_origin
 
-from VideoManager import VideoManager, VideoLibrary
+from VideoManager import VideoManager, VideoLibrary, VideoSource, DownloadHelper
 import argparse
 
 logger = logging.getLogger('HoloServe')
@@ -69,8 +69,24 @@ def handle_actionrequest(action):
             raise ValueError('Action {} is not valid!'.format(action))
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) })
-        
 
+
+
+@app.route('/addmedia/<string:video_id>')
+def handle_addmedia(video_id):
+    sys.stderr.write("Requested /addmedia/{}\n".format(video_id))
+    helper = DownloadHelper(video_id)
+    def add_cbk(d):
+        vid_library.add_source(d.create_source())
+    helper.run(add_cbk)
+    return jsonify({'success':True}) 
+
+@app.route('/addmediaprogress/<string:video_id>')
+def handle_addmediaprogress(video_id):
+    try:
+        return jsonify(DownloadHelper.processes[video_id].progress.serialize())
+    except:
+        return jsonify({'success':False, 'message': str(e) })
     
 @sockets.route('/status')
 def update_player_status(socket):

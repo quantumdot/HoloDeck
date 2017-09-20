@@ -1,5 +1,5 @@
 import json
-
+from numpy import rate
 
 
 def module_exists(mod):
@@ -25,11 +25,22 @@ class VideoLibrary(object):
         self.items = self.__load_items(self.source)
     #end __init__()
     
+    def add_source(self, video_source):
+        self.items.append(video_source)
+        self.save(self.source)
+    
     def find_id(self, id):
         for itm in self.items:
             if itm.id == id:
                 return itm
         return None
+    
+    def get_youtube_source(self, video_id):
+        return VideoSource.from_source(video_id)
+    
+    def save(self, manifest):
+        with open(manifest, 'w') as mfp:
+            json.dump([i.serialize() for i in self.items], mfp)
     
     def __load_items(self, manifest):
         with open(manifest, 'r') as mfp:
@@ -55,6 +66,12 @@ class VideoSource(object):
         self.thumbs = list(thumbs)
         self.source = source
     #end __init__()
+    
+    @staticmethod
+    def from_source(video_id):
+        import youtube_helper
+        youtube_helper.get_video(video_id)
+        
     
     def serialize(self):  
         return {
@@ -126,9 +143,82 @@ class PlayerStatus(object):
     #end serialize()
 #end PlayerStatus()
 
+import pafy
+import threading
+class DownloadProgress(object):
+    def __init__(self):
+        self.complete = False
+        self.task = "Initializing...."
+        self.help = ""
+        self.total = 0
+        self.recieved = 0
+        self.ratio = 0
+        self.rate = 0
+        self.eta = 0
+        
+    def serialize(self):
+        return {
+            "complete": self.complete,
+            "task": self.task,
+            "help": self.help,
+            "total": self.total,
+            "recieved": self.recieved,
+            "ratio": self.ratio,
+            "rate": self.rate,
+            "eta": self.eta
+        }
+#end class DownloadProgress
 
+class DownloadHelper(object):
+    
+    processes = {}
+    
+    def __init__(self, video_id):
+        self.id = video_id
+        self.progress = DownloadProgress()
+        DownloadHelper.processes[self.id] = self
 
+    @property
+    def is_complete(self):
+        return self.progress.complete
 
+    def _update_progress(self, total, recvd, ratio, rate, eta):
+        self.progress.total = total
+        self.progress.recieved = recvd
+        self.progress.ratio = ratio
+        self.progress.rate = rate
+        self.progress.eta = eta
+
+    def run(self, callback):
+        self.__callback = callback
+        self.__thread = threading.Thread(target=self.__run_background, args=())
+        self.__thread.start()
+        return 
+
+    def __run_background(self):
+        try:
+            self.download()
+            self.extract_thumbs()
+            self.progress.complete = True
+            #del DownloadHelper.processes[self.id]
+            self.__callback(self)
+        except BaseException as e:
+            self.progress.help = str(e)
+
+    def download(self):
+        self.progress.task = "Downloading...."
+        self.video = pafy.new("https://www.youtube.com/watch?v={}".format(self.id))
+        best = self.video.getbest()
+        self.vfname = "assets/{}.{}".format(self.id, best.extension)
+        best.download(filepath=self.vfname, quiet=True, callback=self._update_progress)
+    
+    
+    def extract_thumbs(self):
+        self.progress.task = "Generating thumbnails...."
+        pass
+        
+    def create_source(self):
+        return VideoSource(self.id, self.video.title, self.video.description, [], self.vfname)
 
 
 

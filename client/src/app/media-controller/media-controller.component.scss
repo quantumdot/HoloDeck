@@ -14,7 +14,8 @@
 #volume_controls{
 	position:absolute; 
 	top:0; 
-	right:0; 
+	right:0;
+	width:48px;
 }
 
 #volume_controls button{ 
@@ -23,6 +24,13 @@
 	margin-top:10px; 
 	margin-right:0; 
 }
+
+#volume_overlay{
+	position:relative;
+	z-index:999;
+	background:#999999;
+}
+
 
 md-progress-spinner{
 	width:100px;

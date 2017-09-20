@@ -9,7 +9,7 @@
 						<md-card-subtitle>{{media.description}}</md-card-subtitle>
 					</md-card-header>
 					<md-card-content>
-						<app-img-cycler rate="500" [images]="media.thumbs"></app-img-cycler>
+						<img-cycler rate="500" [images]="media.thumbs"></img-cycler>
 					</md-card-content>
 					<md-card-actions>
 						<button md-raised-button color="primary" (click)="requestPlay($event, media)">Play</button>
