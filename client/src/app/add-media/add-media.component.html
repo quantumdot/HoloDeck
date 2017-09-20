@@ -2,17 +2,24 @@
 <md-dialog-content>
 	<form>
 		<md-form-field class="">
-	    	<input mdInput placeholder="Name" value="">
-		</md-form-field>
-		<md-form-field class="">
-	    	<input mdInput type="url" placeholder="Source" value="">
-		</md-form-field>
-		<md-form-field class="">
-	    	<textarea mdInput placeholder="Description" value=""></textarea>
+	    	<input mdInput type="url" name="source" placeholder="Source" [(ngModel)]="media_url">
 		</md-form-field>
 	</form>
 </md-dialog-content>
+<div id="progress_container" *ngIf="progress">
+	<div *ngIf="progress.task == 'Downloading....'">
+		<md-progress-bar color="primary" mode="determinate" [value]="progress.ratio * 100"></md-progress-bar>
+		<span class="">{{progress.task}}</span>
+		<span>{{progress.recieved | bytesToHuman}} / {{progress.total | bytesToHuman}} ({{progress.rate | bytesToHuman}}/s)</span>
+		<span>{{progress.eta}} s</span>
+	</div>
+	<div *ngIf="progress.task == 'Generating thumbnails....'">
+		<md-progress-bar color="primary" mode="determinate" [value]="progress.ratio * 100"></md-progress-bar>
+		<span class="">{{progress.task}}</span>
+		<span>{{progress.recieved}} / {{progress.total}}</span>
+	</div>
+</div>
 <md-dialog-actions>
-	<button md-raised-button color="primary" [md-dialog-close]="true">Add Media</button>
-	<button md-raised-button color="primary" [md-dialog-close]="false">Cancel</button>
+	<button md-raised-button color="primary" (click)="add_media()">Add Media</button>
+	<button md-raised-button color="primary" (click)="cancel()">Cancel</button>
 </md-dialog-actions>
