@@ -17,7 +17,8 @@ setup(  name='HoloServe',
             'omxplayer',
             #'google-api-python-client',
             'youtube-dl',
-            'pafy'
+            'pafy',
+            'wifi'
         ],
         scripts=[
         ],

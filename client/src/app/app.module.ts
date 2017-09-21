@@ -20,11 +20,13 @@ import { SecondsToHmsPipe } from './pipes/seconds-to-hms.pipe';
 import { BytesToHumanPipe } from './pipes/bytes-to-human.pipe';
 import { AddMediaComponent } from './dialogs/add-media/add-media.component';
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
+import { ManageWifiComponent } from './dialogs/manage-wifi/manage-wifi.component';
 import { VideoSettingsComponent } from './dialogs/video-settings/video-settings.component';
 import { DialogsService } from './services/dialogs.service';
 import { MediaControlService } from './services/media-control.service';
 import { MediaInventoryService } from './services/media-inventory.service';
 import { WebSocketService } from './services/websocket.service';
+import { WifiManagementService } from './services/wifi-management.service';
 
 
 
@@ -41,7 +43,8 @@ import { WebSocketService } from './services/websocket.service';
     BytesToHumanPipe,
     ImgCyclerComponent,
     ImageCropperComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ManageWifiComponent
   ],
   imports: [
     BrowserModule,
@@ -55,9 +58,10 @@ import { WebSocketService } from './services/websocket.service';
   entryComponents: [
     AddMediaComponent,
     VideoSettingsComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ManageWifiComponent
   ],
-  providers: [MediaInventoryService, WebSocketService, MediaControlService, DialogsService],
+  providers: [MediaInventoryService, WebSocketService, MediaControlService, DialogsService, WifiManagementService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -29,6 +29,9 @@ export class AppComponent implements OnInit {
   showVideoSettingsDialog(): void {
     this.dialog.showVideoSettingsDialog();
   }
+  showWifiSettingsDialog(): void {
+    this.dialog.showWifiSettingsDialog();
+  }
 }
 
 

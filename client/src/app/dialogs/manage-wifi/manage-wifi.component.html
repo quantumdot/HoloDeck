@@ -1,0 +1,32 @@
+<h1 md-dialog-title>Manage WiFi</h1>
+<md-dialog-content>
+	<form *ngIf="state == 'config'">
+		<h2>Connect to {{selectedSource.ssid}}</h2>
+		<md-form-field class="">
+	    	<input mdInput type="url" name="source" placeholder="Passphrase" [(ngModel)]="media_url" [disabled]="is_submitted">
+		</md-form-field>
+	</form>
+	
+	<div *ngIf="state == 'connecting'">
+		<h3>Connecting to {{selectedSource.ssid}}</h3>
+		<md-progress-bar mode="indeterminate"></md-progress-bar>
+	</div>
+
+	<md-table #table [dataSource]="networks" *ngIf="state == 'list'">
+		<ng-container mdColumnDef="ssid">
+	      <md-header-cell *mdHeaderCellDef>SSID</md-header-cell>
+	      <md-cell *mdCellDef="let row"> {{row.ssid}}</md-cell>
+	    </ng-container>
+	    <ng-container mdColumnDef="saved">
+	      <md-header-cell *mdHeaderCellDef>Saved</md-header-cell>
+	      <md-cell *mdCellDef="let row"> {{ row.saved ? 'yes' : 'no' }}</md-cell>
+	    </ng-container>
+	    
+	    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    	<md-row *mdRowDef="let row; columns: displayedColumns;" (click)="start_connect($event, row);"></md-row>
+	</md-table>
+</md-dialog-content>
+<md-dialog-actions *ngIf="state == 'config'">
+	<button md-raised-button color="primary" (click)="connect()">Connect</button>
+	<button md-raised-button color="primary" (click)="cancel()">Cancel</button>
+</md-dialog-actions>

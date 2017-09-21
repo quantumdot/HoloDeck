@@ -6,8 +6,18 @@ import { Observable, Subscription } from 'rxjs';
 
 
 
-export class WifiAP {
-  constructor(public ssid: string, public connected: boolean) { }
+export interface WifiCell {
+  ssid: string;
+  signal: string;
+  quality: string;
+  frequency: string;
+  bitrates: string;
+  encrypted: boolean;
+  channel: number;
+  address: string;
+  mode: string;
+  encryption_type: string;
+  saved: boolean;
 }
 
 
@@ -17,30 +27,22 @@ export class WifiAP {
 @Injectable()
 export class WifiManagementService {
 
-
+  @Output() suggestRequery: EventEmitter<any> = new EventEmitter();
 
   constructor(private http: HttpClient) {
-    this.suggestInventoryQuery.subscribe(() => console.log('service saw requery request'));
+    this.suggestRequery.subscribe(() => console.log('service saw requery request'));
   }
 
-  getMediaItems(): Promise<Media[]> {
-    return this.http.get(config.Endpoints.Main + 'getmediaitems'/*, { headers: headers }*/)
-               .toPromise()
-               .then(response => response as Media[])
+  listConnections(): Observable<WifiCell[]> {
+    return this.http.get(config.Endpoints.Main + 'wifi/list')
+              .map(result => result as WifiCell[])
                .catch(this.handleError);
   }
-
-  requestPlay(media: Media): void {
-    this.http.get(config.Endpoints.Main + 'playitem/' + media.id)
-               .toPromise()
-               .catch(this.handleError);
-  }
-
-  requestAdd(url: string): Observable<AddMediaProgress> {
-    this.http.get(config.Endpoints.Main + 'addmedia/' + url).subscribe(console.log);
-    return Observable.interval(500)
-              .switchMap(() => this.http.get(config.Endpoints.Main + 'addmediaprogress/' + url))
-              .map(response => response as AddMediaProgress);
+  
+  connect(ssid, passphrase=null): Observable<any> {
+    return this.http.post(config.Endpoints.Main + 'wifi/connect', {'ssid': ssid, 'pswd': passphrase})
+                .map(result => result)
+                .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
