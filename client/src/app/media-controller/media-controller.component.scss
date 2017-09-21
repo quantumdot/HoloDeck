@@ -2,48 +2,29 @@
  	font-family: Roboto, "Helvetica Neue", sans-serif;
  	position: relative;
  	display:block; 
- 	height:120px; 
+ 	height:110px; 
  	width:100%; 
  	background:#3f3f3f; 
- 	/*z-index:999; 
- 	border-bottom: 5px solid rgba(0, 0, 0, 0.8);  
- 	-webkit-background-clip: padding-box; 
- 	background-clip: padding-box;*/
  }
 
-#volume_controls{
-	position:absolute; 
-	top:0; 
-	right:0;
-	width:48px;
+#media_state {
+	display:flex;
+	width:100%;
 }
 
-#volume_controls button{ 
-	display:block; 
-	clear:both; 
-	margin-top:10px; 
-	margin-right:0; 
-}
-
-#volume_overlay{
-	position:relative;
-	z-index:999;
-	background:#999999;
-}
-
-
-md-progress-spinner{
-	width:100px;
-	height:100px;
+#media_state md-progress-spinner{
+	width:25%;
+	height:25%;
 	margin-top: 10px;
 	margin-bottom: 10px;
 	margin-left:10px;
 	margin-right:20px;
-	float:left; 
+	flex:none;
 }
 
 #media_state #media_info{
-	float: left;margin-top:20px;
+	max-width:65%;
+	margin-top:10px;
 }
 
 #media_state span{ 
@@ -51,27 +32,48 @@ md-progress-spinner{
 }
 
 #media_state span.title{ 
-	font-size:24px;
+	font-size:18px;
 	color:#efefef; 
 	white-space: nowrap;
     overflow:hidden !important;
     text-overflow: ellipsis;
-    max-width:230px;
 }
 
-#media_state span.time{ 
+#media_state span.time{
+	font-size:12px;
 	font-style: italic; 
 	color:#afafaf; 
 }
 
 #control_buttons{
-	position:absolute;
+	margin-top:20px;
+	/*position:absolute;
 	top:70px;
 	left:120px;
-	clear:both;
+	clear:both;*/
 }
     
-    
+#volume_controls{
+	/*position:absolute; 
+	top:0; 
+	right:0;*/
+	width:48px;
+	display:inline-block;
+}
+
+#volume_controls button{ 
+	/*display:block; 
+	clear:both; 
+	margin-top:10px; 
+	margin-right:0;*/ 
+}
+
+#volume_overlay{
+	position:relative;
+	z-index:999;
+	background:#999999;
+	width:48px;
+}    
     
     
     

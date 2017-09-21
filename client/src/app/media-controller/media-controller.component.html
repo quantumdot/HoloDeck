@@ -8,33 +8,34 @@
 	<div id="media_info">
 		<span class="title">{{currentState.media.name}}</span>
 		<span class="time">{{currentState.position | secondsToHms}} / {{currentState.duration | secondsToHms}}</span>
-	</div>
-</div>
-<div id="control_buttons">
 
-	
-	<button md-icon-button>
-	    <md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="requestAction('seek',[-10])">fast_rewind</md-icon>
-	</button>
-	<button md-icon-button>
-	    <md-icon class="md-36 md-light" aria-label="Play/Pause" (click)="requestAction('play_pause',[])">{{currentState.is_playing == 0 ? 'play_arrow' : 'pause'}}</md-icon>
-	</button>
-	<button md-icon-button>
-	    <md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="requestAction('seek',[10])">fast_forward</md-icon>
-	</button>
-</div>	
-	
-<div id="volume_controls">
-	<button md-icon-button id="volume_overlay_trigger">
-		<md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="vover_open = !vover_open">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>
-	</button>
-	
-	<div *ngIf="vover_open" id="volume_overlay" (clickOutside)="vover_open = false" [delayClickOutsideInit]="true">
-		<md-slider thumbLabel="true" vertical="true" value="{{currentState.volume}}" color="primary" (change)="volume_slider_changed($event)" ></md-slider>
-		<button md-icon-button>
-			<md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="requestAction('toggle_mute',[])">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>
-		</button>
+		<div id="control_buttons">
+			<button md-icon-button>
+			    <md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="requestAction('seek',[-10])">fast_rewind</md-icon>
+			</button>
+			<button md-icon-button>
+			    <md-icon class="md-36 md-light" aria-label="Play/Pause" (click)="requestAction('play_pause',[])">{{currentState.is_playing == 0 ? 'play_arrow' : 'pause'}}</md-icon>
+			</button>
+			<button md-icon-button>
+			    <md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="requestAction('seek',[10])">fast_forward</md-icon>
+			</button>
+			
+			<div id="volume_controls">
+				<button md-icon-button id="volume_overlay_trigger">
+					<md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="vover_open = !vover_open">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>
+				</button>
+				
+				<div *ngIf="vover_open" id="volume_overlay" (clickOutside)="vover_open = false" [delayClickOutsideInit]="true">
+					<md-slider thumbLabel="true" vertical="true" value="{{currentState.volume}}" color="primary" (change)="volume_slider_changed($event)" ></md-slider>
+					<button md-icon-button>
+						<md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="requestAction('toggle_mute',[])">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>
+					</button>
+				</div>
+			</div>
+		</div>	
 	</div>
 </div>
+	
+
 	
 
