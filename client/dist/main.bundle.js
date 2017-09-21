@@ -32,7 +32,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ":host {\n  display: block;\n  /* margin:20px; */ }\n\n.spacer {\n  -webkit-box-flex: 1;\n  -ms-flex: 1 1 auto;\n  flex: 1 1 auto; }\n", ""]);
+exports.push([module.i, ":host {\n  display: block;\n  /* margin:20px; */ }\n\n.spacer {\n  -webkit-box-flex: 1;\n  -ms-flex: 1 1 auto;\n  flex: 1 1 auto; }\n\n.mat-menu-content {\n  font-size: 12px; }\n", ""]);
 
 // exports
 
@@ -381,7 +381,7 @@ var _a;
 /***/ "../../../../../src/app/dialogs/video-settings/video-settings.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 md-dialog-title>Video Settings</h1>\r\n<md-dialog-content>\r\n\t<md-list>\r\n\t\t<md-list-item>\r\n\t\t\t <md-icon md-list-icon class=\"md-48\">aspect_ratio</md-icon>\r\n\t\t\t <!-- <h3 md-line>Aspect Mode</h3>-->\r\n\t\t\t <md-select placeholder=\"Aspect Mode\" (change)=\"settingsValueChanged('set_aspect_mode', $event);\" value=\"\">\r\n\t\t\t\t<md-option value=\"letterbox\">Letter Box</md-option>\r\n\t\t\t  \t<md-option value=\"fill\">Fill</md-option>\r\n\t\t\t  \t<md-option value=\"stretch\">Stretch</md-option>\r\n\t\t\t</md-select>\r\n\t\t</md-list-item>\r\n\t\t<md-list-item>\r\n\t\t\t <md-icon md-list-icon class=\"md-48\">opacity</md-icon>\r\n\t\t\t <!-- <h3 md-line>Opacity</h3>-->\r\n\t\t\t <md-slider color=\"primary\" min=\"0\" max=\"255\" thumbLabel=\"true\" value=\"\" (change)=\"settingsValueChanged('set_alpha', $event);\"></md-slider>\r\n\t\t</md-list-item>\r\n\t\t<md-list-item>\r\n\t\t\t<!-- <img src=\"{{pstate.media.thumbs[0]}}\" />\r\n\t\t\t<img-cropper [image]=\"pstate.media.thumbs[0]\" ></img-cropper>\r\n\t\t\t<img [src]=\"cropperData.image\" [width]=\"cropperSettings.croppedWidth\" [height]=\"cropperSettings.croppedHeight\">-->\r\n\t\t</md-list-item>\r\n\t</md-list>\r\n</md-dialog-content>\r\n"
+module.exports = "<h1 md-dialog-title>Video Settings</h1>\n<md-dialog-content>\n\t<md-list>\n\t\t<md-list-item>\n\t\t\t <md-icon md-list-icon class=\"md-48\">aspect_ratio</md-icon>\n\t\t\t <!-- <h3 md-line>Aspect Mode</h3>-->\n\t\t\t <md-select placeholder=\"Aspect Mode\" (change)=\"settingsValueChanged('set_aspect_mode', $event);\" value=\"\">\n\t\t\t\t<md-option value=\"letterbox\">Letter Box</md-option>\n\t\t\t  \t<md-option value=\"fill\">Fill</md-option>\n\t\t\t  \t<md-option value=\"stretch\">Stretch</md-option>\n\t\t\t</md-select>\n\t\t</md-list-item>\n\t\t<md-list-item>\n\t\t\t <md-icon md-list-icon class=\"md-48\">opacity</md-icon>\n\t\t\t <!-- <h3 md-line>Opacity</h3>-->\n\t\t\t <md-slider color=\"primary\" min=\"0\" max=\"255\" thumbLabel=\"true\" value=\"\" (change)=\"settingsValueChanged('set_alpha', $event);\"></md-slider>\n\t\t</md-list-item>\n\t\t<md-list-item>\n\t\t\t<!-- <img src=\"{{pstate.media.thumbs[0]}}\" />\n\t\t\t<img-cropper [image]=\"pstate.media.thumbs[0]\" ></img-cropper>\n\t\t\t<img [src]=\"cropperData.image\" [width]=\"cropperSettings.croppedWidth\" [height]=\"cropperSettings.croppedHeight\">-->\n\t\t</md-list-item>\n\t</md-list>\n</md-dialog-content>\n"
 
 /***/ }),
 
