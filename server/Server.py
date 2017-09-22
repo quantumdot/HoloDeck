@@ -110,14 +110,16 @@ def handle_system_heartbeat():
     
 @app.route('/system/update', methods=['POST'])
 def handle_system_update():
+    sys.stderr.write("Requested system update\n")
     try:
-        subprocess.check_call(['../install/update.sh'], stderr=sys.stderr, stdout=sys.stderr)
+        subprocess.check_call(['sh', '../install/update.sh'], stderr=sys.stderr, stdout=sys.stderr)
         os.execl(sys.executable, *sys.argv)
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) })
 
 @app.route('/system/restart_services', methods=['POST'])
 def handle_restart_services():
+    sys.stderr.write("Requested services restart\n")
     try:
         os.execl(sys.executable, *sys.argv)
     except BaseException as e:
@@ -125,6 +127,7 @@ def handle_restart_services():
     
 @app.route('/system/restart_system', methods=['POST'])
 def handle_system_restart():
+    sys.stderr.write("Requested system restart\n")
     try:
         subprocess.check_call(['reboot'], stderr=sys.stderr, stdout=sys.stderr)
     except BaseException as e:
@@ -132,6 +135,7 @@ def handle_system_restart():
     
 @app.route('/system/shutdown_system', methods=['POST'])
 def handle_system_shutdown():
+    sys.stderr.write("Requested system shutdown\n")
     try:
         subprocess.check_call(['shutdown'], stderr=sys.stderr, stdout=sys.stderr)
     except BaseException as e:
