@@ -134,38 +134,38 @@ def handle_wifi_forget():
     
 @app.route('/wifi/list')
 def handle_wifilist():
-    items = [
-        {
-            'ssid': "ssid1",
-            'signal': "signal",
-            'quality': "quality",
-            'frequency': "frequency",
-            'bitrates': "bitrates",
-            'encrypted': True,
-            'channel': 1,
-            'address': "address",
-            'mode': "WPA",
-            'encryption_type': "WPA"
-        },
-        {
-            'ssid': "ssid2",
-            'signal': "signal",
-            'quality': "quality",
-            'frequency': "frequency",
-            'bitrates': "bitrates",
-            'encrypted': True,
-            'channel': 1,
-            'address': "address",
-            'mode': "WPA",
-            'encryption_type': "WPA"
-        }    
-        
-    ]
-    return jsonify(items)
-    #import wifi_helper
-    #from wifi import Cell
-    #cells = Cell.all('wlan0')
-    #return jsonify([wifi_helper.serialize_cell(c) for c in cells])
+#     items = [
+#         {
+#             'ssid': "ssid1",
+#             'signal': "signal",
+#             'quality': "quality",
+#             'frequency': "frequency",
+#             'bitrates': "bitrates",
+#             'encrypted': True,
+#             'channel': 1,
+#             'address': "address",
+#             'mode': "WPA",
+#             'encryption_type': "WPA"
+#         },
+#         {
+#             'ssid': "ssid2",
+#             'signal': "signal",
+#             'quality': "quality",
+#             'frequency': "frequency",
+#             'bitrates': "bitrates",
+#             'encrypted': True,
+#             'channel': 1,
+#             'address': "address",
+#             'mode': "WPA",
+#             'encryption_type': "WPA"
+#         }    
+#         
+#     ]
+#     return jsonify(items)
+    import wifi_helper
+    from wifi import Cell
+    cells = Cell.all('wlan0')
+    return jsonify([wifi_helper.serialize_cell(c) for c in cells])
 
 
 
