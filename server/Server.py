@@ -103,9 +103,34 @@ def update_player_status(socket):
         sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
 
 
-@app.route('/wifi/connect')
+@app.route('/wifi/connect', methods=['POST'])
 def handle_wifi_connect():
-    from wifi import Cell
+    try:
+        from wifi import Cell, Scheme
+        data = json.loads(request.data)
+        s = Scheme.find('wlan0', data.ssid) 
+        if s is None:
+            s = Scheme.for_cell('wlan0', Cell.where('wlan0', lambda c: c.ssid == ssid), data.pswd)
+            s.save()
+        s.activate()
+        return jsonify({'success':True})
+    except BaseException as e:
+        return jsonify({'success':False, 'message': str(e) }) 
+        
+
+@app.route('/wifi/forget', method=['POST'])
+def handle_wifi_forget():
+    try:
+        from wifi import Cell, Scheme
+        data = json.loads(request.data)
+        s = Scheme.find('wlan0', data.ssid) 
+        if s is not None:
+            s.delete()
+            return jsonify({'success':True})
+        else:
+            raise ValueError("Could not find ssid {}".format(data.ssid))
+    except BaseException as e:
+        return jsonify({'success': False, 'message': str(e) }) 
     
 @app.route('/wifi/list')
 def handle_wifilist():
