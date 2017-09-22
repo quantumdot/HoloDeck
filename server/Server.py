@@ -111,7 +111,7 @@ def handle_system_heartbeat():
 @app.route('/system/update', methods=['POST'])
 def handle_system_update():
     try:
-        subprocess.check_call(['../install/update.sh'])
+        subprocess.check_call(['../install/update.sh'], stderr=sys.stderr, stdout=sys.stderr)
         os.execl(sys.executable, *sys.argv)
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) })
@@ -126,14 +126,14 @@ def handle_restart_services():
 @app.route('/system/restart_system', methods=['POST'])
 def handle_system_restart():
     try:
-        subprocess.check_call(['reboot'])
+        subprocess.check_call(['reboot'], stderr=sys.stderr, stdout=sys.stderr)
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
     
 @app.route('/system/shutdown_system', methods=['POST'])
 def handle_system_shutdown():
     try:
-        subprocess.check_call(['shutdown'])
+        subprocess.check_call(['shutdown'], stderr=sys.stderr, stdout=sys.stderr)
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
         
