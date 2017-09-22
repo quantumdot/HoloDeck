@@ -113,7 +113,7 @@ def handle_system_update():
     sys.stderr.write("Requested system update\n")
     try:
         subprocess.check_call(['../install/update.sh'], stderr=sys.stderr, stdout=sys.stderr)
-        os.execl(sys.executable, *sys.argv)
+        os.execv(__file__, sys.argv)
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) })
 
@@ -121,7 +121,7 @@ def handle_system_update():
 def handle_restart_services():
     sys.stderr.write("Requested services restart\n")
     try:
-        os.execl(sys.executable, *sys.argv)
+        os.execv(__file__, sys.argv)
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
     
