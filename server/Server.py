@@ -21,7 +21,6 @@ import subprocess
 logger = logging.getLogger('HoloServe')
 
 
-
 app = Flask(__name__)
 CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
