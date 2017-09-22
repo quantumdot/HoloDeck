@@ -95,7 +95,7 @@ var AppComponent = (function () {
                 _this.sysCtrlService.requestSystemUpdate().subscribe(function (data) {
                     if (data) {
                         prog_1.close();
-                        window.location.replace('/'); // reload the app
+                        // window.location.replace('/'); // reload the app
                     }
                 });
             }
@@ -114,7 +114,7 @@ var AppComponent = (function () {
                 _this.sysCtrlService.requestSystemUpdate().subscribe(function (data) {
                     if (data) {
                         prog_2.close();
-                        window.location.replace('/'); // reload the app
+                        // window.location.replace('/'); // reload the app
                     }
                 });
             }
@@ -133,7 +133,7 @@ var AppComponent = (function () {
                 _this.sysCtrlService.requestSystemUpdate().subscribe(function (data) {
                     if (data) {
                         prog_3.close();
-                        window.location.replace('/'); // reload the app
+                        // window.location.replace('/'); // reload the app
                     }
                 });
             }
@@ -152,7 +152,7 @@ var AppComponent = (function () {
                 _this.sysCtrlService.requestSystemUpdate().subscribe(function (data) {
                     if (data) {
                         prog_4.close();
-                        window.location.replace('/'); // reload the app
+                        // window.location.replace('/'); // reload the app
                     }
                 });
             }

@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
   			this.sysCtrlService.requestSystemUpdate().subscribe((data) => {
   				if (data) {
   					prog.close();
-  					window.location.replace('/'); // reload the app
+  					// window.location.replace('/'); // reload the app
   				}
   			});
   		}
@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
   			this.sysCtrlService.requestSystemUpdate().subscribe((data) => {
   				if (data) {
   					prog.close();
-  					window.location.replace('/'); // reload the app
+  					// window.location.replace('/'); // reload the app
   				}
   			});
   		}
@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
   			this.sysCtrlService.requestSystemUpdate().subscribe((data) => {
   				if (data) {
   					prog.close();
-  					window.location.replace('/'); // reload the app
+  					// window.location.replace('/'); // reload the app
   				}
   			});
   		}
@@ -100,7 +100,7 @@ export class AppComponent implements OnInit {
   			this.sysCtrlService.requestSystemUpdate().subscribe((data) => {
   				if (data) {
   					prog.close();
-  					window.location.replace('/'); // reload the app
+  					// window.location.replace('/'); // reload the app
   				}
   			});
   		}
