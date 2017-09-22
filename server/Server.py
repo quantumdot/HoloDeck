@@ -104,7 +104,10 @@ def update_player_status(socket):
     except BaseException as e:
         sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
 
-
+@app.route('/system/heartbeat')
+def handle_system_heartbeat():
+    return jsonify({'success':True})
+    
 @app.route('/system/update')
 def handle_system_update():
     try:
@@ -178,7 +181,7 @@ def handle_wifilist():
 #     return jsonify(items)
     import wifi_helper
     from wifi import Cell
-    cells = Cell.where('wlan0', lambda c: c.ssid  not == "")
+    cells = Cell.where('wlan0', lambda c: c.ssid  != "")
     return jsonify([wifi_helper.serialize_cell(c) for c in cells])
 
 

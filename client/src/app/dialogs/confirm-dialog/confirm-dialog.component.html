@@ -3,6 +3,6 @@
 	<p>{{ message }}</p>
 </md-dialog-content>
 <md-dialog-actions>
-	<button type="button" md-raised-button (click)="dialogRef.close(true)">OK</button>
-	<button type="button" md-button (click)="dialogRef.close()">Cancel</button>
+	<button type="button" color="primary" md-raised-button (click)="dialogRef.close(true)">{{confirm_button}}</button>
+	<button type="button" md-button (click)="dialogRef.close()">{{cancel_button}}</button>
 </md-dialog-actions>

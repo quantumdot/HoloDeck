@@ -11,6 +11,8 @@ export class ConfirmDialogComponent {
     public icon: string;
     public title: string;
     public message: string;
+    public confirm_button: string;
+    public cancel_button: string
 
     constructor(public dialogRef: MdDialogRef<ConfirmDialogComponent>) {
 

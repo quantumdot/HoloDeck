@@ -27,7 +27,8 @@ import { MediaControlService } from './services/media-control.service';
 import { MediaInventoryService } from './services/media-inventory.service';
 import { WebSocketService } from './services/websocket.service';
 import { WifiManagementService } from './services/wifi-management.service';
-
+import { SystemControlService } from './services/system-control.service';
+import { ProgressDialogComponent } from './dialogs/progress-dialog/progress-dialog.component';
 
 
 
@@ -44,7 +45,8 @@ import { WifiManagementService } from './services/wifi-management.service';
     ImgCyclerComponent,
     ImageCropperComponent,
     ConfirmDialogComponent,
-    ManageWifiComponent
+    ManageWifiComponent,
+    ProgressDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,9 +61,10 @@ import { WifiManagementService } from './services/wifi-management.service';
     AddMediaComponent,
     VideoSettingsComponent,
     ConfirmDialogComponent,
-    ManageWifiComponent
+    ManageWifiComponent,
+    ProgressDialogComponent
   ],
-  providers: [MediaInventoryService, WebSocketService, MediaControlService, DialogsService, WifiManagementService],
+  providers: [MediaInventoryService, WebSocketService, MediaControlService, DialogsService, WifiManagementService, SystemControlService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

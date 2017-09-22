@@ -5,19 +5,32 @@ import { ManageWifiComponent } from '../dialogs/manage-wifi/manage-wifi.componen
 import { VideoSettingsComponent } from '../dialogs/video-settings/video-settings.component';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material';
 import { Injectable } from '@angular/core';
+import { ProgressDialogComponent } from '../dialogs/progress-dialog/progress-dialog.component';
+
+
 
 @Injectable()
 export class DialogsService {
 
     constructor(private dialog: MdDialog) { }
 
-    public confirm(title: string, message: string, icon: string): Observable<boolean> {
+    public confirm(title: string, message: string, icon: string, confirm_button = 'OK', cancel_button = 'Cancel'): Observable<boolean> {
         let dialogRef: MdDialogRef<ConfirmDialogComponent>;
         dialogRef = this.dialog.open(ConfirmDialogComponent);
         dialogRef.componentInstance.title = title;
         dialogRef.componentInstance.message = message;
         dialogRef.componentInstance.icon = icon;
+        dialogRef.componentInstance.confirm_button = confirm_button;
+        dialogRef.componentInstance.cancel_button = cancel_button;
         return dialogRef.afterClosed();
+    }
+    public progress(title: string, message: string, icon: string): MdDialogRef<ProgressDialogComponent> {
+        let dialogRef: MdDialogRef<ProgressDialogComponent>;
+        dialogRef = this.dialog.open(ProgressDialogComponent);
+        dialogRef.componentInstance.title = title;
+        dialogRef.componentInstance.message = message;
+        dialogRef.componentInstance.icon = icon;
+        return dialogRef;
     }
     showAddMediaDialog(): Observable<any> {
       console.log('opening add dialog!');

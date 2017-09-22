@@ -25,15 +25,19 @@
     </md-menu>
     
     <md-menu #powerMenu="mdMenu">
-    	<button md-menu-item >
+    	<button md-menu-item (click)="updateApplication();">
+    		<md-icon>autorenew</md-icon>
+    		<span>Update Application</span>
+    	</button>
+    	<button md-menu-item (click)="restartServices();">
     		<md-icon>autorenew</md-icon>
     		<span>Restart Services</span>
     	</button>
-    	<button md-menu-item >
+    	<button md-menu-item (click)="restartSystem();">
     		<md-icon>refresh</md-icon>
     		<span>Restart HoloDeck</span>
     	</button>
-    	<button md-menu-item >
+    	<button md-menu-item (click)="shutdownSystem();">
     		<md-icon>power_settings_new</md-icon>
     		<span>Shutdown HoloDeck</span>
     	</button>

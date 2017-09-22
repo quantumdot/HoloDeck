@@ -20,7 +20,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<md-toolbar color=\"primary\">\r\n    <span>{{title}}</span>\r\n    <span class=\"spacer\"></span>\r\n    <button md-icon-button [mdMenuTriggerFor]=\"rootMenu\">\r\n\t\t<md-icon>more_vert</md-icon>\r\n    </button>\r\n    <md-menu #rootMenu=\"mdMenu\">\r\n\t\t<button md-menu-item (click)=\"showAddMediaDialog();\">\r\n\t\t\t<md-icon>add_to_queue</md-icon>\r\n\t\t\t<span>Add Media</span>\r\n\t\t</button>\r\n\t\t<button md-menu-item (click)=\"showVideoSettingsDialog();\">\r\n\t\t\t<md-icon>settings</md-icon>\r\n\t\t\t<span>Video Settings</span>\r\n\t\t</button>\r\n\t\t<button md-menu-item (click)=\"showWifiSettingsDialog();\">\r\n\t\t\t<md-icon>settings</md-icon>\r\n\t\t\t<span>WiFi Settings</span>\r\n\t\t</button>\r\n\t\t<button md-menu-item [mdMenuTriggerFor]=\"powerMenu\">\r\n\t\t\t<md-icon>settings_power</md-icon>\r\n    \t\t<span>Power Options</span>\r\n\t\t</button>\r\n    </md-menu>\r\n    \r\n    <md-menu #powerMenu=\"mdMenu\">\r\n    \t<button md-menu-item >\r\n    \t\t<md-icon>autorenew</md-icon>\r\n    \t\t<span>Restart Services</span>\r\n    \t</button>\r\n    \t<button md-menu-item >\r\n    \t\t<md-icon>refresh</md-icon>\r\n    \t\t<span>Restart HoloDeck</span>\r\n    \t</button>\r\n    \t<button md-menu-item >\r\n    \t\t<md-icon>power_settings_new</md-icon>\r\n    \t\t<span>Shutdown HoloDeck</span>\r\n    \t</button>\r\n    </md-menu>\r\n</md-toolbar>\r\n\r\n<app-media-controller></app-media-controller>\r\n<app-media-items></app-media-items>\r\n\r\n\r\n"
+module.exports = "\r\n<md-toolbar color=\"primary\">\r\n    <span>{{title}}</span>\r\n    <span class=\"spacer\"></span>\r\n    <button md-icon-button [mdMenuTriggerFor]=\"rootMenu\">\r\n\t\t<md-icon>more_vert</md-icon>\r\n    </button>\r\n    <md-menu #rootMenu=\"mdMenu\">\r\n\t\t<button md-menu-item (click)=\"showAddMediaDialog();\">\r\n\t\t\t<md-icon>add_to_queue</md-icon>\r\n\t\t\t<span>Add Media</span>\r\n\t\t</button>\r\n\t\t<button md-menu-item (click)=\"showVideoSettingsDialog();\">\r\n\t\t\t<md-icon>settings</md-icon>\r\n\t\t\t<span>Video Settings</span>\r\n\t\t</button>\r\n\t\t<button md-menu-item (click)=\"showWifiSettingsDialog();\">\r\n\t\t\t<md-icon>settings</md-icon>\r\n\t\t\t<span>WiFi Settings</span>\r\n\t\t</button>\r\n\t\t<button md-menu-item [mdMenuTriggerFor]=\"powerMenu\">\r\n\t\t\t<md-icon>settings_power</md-icon>\r\n    \t\t<span>Power Options</span>\r\n\t\t</button>\r\n    </md-menu>\r\n    \r\n    <md-menu #powerMenu=\"mdMenu\">\r\n    \t<button md-menu-item (click)=\"updateApplication();\">\r\n    \t\t<md-icon>autorenew</md-icon>\r\n    \t\t<span>Update Application</span>\r\n    \t</button>\r\n    \t<button md-menu-item (click)=\"restartServices();\">\r\n    \t\t<md-icon>autorenew</md-icon>\r\n    \t\t<span>Restart Services</span>\r\n    \t</button>\r\n    \t<button md-menu-item (click)=\"restartSystem();\">\r\n    \t\t<md-icon>refresh</md-icon>\r\n    \t\t<span>Restart HoloDeck</span>\r\n    \t</button>\r\n    \t<button md-menu-item (click)=\"shutdownSystem();\">\r\n    \t\t<md-icon>power_settings_new</md-icon>\r\n    \t\t<span>Shutdown HoloDeck</span>\r\n    \t</button>\r\n    </md-menu>\r\n</md-toolbar>\r\n\r\n<app-media-controller></app-media-controller>\r\n<app-media-items></app-media-items>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -49,6 +49,7 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_dialogs_service__ = __webpack_require__("../../../../../src/app/services/dialogs.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_system_control_service__ = __webpack_require__("../../../../../src/app/services/system-control.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -60,9 +61,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var AppComponent = (function () {
-    function AppComponent(dialog) {
+    function AppComponent(dialog, sysCtrlService) {
         this.dialog = dialog;
+        this.sysCtrlService = sysCtrlService;
         this.title = 'HoloDeck';
     }
     AppComponent.prototype.ngOnInit = function () {
@@ -79,6 +82,31 @@ var AppComponent = (function () {
     AppComponent.prototype.showWifiSettingsDialog = function () {
         this.dialog.showWifiSettingsDialog();
     };
+    AppComponent.prototype.updateApplication = function () {
+        var _this = this;
+        var title = 'Update System?';
+        var message = 'Are you sure that you want to update the system?';
+        var icon = '';
+        var confirm_button = 'Update';
+        var cancel_button = 'Cancel';
+        this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe(function (data) {
+            if (data) {
+                var prog_1 = _this.dialog.progress('Updating System....', '', '');
+                _this.sysCtrlService.requestSystemUpdate().subscribe(function (data) {
+                    if (data) {
+                        prog_1.close();
+                        window.location.replace('/'); // reload the app
+                    }
+                });
+            }
+        });
+    };
+    AppComponent.prototype.restartServices = function () {
+    };
+    AppComponent.prototype.restartSystem = function () {
+    };
+    AppComponent.prototype.shutdownSystem = function () {
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -87,10 +115,10 @@ AppComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_dialogs_service__["a" /* DialogsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_dialogs_service__["a" /* DialogsService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_dialogs_service__["a" /* DialogsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_dialogs_service__["a" /* DialogsService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_system_control_service__["a" /* SystemControlService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_system_control_service__["a" /* SystemControlService */]) === "function" && _b || Object])
 ], AppComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -126,6 +154,8 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__services_media_inventory_service__ = __webpack_require__("../../../../../src/app/services/media-inventory.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_websocket_service__ = __webpack_require__("../../../../../src/app/services/websocket.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_wifi_management_service__ = __webpack_require__("../../../../../src/app/services/wifi-management.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_system_control_service__ = __webpack_require__("../../../../../src/app/services/system-control.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__dialogs_progress_dialog_progress_dialog_component__ = __webpack_require__("../../../../../src/app/dialogs/progress-dialog/progress-dialog.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -159,6 +189,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
 var AppModule = (function () {
     function AppModule() {
     }
@@ -177,7 +209,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_10__img_cycler_img_cycler_component__["a" /* ImgCyclerComponent */],
             __WEBPACK_IMPORTED_MODULE_7_ng2_img_cropper__["b" /* ImageCropperComponent */],
             __WEBPACK_IMPORTED_MODULE_16__dialogs_confirm_dialog_confirm_dialog_component__["a" /* ConfirmDialogComponent */],
-            __WEBPACK_IMPORTED_MODULE_17__dialogs_manage_wifi_manage_wifi_component__["a" /* ManageWifiComponent */]
+            __WEBPACK_IMPORTED_MODULE_17__dialogs_manage_wifi_manage_wifi_component__["a" /* ManageWifiComponent */],
+            __WEBPACK_IMPORTED_MODULE_25__dialogs_progress_dialog_progress_dialog_component__["a" /* ProgressDialogComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["a" /* BrowserModule */],
@@ -192,9 +225,10 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_15__dialogs_add_media_add_media_component__["a" /* AddMediaComponent */],
             __WEBPACK_IMPORTED_MODULE_18__dialogs_video_settings_video_settings_component__["a" /* VideoSettingsComponent */],
             __WEBPACK_IMPORTED_MODULE_16__dialogs_confirm_dialog_confirm_dialog_component__["a" /* ConfirmDialogComponent */],
-            __WEBPACK_IMPORTED_MODULE_17__dialogs_manage_wifi_manage_wifi_component__["a" /* ManageWifiComponent */]
+            __WEBPACK_IMPORTED_MODULE_17__dialogs_manage_wifi_manage_wifi_component__["a" /* ManageWifiComponent */],
+            __WEBPACK_IMPORTED_MODULE_25__dialogs_progress_dialog_progress_dialog_component__["a" /* ProgressDialogComponent */]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_21__services_media_inventory_service__["a" /* MediaInventoryService */], __WEBPACK_IMPORTED_MODULE_22__services_websocket_service__["a" /* WebSocketService */], __WEBPACK_IMPORTED_MODULE_20__services_media_control_service__["a" /* MediaControlService */], __WEBPACK_IMPORTED_MODULE_19__services_dialogs_service__["a" /* DialogsService */], __WEBPACK_IMPORTED_MODULE_23__services_wifi_management_service__["a" /* WifiManagementService */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_21__services_media_inventory_service__["a" /* MediaInventoryService */], __WEBPACK_IMPORTED_MODULE_22__services_websocket_service__["a" /* WebSocketService */], __WEBPACK_IMPORTED_MODULE_20__services_media_control_service__["a" /* MediaControlService */], __WEBPACK_IMPORTED_MODULE_19__services_dialogs_service__["a" /* DialogsService */], __WEBPACK_IMPORTED_MODULE_23__services_wifi_management_service__["a" /* WifiManagementService */], __WEBPACK_IMPORTED_MODULE_24__services_system_control_service__["a" /* SystemControlService */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_9__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -327,7 +361,7 @@ var _a, _b;
 /***/ "../../../../../src/app/dialogs/confirm-dialog/confirm-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 md-dialog-title>{{ title }}</h1>\r\n<md-dialog-content>\r\n\t<p>{{ message }}</p>\r\n</md-dialog-content>\r\n<md-dialog-actions>\r\n\t<button type=\"button\" md-raised-button (click)=\"dialogRef.close(true)\">OK</button>\r\n\t<button type=\"button\" md-button (click)=\"dialogRef.close()\">Cancel</button>\r\n</md-dialog-actions>"
+module.exports = "<h1 md-dialog-title>{{ title }}</h1>\r\n<md-dialog-content>\r\n\t<p>{{ message }}</p>\r\n</md-dialog-content>\r\n<md-dialog-actions>\r\n\t<button type=\"button\" color=\"primary\" md-raised-button (click)=\"dialogRef.close(true)\">{{confirm_button}}</button>\r\n\t<button type=\"button\" md-button (click)=\"dialogRef.close()\">{{cancel_button}}</button>\r\n</md-dialog-actions>"
 
 /***/ }),
 
@@ -508,10 +542,73 @@ var _a, _b;
 
 /***/ }),
 
+/***/ "../../../../../src/app/dialogs/progress-dialog/progress-dialog.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<h1 md-dialog-title>{{ title }}</h1>\r\n<md-dialog-content>\r\n\t<md-progress-bar mode=\"indeterminate\"></md-progress-bar>\r\n\t<p>{{ message }}</p>\r\n</md-dialog-content>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/dialogs/progress-dialog/progress-dialog.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/dialogs/progress-dialog/progress-dialog.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProgressDialogComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_material__ = __webpack_require__("../../../material/@angular/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ProgressDialogComponent = (function () {
+    function ProgressDialogComponent(dialogRef) {
+        this.dialogRef = dialogRef;
+    }
+    return ProgressDialogComponent;
+}());
+ProgressDialogComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
+        selector: 'progress-dialog',
+        template: __webpack_require__("../../../../../src/app/dialogs/progress-dialog/progress-dialog.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/dialogs/progress-dialog/progress-dialog.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_material__["e" /* MdDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_material__["e" /* MdDialogRef */]) === "function" && _a || Object])
+], ProgressDialogComponent);
+
+var _a;
+//# sourceMappingURL=progress-dialog.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/dialogs/video-settings/video-settings.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 md-dialog-title>Video Settings</h1>\n<md-dialog-content>\n\t<md-list>\n\t\t<md-list-item>\n\t\t\t <md-icon md-list-icon class=\"md-48\">aspect_ratio</md-icon>\n\t\t\t <!-- <h3 md-line>Aspect Mode</h3>-->\n\t\t\t <md-select placeholder=\"Aspect Mode\" (change)=\"settingsValueChanged('set_aspect_mode', $event);\" value=\"\">\n\t\t\t\t<md-option value=\"letterbox\">Letter Box</md-option>\n\t\t\t  \t<md-option value=\"fill\">Fill</md-option>\n\t\t\t  \t<md-option value=\"stretch\">Stretch</md-option>\n\t\t\t</md-select>\n\t\t</md-list-item>\n\t\t<md-list-item>\n\t\t\t <md-icon md-list-icon class=\"md-48\">opacity</md-icon>\n\t\t\t <!-- <h3 md-line>Opacity</h3>-->\n\t\t\t <md-slider color=\"primary\" min=\"0\" max=\"255\" thumbLabel=\"true\" value=\"\" (change)=\"settingsValueChanged('set_alpha', $event);\"></md-slider>\n\t\t</md-list-item>\n\t\t<md-list-item>\n\t\t\t<!-- <img src=\"{{pstate.media.thumbs[0]}}\" />\n\t\t\t<img-cropper [image]=\"pstate.media.thumbs[0]\" ></img-cropper>\n\t\t\t<img [src]=\"cropperData.image\" [width]=\"cropperSettings.croppedWidth\" [height]=\"cropperSettings.croppedHeight\">-->\n\t\t</md-list-item>\n\t</md-list>\n</md-dialog-content>\n"
+module.exports = "<h1 md-dialog-title>Video Settings</h1>\r\n<md-dialog-content>\r\n\t<md-list>\r\n\t\t<md-list-item>\r\n\t\t\t <md-icon md-list-icon class=\"md-48\">aspect_ratio</md-icon>\r\n\t\t\t <!-- <h3 md-line>Aspect Mode</h3>-->\r\n\t\t\t <md-select placeholder=\"Aspect Mode\" (change)=\"settingsValueChanged('set_aspect_mode', $event);\" value=\"\">\r\n\t\t\t\t<md-option value=\"letterbox\">Letter Box</md-option>\r\n\t\t\t  \t<md-option value=\"fill\">Fill</md-option>\r\n\t\t\t  \t<md-option value=\"stretch\">Stretch</md-option>\r\n\t\t\t</md-select>\r\n\t\t</md-list-item>\r\n\t\t<md-list-item>\r\n\t\t\t <md-icon md-list-icon class=\"md-48\">opacity</md-icon>\r\n\t\t\t <!-- <h3 md-line>Opacity</h3>-->\r\n\t\t\t <md-slider color=\"primary\" min=\"0\" max=\"255\" thumbLabel=\"true\" value=\"\" (change)=\"settingsValueChanged('set_alpha', $event);\"></md-slider>\r\n\t\t</md-list-item>\r\n\t\t<md-list-item>\r\n\t\t\t<!-- <img src=\"{{pstate.media.thumbs[0]}}\" />\r\n\t\t\t<img-cropper [image]=\"pstate.media.thumbs[0]\" ></img-cropper>\r\n\t\t\t<img [src]=\"cropperData.image\" [width]=\"cropperSettings.croppedWidth\" [height]=\"cropperSettings.croppedHeight\">-->\r\n\t\t</md-list-item>\r\n\t</md-list>\r\n</md-dialog-content>\r\n"
 
 /***/ }),
 
@@ -1053,6 +1150,7 @@ SecondsToHmsPipe = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dialogs_video_settings_video_settings_component__ = __webpack_require__("../../../../../src/app/dialogs/video-settings/video-settings.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_material__ = __webpack_require__("../../../material/@angular/material.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__dialogs_progress_dialog_progress_dialog_component__ = __webpack_require__("../../../../../src/app/dialogs/progress-dialog/progress-dialog.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1068,17 +1166,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var DialogsService = (function () {
     function DialogsService(dialog) {
         this.dialog = dialog;
     }
-    DialogsService.prototype.confirm = function (title, message, icon) {
+    DialogsService.prototype.confirm = function (title, message, icon, confirm_button, cancel_button) {
+        if (confirm_button === void 0) { confirm_button = 'OK'; }
+        if (cancel_button === void 0) { cancel_button = 'Cancel'; }
         var dialogRef;
         dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_0__dialogs_confirm_dialog_confirm_dialog_component__["a" /* ConfirmDialogComponent */]);
         dialogRef.componentInstance.title = title;
         dialogRef.componentInstance.message = message;
         dialogRef.componentInstance.icon = icon;
+        dialogRef.componentInstance.confirm_button = confirm_button;
+        dialogRef.componentInstance.cancel_button = cancel_button;
         return dialogRef.afterClosed();
+    };
+    DialogsService.prototype.progress = function (title, message, icon) {
+        var dialogRef;
+        dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_6__dialogs_progress_dialog_progress_dialog_component__["a" /* ProgressDialogComponent */]);
+        dialogRef.componentInstance.title = title;
+        dialogRef.componentInstance.message = message;
+        dialogRef.componentInstance.icon = icon;
+        return dialogRef;
     };
     DialogsService.prototype.showAddMediaDialog = function () {
         console.log('opening add dialog!');
@@ -1288,6 +1399,65 @@ MediaInventoryService = __decorate([
 
 var _a, _b;
 //# sourceMappingURL=media-inventory.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/system-control.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SystemControlService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__("../../../../../src/app/config.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise__ = __webpack_require__("../../../../rxjs/add/operator/toPromise.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var SystemControlService = (function () {
+    function SystemControlService(http) {
+        this.http = http;
+        this.suggestInventoryQuery = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["EventEmitter"]();
+        this.suggestInventoryQuery.subscribe(function () { return console.log('service saw requery request'); });
+    }
+    SystemControlService.prototype.requestSystemUpdate = function () {
+        var _this = this;
+        this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/update').subscribe(console.log);
+        return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].interval(500)
+            .switchMap(function () { return _this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/heartbeat'); })
+            .map(function (response) { return response; });
+    };
+    SystemControlService.prototype.handleError = function (error) {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
+    };
+    return SystemControlService;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Output"])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_core__["EventEmitter"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_core__["EventEmitter"]) === "function" && _a || Object)
+], SystemControlService.prototype, "suggestInventoryQuery", void 0);
+SystemControlService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */]) === "function" && _b || Object])
+], SystemControlService);
+
+var _a, _b;
+//# sourceMappingURL=system-control.service.js.map
 
 /***/ }),
 
