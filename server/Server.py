@@ -108,11 +108,32 @@ def update_player_status(socket):
 def handle_system_heartbeat():
     return jsonify({'success':True})
     
-@app.route('/system/update')
+@app.route('/system/update', methods=['POST'])
 def handle_system_update():
     try:
         subprocess.check_call(['../install/update.sh'])
         os.execl(sys.executable, *sys.argv)
+    except BaseException as e:
+        return jsonify({'success':False, 'message': str(e) })
+
+@app.route('/system/restart_services', methods=['POST'])
+def handle_restart_services():
+    try:
+        os.execl(sys.executable, *sys.argv)
+    except BaseException as e:
+        return jsonify({'success':False, 'message': str(e) }) 
+    
+@app.route('/system/restart_system', methods=['POST'])
+def handle_system_restart():
+    try:
+        subprocess.check_call(['reboot'])
+    except BaseException as e:
+        return jsonify({'success':False, 'message': str(e) }) 
+    
+@app.route('/system/shutdown_system', methods=['POST'])
+def handle_system_shutdown():
+    try:
+        subprocess.check_call(['shutdown'])
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
         

@@ -53,13 +53,58 @@ export class AppComponent implements OnInit {
   	});
   }
   restartServices(): void {
-  
+  	let title = 'Restart Services?';
+  	let message = 'Are you sure that you want to restart all services?';
+  	let icon = '';
+  	let confirm_button = 'Restart';
+  	let cancel_button = 'Cancel';
+  	this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe((data) => {
+  		if (data) {
+  			let prog = this.dialog.progress('Restarting Services....', '', '');
+  			this.sysCtrlService.requestSystemUpdate().subscribe((data) => {
+  				if (data) {
+  					prog.close();
+  					window.location.replace('/'); // reload the app
+  				}
+  			});
+  		}
+  	});
   }
   restartSystem(): void {
-  
+  	let title = 'Restart System?';
+  	let message = 'Are you sure that you want to restart the system?';
+  	let icon = '';
+  	let confirm_button = 'Restart';
+  	let cancel_button = 'Cancel';
+  	this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe((data) => {
+  		if (data) {
+  			let prog = this.dialog.progress('Restarting System....', '', '');
+  			this.sysCtrlService.requestSystemUpdate().subscribe((data) => {
+  				if (data) {
+  					prog.close();
+  					window.location.replace('/'); // reload the app
+  				}
+  			});
+  		}
+  	});
   }
   shutdownSystem(): void {
-  
+  	let title = 'Shutdown System?';
+  	let message = 'Are you sure that you want to shutdown the system?';
+  	let icon = '';
+  	let confirm_button = 'Shutdown';
+  	let cancel_button = 'Cancel';
+  	this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe((data) => {
+  		if (data) {
+  			let prog = this.dialog.progress('Shutting System Down....', '', '');
+  			this.sysCtrlService.requestSystemUpdate().subscribe((data) => {
+  				if (data) {
+  					prog.close();
+  					window.location.replace('/'); // reload the app
+  				}
+  			});
+  		}
+  	});
   }
   
 }

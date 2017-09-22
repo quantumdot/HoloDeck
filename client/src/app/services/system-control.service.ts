@@ -17,7 +17,25 @@ export class SystemControlService {
   }
 
   requestSystemUpdate(): Observable<any> {
-    this.http.get(config.Endpoints.Main + '/system/update').subscribe(console.log);
+    this.http.post(config.Endpoints.Main + '/system/update', {}).subscribe(console.log);
+    return Observable.interval(500)
+              .switchMap(() => this.http.get(config.Endpoints.Main + '/system/heartbeat'))
+              .map(response => response);
+  }
+  requestRestartServices(): Observable<any> {
+    this.http.post(config.Endpoints.Main + '/system/restart_services', {}).subscribe(console.log);
+    return Observable.interval(500)
+              .switchMap(() => this.http.get(config.Endpoints.Main + '/system/heartbeat'))
+              .map(response => response);
+  }
+  requestRestartSystem(): Observable<any> {
+    this.http.post(config.Endpoints.Main + '/system/restart_system', {}).subscribe(console.log);
+    return Observable.interval(500)
+              .switchMap(() => this.http.get(config.Endpoints.Main + '/system/heartbeat'))
+              .map(response => response);
+  }
+  requestSshutdownSystem(): Observable<any> {
+    this.http.post(config.Endpoints.Main + '/system/shutdown_system', {}).subscribe(console.log);
     return Observable.interval(500)
               .switchMap(() => this.http.get(config.Endpoints.Main + '/system/heartbeat'))
               .map(response => response);

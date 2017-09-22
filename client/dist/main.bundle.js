@@ -102,10 +102,61 @@ var AppComponent = (function () {
         });
     };
     AppComponent.prototype.restartServices = function () {
+        var _this = this;
+        var title = 'Restart Services?';
+        var message = 'Are you sure that you want to restart all services?';
+        var icon = '';
+        var confirm_button = 'Restart';
+        var cancel_button = 'Cancel';
+        this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe(function (data) {
+            if (data) {
+                var prog_2 = _this.dialog.progress('Restarting Services....', '', '');
+                _this.sysCtrlService.requestSystemUpdate().subscribe(function (data) {
+                    if (data) {
+                        prog_2.close();
+                        window.location.replace('/'); // reload the app
+                    }
+                });
+            }
+        });
     };
     AppComponent.prototype.restartSystem = function () {
+        var _this = this;
+        var title = 'Restart System?';
+        var message = 'Are you sure that you want to restart the system?';
+        var icon = '';
+        var confirm_button = 'Restart';
+        var cancel_button = 'Cancel';
+        this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe(function (data) {
+            if (data) {
+                var prog_3 = _this.dialog.progress('Restarting System....', '', '');
+                _this.sysCtrlService.requestSystemUpdate().subscribe(function (data) {
+                    if (data) {
+                        prog_3.close();
+                        window.location.replace('/'); // reload the app
+                    }
+                });
+            }
+        });
     };
     AppComponent.prototype.shutdownSystem = function () {
+        var _this = this;
+        var title = 'Shutdown System?';
+        var message = 'Are you sure that you want to shutdown the system?';
+        var icon = '';
+        var confirm_button = 'Shutdown';
+        var cancel_button = 'Cancel';
+        this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe(function (data) {
+            if (data) {
+                var prog_4 = _this.dialog.progress('Shutting System Down....', '', '');
+                _this.sysCtrlService.requestSystemUpdate().subscribe(function (data) {
+                    if (data) {
+                        prog_4.close();
+                        window.location.replace('/'); // reload the app
+                    }
+                });
+            }
+        });
     };
     return AppComponent;
 }());
@@ -1436,7 +1487,28 @@ var SystemControlService = (function () {
     }
     SystemControlService.prototype.requestSystemUpdate = function () {
         var _this = this;
-        this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/update').subscribe(console.log);
+        this.http.post(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/update', {}).subscribe(console.log);
+        return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].interval(500)
+            .switchMap(function () { return _this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/heartbeat'); })
+            .map(function (response) { return response; });
+    };
+    SystemControlService.prototype.requestRestartServices = function () {
+        var _this = this;
+        this.http.post(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/restart_services', {}).subscribe(console.log);
+        return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].interval(500)
+            .switchMap(function () { return _this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/heartbeat'); })
+            .map(function (response) { return response; });
+    };
+    SystemControlService.prototype.requestRestartSystem = function () {
+        var _this = this;
+        this.http.post(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/restart_system', {}).subscribe(console.log);
+        return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].interval(500)
+            .switchMap(function () { return _this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/heartbeat'); })
+            .map(function (response) { return response; });
+    };
+    SystemControlService.prototype.requestSshutdownSystem = function () {
+        var _this = this;
+        this.http.post(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/shutdown_system', {}).subscribe(console.log);
         return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].interval(500)
             .switchMap(function () { return _this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/heartbeat'); })
             .map(function (response) { return response; });
