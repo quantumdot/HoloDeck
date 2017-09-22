@@ -118,7 +118,7 @@ def handle_wifi_connect():
         return jsonify({'success':False, 'message': str(e) }) 
         
 
-@app.route('/wifi/forget', method=['POST'])
+@app.route('/wifi/forget', methods=['POST'])
 def handle_wifi_forget():
     try:
         from wifi import Cell, Scheme
