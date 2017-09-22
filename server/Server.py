@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import sys
 import json
@@ -112,7 +113,7 @@ def handle_system_heartbeat():
 def handle_system_update():
     sys.stderr.write("Requested system update\n")
     try:
-        subprocess.check_call(['sh', '../install/update.sh'], stderr=sys.stderr, stdout=sys.stderr)
+        subprocess.check_call(['../install/update.sh'], stderr=sys.stderr, stdout=sys.stderr)
         os.execl(sys.executable, *sys.argv)
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) })
