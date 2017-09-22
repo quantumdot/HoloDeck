@@ -1,18 +1,42 @@
 <h1 md-dialog-title>Manage WiFi</h1>
 <md-dialog-content>
-	<form *ngIf="state == 'config'">
+	<form *ngIf="state == 'config'" class="config">
 		<h2>Connect to {{selectedSource.ssid}}</h2>
 		<md-form-field class="">
 	    	<input mdInput type="url" name="source" placeholder="Passphrase" [(ngModel)]="media_url" [disabled]="is_submitted">
 		</md-form-field>
 	</form>
 	
-	<div *ngIf="state == 'connecting'">
+	<div *ngIf="state == 'connecting'" class="connecting">
 		<h3>Connecting to {{selectedSource.ssid}}</h3>
 		<md-progress-bar mode="indeterminate"></md-progress-bar>
 	</div>
+	
+	<div *ngIf="state == 'error'" class="error">
+		<md-icon class="md-36" aria-label="Error!" color="warn">error</md-icon>
+		<span>Error Connecting to {{selectedSource.ssid}}</span>
+		<p>{{error_data}}</p>
+	</div>
+	
+	<div *ngIf="state == 'success'" class="success">
+		<md-icon class="md-36" aria-label="Success!" color="primary">done</md-icon>
+		<span>Success!</span>
+		<p>Successfully connected to {{selectedSource.ssid}}</p>
+	</div>
 
-	<md-table #table [dataSource]="networks" *ngIf="state == 'list'">
+	<md-list *ngIf="state == 'list'">
+		<md-list-item *ngFor="let cell of networks" (click)="start_connect($event, cell);">
+			<md-icon mdListIcon>{{ cell.encrypted ? 'wifi_lock' : 'network_wifi' }}</md-icon>
+			<h3 mdLine> {{cell.ssid}} <span class="saved" *ngIf="cell.saved">(saved)</span></h3>
+			<p mdLine>
+				
+				<span class="encryption">{{ cell.encrypted ? 'protected with ' + cell.encryption_type : 'unprotected'}}</span>
+			</p>
+		</md-list-item>
+	</md-list>
+
+
+	<!-- <md-table #table [dataSource]="networks" >
 		<ng-container mdColumnDef="ssid">
 	      <md-header-cell *mdHeaderCellDef>SSID</md-header-cell>
 	      <md-cell *mdCellDef="let row"> {{row.ssid}}</md-cell>
@@ -24,7 +48,7 @@
 	    
 	    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
     	<md-row *mdRowDef="let row; columns: displayedColumns;" (click)="start_connect($event, row);"></md-row>
-	</md-table>
+	</md-table>-->
 </md-dialog-content>
 <md-dialog-actions *ngIf="state == 'config'">
 	<button md-raised-button color="primary" (click)="connect()">Connect</button>

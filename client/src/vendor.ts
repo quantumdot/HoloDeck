@@ -1,2 +1,2 @@
 import 'hammerjs';
-import '../node_modules/swiper/dist/js/swiper.js'
+import '../node_modules/swiper/dist/js/swiper.js';

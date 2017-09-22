@@ -1,33 +1,30 @@
-#progress_container{
+
+	
+md-list-item{
 	
 }
-#progress_container span.task{
-	font-weight:bold;
-}
-#progress_container span.rate,
-#progress_container span.eta{
-	float:right;
-	clear:right;
-	display:block;
-	font-size:12px;
-	
+md-dialog-content{
+	/* padding:0; */
 }
 
-#progress_container .complete span{
+md-list-item .saved{
+	color:#999;
+}
+md-list-item .encryption{
+	color:#999;
+}
+
+.success span,
+.error span{
 	font-size:1.2em;
 	font-weight:bold;
 	vertical-align:middle;
 	line-height:36px;
 	padding-left:10px;
 }
-#progress_container .complete md-icon{
+.success md-icon,
+.error md-icon{
 	float:left;	
 }
-#progress_container .complete p{
-	
-}
 
-#progress_container .thumbnail{
-	
-}
 

@@ -14,7 +14,7 @@
 			    <md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="requestAction('seek',[-10])">fast_rewind</md-icon>
 			</button>
 			<button md-icon-button>
-			    <md-icon class="md-36 md-light" aria-label="Play/Pause" (click)="requestAction('play_pause',[])">{{currentState.is_playing == 0 ? 'play_arrow' : 'pause'}}</md-icon>
+			    <md-icon class="md-36 md-light" aria-label="Play/Pause" (click)="requestAction('play_pause',[])">{{currentState.is_playing ? 'play_arrow' : 'pause'}}</md-icon>
 			</button>
 			<button md-icon-button>
 			    <md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="requestAction('seek',[10])">fast_forward</md-icon>

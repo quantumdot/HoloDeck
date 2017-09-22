@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WebSocketService } from '../../services/websocket.service';
 import { MediaControlService, PlayerState } from '../../services/media-control.service';
 
-import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
+// import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
 @Component({
   selector: 'app-video-settings',
@@ -12,12 +12,12 @@ import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
   // declarations: [ImageCropperComponent]
 })
 export class VideoSettingsComponent implements OnInit {
-  cropperSettings: CropperSettings;
-  cropperData: any;
+  // cropperSettings: CropperSettings;
+  // cropperData: any;
   pstate: PlayerState;
 
   constructor(private mediaControlService: MediaControlService) {
-    this.cropperSettings = new CropperSettings();
+    /*his.cropperSettings = new CropperSettings();
     this.cropperSettings.noFileInput = true;
     this.cropperSettings.width = 100;
     this.cropperSettings.height = 100;
@@ -26,7 +26,7 @@ export class VideoSettingsComponent implements OnInit {
     this.cropperSettings.canvasWidth = 400;
     this.cropperSettings.canvasHeight = 300;
 
-    this.cropperData = {};
+    this.cropperData = {};*/
    }
 
   ngOnInit() {

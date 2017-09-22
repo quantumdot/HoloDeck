@@ -16,19 +16,23 @@ import { WifiManagementService, WifiCell } from '../../services/wifi-management.
 })
 export class ManageWifiComponent implements OnInit {
   displayedColumns = ['ssid', 'saved'];
-  networks: WifiDataSource | null;
+  // networks: WifiDataSource | null;
+  networks: WifiCell[];
 
   state: string;
   selectedSource: WifiCell;
   passphrase: string;
+  error_data: string;
 
   constructor(public dialogRef: MdDialogRef<ManageWifiComponent>, private wifiService: WifiManagementService) {
-    this.networks = new WifiDataSource(wifiService);
+    //this.networks = new WifiDataSource(wifiService);
     this.state = 'list';
     this.passphrase = '';
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.wifiService.listConnections().toPromise().then(networks => this.networks = networks);
+  }
 
   start_connect(event, wsource): void {
     this.selectedSource = wsource;
@@ -41,10 +45,18 @@ export class ManageWifiComponent implements OnInit {
   }
   connect(): void {
     this.state = 'connecting';
-    let obsv = this.wifiService.connect(this.selectedSource.ssid, this.passphrase);
+    let obsv: Observable<any>;
+    obsv = this.wifiService.connect(this.selectedSource.ssid, this.passphrase);
     obsv.subscribe((data) => {
       console.log(data);
-      this.dialogRef.close();
+      if (data.success) {
+        this.dialogRef.close();
+        this.state = 'success';
+        setTimeout(() => { this.dialogRef.close(); }, 5000);
+      } else {
+        this.error_data = data.message;
+        this.state = 'error';
+      }
     });
   }
   cancel(): void {

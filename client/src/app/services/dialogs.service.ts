@@ -56,7 +56,7 @@ export class DialogsService {
       let dialogRef: MdDialogRef<ManageWifiComponent>;
       dialogRef = this.dialog.open(ManageWifiComponent, {
         // height: '400px',
-        width: '300px',
+        //width: '300px',
       });
       return dialogRef.afterClosed();
     }

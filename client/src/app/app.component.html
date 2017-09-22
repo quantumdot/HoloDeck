@@ -15,7 +15,7 @@
 			<span>Video Settings</span>
 		</button>
 		<button md-menu-item (click)="showWifiSettingsDialog();">
-			<md-icon>settings</md-icon>
+			<md-icon>network_wifi</md-icon>
 			<span>WiFi Settings</span>
 		</button>
 		<button md-menu-item [mdMenuTriggerFor]="powerMenu">
@@ -26,20 +26,20 @@
     
     <md-menu #powerMenu="mdMenu">
     	<button md-menu-item (click)="updateApplication();">
-    		<md-icon>autorenew</md-icon>
-    		<span>Update Application</span>
+    		<md-icon>system_update</md-icon>
+    		<span>Update</span>
     	</button>
     	<button md-menu-item (click)="restartServices();">
     		<md-icon>autorenew</md-icon>
-    		<span>Restart Services</span>
+    		<span>Refresh</span>
     	</button>
     	<button md-menu-item (click)="restartSystem();">
     		<md-icon>refresh</md-icon>
-    		<span>Restart HoloDeck</span>
+    		<span>Restart</span>
     	</button>
     	<button md-menu-item (click)="shutdownSystem();">
     		<md-icon>power_settings_new</md-icon>
-    		<span>Shutdown HoloDeck</span>
+    		<span>Shutdown</span>
     	</button>
     </md-menu>
 </md-toolbar>

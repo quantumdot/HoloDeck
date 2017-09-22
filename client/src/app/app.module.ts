@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 //third-party stuff
 import { MaterialModule } from './material.module';
 import { SwiperModule } from 'angular2-useful-swiper';
-import { ImageCropperComponent } from 'ng2-img-cropper';
+// import { ImageCropperComponent } from 'ng2-img-cropper';
 import { ClickOutsideModule } from 'ng-click-outside';
 
 //my stuff
@@ -43,7 +43,6 @@ import { ProgressDialogComponent } from './dialogs/progress-dialog/progress-dial
     SecondsToHmsPipe,
     BytesToHumanPipe,
     ImgCyclerComponent,
-    ImageCropperComponent,
     ConfirmDialogComponent,
     ManageWifiComponent,
     ProgressDialogComponent
@@ -54,6 +53,7 @@ import { ProgressDialogComponent } from './dialogs/progress-dialog/progress-dial
     BrowserAnimationsModule,
     MaterialModule,
     SwiperModule,
+    // ImageCropperComponent,
     ClickOutsideModule,
     FormsModule
   ],

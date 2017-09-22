@@ -41,7 +41,7 @@ export class AddMediaComponent implements OnInit {
   private check_complete(): void {
     if (this.progress.complete) {
       this.progressSub.unsubscribe();
-      console.log('Notifying service to requery!')
+      console.log('Notifying service to requery!');
       this.mediaItemService.suggestInventoryQuery.emit(null);
       this.dialogRef.close();
     }

@@ -1,9 +1,10 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { OverlayContainer } from '@angular/material';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { DialogsService } from './services/dialogs.service';
+import { ProgressDialogComponent } from './dialogs/progress-dialog/progress-dialog.component';
 import { AddMediaComponent } from './dialogs/add-media/add-media.component';
 import { VideoSettingsComponent } from './dialogs/video-settings/video-settings.component';
-import { DialogsService } from './services/dialogs.service';
 import { SystemControlService } from './services/system-control.service';
 
 
@@ -24,6 +25,10 @@ export class AppComponent implements OnInit {
     // this.overlayContainer.themeClass = newThemeClass;
   }
 
+  reloadApp(): void {
+    // window.location.replace('/'); // reload the app
+  }
+
   showAddMediaDialog(): void {
     this.dialog.showAddMediaDialog();
   }
@@ -35,78 +40,101 @@ export class AppComponent implements OnInit {
     this.dialog.showWifiSettingsDialog();
   }
   updateApplication(): void {
-  	let title = 'Update System?';
-  	let message = 'Are you sure that you want to update the system?';
-  	let icon = '';
-  	let confirm_button = 'Update';
-  	let cancel_button = 'Cancel';
-  	this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe((data) => {
-  		if (data) {
-  			let prog = this.dialog.progress('Updating System....', '', '');
-  			this.sysCtrlService.requestSystemUpdate().subscribe((data) => {
-  				if (data) {
-  					prog.close();
-  					// window.location.replace('/'); // reload the app
-  				}
-  			});
-  		}
-  	});
+    const title = 'Update System?';
+    const message = 'Are you sure that you want to update the system?';
+    const icon = '';
+    const confirm_button = 'Update';
+    const cancel_button = 'Cancel';
+    this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe((data) => {
+      if (data) {
+        let prog: MdDialogRef<ProgressDialogComponent>;
+        prog = this.dialog.progress('Updating System....', '', '');
+        this.sysCtrlService.requestSystemUpdate().subscribe(
+          (rsp) => {
+            if (rsp) {
+              prog.close();
+              this.reloadApp();
+            }
+          },
+          (err) => {
+            // do nothing
+          }
+        );
+      }
+    });
   }
   restartServices(): void {
-  	let title = 'Restart Services?';
-  	let message = 'Are you sure that you want to restart all services?';
-  	let icon = '';
-  	let confirm_button = 'Restart';
-  	let cancel_button = 'Cancel';
-  	this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe((data) => {
-  		if (data) {
-  			let prog = this.dialog.progress('Restarting Services....', '', '');
-  			this.sysCtrlService.requestSystemUpdate().subscribe((data) => {
-  				if (data) {
-  					prog.close();
-  					// window.location.replace('/'); // reload the app
-  				}
-  			});
-  		}
-  	});
+    const title = 'Restart Services?';
+    const message = 'Are you sure that you want to restart all services?';
+    const icon = '';
+    const confirm_button = 'Restart';
+    const cancel_button = 'Cancel';
+    this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe((data) => {
+      if (data) {
+        let prog: MdDialogRef<ProgressDialogComponent>;
+        prog = this.dialog.progress('Restarting Services....', '', '');
+        this.sysCtrlService.requestRestartServices().subscribe(
+          (rsp) => {
+            if (rsp) {
+              prog.close();
+              this.reloadApp();
+            }
+          },
+          (err) => {
+            // do nothing
+          }
+        );
+      }
+    });
   }
   restartSystem(): void {
-  	let title = 'Restart System?';
-  	let message = 'Are you sure that you want to restart the system?';
-  	let icon = '';
-  	let confirm_button = 'Restart';
-  	let cancel_button = 'Cancel';
-  	this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe((data) => {
-  		if (data) {
-  			let prog = this.dialog.progress('Restarting System....', '', '');
-  			this.sysCtrlService.requestSystemUpdate().subscribe((data) => {
-  				if (data) {
-  					prog.close();
-  					// window.location.replace('/'); // reload the app
-  				}
-  			});
-  		}
-  	});
+    const title = 'Restart System?';
+    const message = 'Are you sure that you want to restart the system?';
+    const icon = '';
+    const confirm_button = 'Restart';
+    const cancel_button = 'Cancel';
+    this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe((data) => {
+      if (data) {
+        let prog: MdDialogRef<ProgressDialogComponent>;
+        prog = this.dialog.progress('Restarting System....', '', '');
+        this.sysCtrlService.requestRestartSystem().subscribe(
+          (rsp) => {
+            if (rsp) {
+              prog.close();
+              this.reloadApp();
+            }
+          },
+          (err) => {
+            // do nothing
+          }
+        );
+      }
+    });
   }
   shutdownSystem(): void {
-  	let title = 'Shutdown System?';
-  	let message = 'Are you sure that you want to shutdown the system?';
-  	let icon = '';
-  	let confirm_button = 'Shutdown';
-  	let cancel_button = 'Cancel';
-  	this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe((data) => {
-  		if (data) {
-  			let prog = this.dialog.progress('Shutting System Down....', '', '');
-  			this.sysCtrlService.requestSystemUpdate().subscribe((data) => {
-  				if (data) {
-  					prog.close();
-  					// window.location.replace('/'); // reload the app
-  				}
-  			});
-  		}
-  	});
+    const title = 'Shutdown System?';
+    const message = 'Are you sure that you want to shutdown the system?';
+    const icon = '';
+    const confirm_button = 'Shutdown';
+    const cancel_button = 'Cancel';
+    this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe((data) => {
+      if (data) {
+        let prog: MdDialogRef<ProgressDialogComponent>;
+        prog = this.dialog.progress('Shutting System Down....', '', '');
+        this.sysCtrlService.requestShutdownSystem().subscribe(
+          (rsp) => {
+            if (rsp) {
+              prog.close();
+              this.reloadApp();
+            }
+          },
+          (err) => {
+            // do nothing
+          }
+        );
+      }
+    });
   }
-  
 }
 
 

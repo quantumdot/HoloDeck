@@ -4,7 +4,9 @@ import 'rxjs/add/operator/toPromise';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 
-
+export interface SystemHeartbeat {
+  alive: boolean;
+}
 
 
 @Injectable()
@@ -16,29 +18,26 @@ export class SystemControlService {
     this.suggestInventoryQuery.subscribe(() => console.log('service saw requery request'));
   }
 
-  requestSystemUpdate(): Observable<any> {
-    this.http.post(config.Endpoints.Main + '/system/update', {}).subscribe(console.log);
-    return Observable.interval(500)
-              .switchMap(() => this.http.get(config.Endpoints.Main + '/system/heartbeat'))
-              .map(response => response);
+  requestSystemUpdate(): Observable<SystemHeartbeat> {
+    this.http.post(config.Endpoints.Main + 'system/update', {}).subscribe(console.log);
+    return this.requestSystemHeartbeat();
   }
-  requestRestartServices(): Observable<any> {
-    this.http.post(config.Endpoints.Main + '/system/restart_services', {}).subscribe(console.log);
-    return Observable.interval(500)
-              .switchMap(() => this.http.get(config.Endpoints.Main + '/system/heartbeat'))
-              .map(response => response);
+  requestRestartServices(): Observable<SystemHeartbeat> {
+    this.http.post(config.Endpoints.Main + 'system/restart_services', {}).subscribe(console.log);
+    return this.requestSystemHeartbeat();
   }
-  requestRestartSystem(): Observable<any> {
-    this.http.post(config.Endpoints.Main + '/system/restart_system', {}).subscribe(console.log);
-    return Observable.interval(500)
-              .switchMap(() => this.http.get(config.Endpoints.Main + '/system/heartbeat'))
-              .map(response => response);
+  requestRestartSystem(): Observable<SystemHeartbeat> {
+    this.http.post(config.Endpoints.Main + 'system/restart_system', {}).subscribe(console.log);
+    return this.requestSystemHeartbeat();
   }
-  requestSshutdownSystem(): Observable<any> {
-    this.http.post(config.Endpoints.Main + '/system/shutdown_system', {}).subscribe(console.log);
-    return Observable.interval(500)
+  requestShutdownSystem(): Observable<SystemHeartbeat> {
+    this.http.post(config.Endpoints.Main + 'system/shutdown_system', {}).subscribe(console.log);
+    return this.requestSystemHeartbeat();
+  }
+  requestSystemHeartbeat(interval = 500): Observable<SystemHeartbeat> {
+    return Observable.interval(interval)
               .switchMap(() => this.http.get(config.Endpoints.Main + '/system/heartbeat'))
-              .map(response => response);
+              .map(response => response as SystemHeartbeat);
   }
 
   private handleError(error: any): Promise<any> {
