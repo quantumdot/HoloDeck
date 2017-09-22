@@ -111,8 +111,9 @@ def handle_system_heartbeat():
 @app.route('/system/update', methods=['POST'])
 def handle_system_update():
     sys.stderr.write("Requested system update\n")
-    try:
+    try: 
         subprocess.check_call(['../install/update.sh'], stderr=sys.stderr, stdout=sys.stderr)
+        stop_server()
         os.execv(__file__, sys.argv)
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) })
@@ -121,6 +122,7 @@ def handle_system_update():
 def handle_restart_services():
     sys.stderr.write("Requested services restart\n")
     try:
+        stop_server()
         os.execv(__file__, sys.argv)
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
@@ -212,6 +214,9 @@ def handle_wifilist():
 
 
 
+def stop_server():
+    global server
+    server.close()
 
 
 
@@ -229,3 +234,4 @@ if __name__ == "__main__":
     
     sys.stderr.write("Server listening on {} port {}\n".format(args.host, args.port))
     server.serve_forever()
+    
