@@ -1,3 +1,4 @@
+import os
 import sys
 import json
 import time
@@ -13,6 +14,7 @@ from flask_cors import CORS, cross_origin
 from VideoManager import VideoManager
 from VideoLibrary import VideoLibrary
 from DownloadHelper import DownloadHelper
+import subprocess
 
 
 logger = logging.getLogger('HoloServe')
@@ -103,6 +105,16 @@ def update_player_status(socket):
         sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
 
 
+@app.route('/system/update')
+def handle_system_update():
+    try:
+        subprocess.check_call(['../install/update.sh'])
+        os.execl(sys.executable, *sys.argv)
+    except BaseException as e:
+        return jsonify({'success':False, 'message': str(e) }) 
+        
+
+
 @app.route('/wifi/connect', methods=['POST'])
 def handle_wifi_connect():
     try:
@@ -112,6 +124,8 @@ def handle_wifi_connect():
         if s is None:
             s = Scheme.for_cell('wlan0', Cell.where('wlan0', lambda c: c.ssid == ssid), data.pswd)
             s.save()
+        else:
+            raise ValueError("Already connected!")
         s.activate()
         return jsonify({'success':True})
     except BaseException as e:
@@ -164,7 +178,7 @@ def handle_wifilist():
 #     return jsonify(items)
     import wifi_helper
     from wifi import Cell
-    cells = Cell.all('wlan0')
+    cells = Cell.where('wlan0', lambda c: c.ssid  not == "")
     return jsonify([wifi_helper.serialize_cell(c) for c in cells])
 
 
