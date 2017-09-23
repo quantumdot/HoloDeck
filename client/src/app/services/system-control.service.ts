@@ -34,7 +34,7 @@ export class SystemControlService {
     this.http.post(config.Endpoints.Main + 'system/shutdown_system', {}).subscribe(console.log);
     return this.requestSystemHeartbeat();
   }
-  requestSystemHeartbeat(interval = 1000): Observable<SystemHeartbeat> {
+  requestSystemHeartbeat(interval = 5000): Observable<SystemHeartbeat> {
     return Observable.interval(interval)
               .switchMap(() => this.http.get(config.Endpoints.Main + '/system/heartbeat'))
               .catch(err => Observable.empty())

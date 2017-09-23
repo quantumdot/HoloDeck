@@ -1540,7 +1540,7 @@ var SystemControlService = (function () {
     };
     SystemControlService.prototype.requestSystemHeartbeat = function (interval) {
         var _this = this;
-        if (interval === void 0) { interval = 1000; }
+        if (interval === void 0) { interval = 5000; }
         return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].interval(interval)
             .switchMap(function () { return _this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/heartbeat'); })
             .catch(function (err) { return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].empty(); })
