@@ -37,6 +37,7 @@ export class SystemControlService {
   requestSystemHeartbeat(interval = 500): Observable<SystemHeartbeat> {
     return Observable.interval(interval)
               .switchMap(() => this.http.get(config.Endpoints.Main + '/system/heartbeat'))
+              .catch(err => Observable.empty())
               .map(response => response as SystemHeartbeat);
   }
 

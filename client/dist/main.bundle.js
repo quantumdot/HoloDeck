@@ -1529,6 +1529,7 @@ var SystemControlService = (function () {
         if (interval === void 0) { interval = 500; }
         return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].interval(interval)
             .switchMap(function () { return _this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/heartbeat'); })
+            .catch(function (err) { return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].empty(); })
             .map(function (response) { return response; });
     };
     SystemControlService.prototype.handleError = function (error) {
