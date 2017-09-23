@@ -29,6 +29,17 @@ vid_library = VideoLibrary('conf/assets.json')
 vid_manager = VideoManager()
 vid_manager.set_source(vid_library.items[0])
 
+########
+########
+SERVER_RESTART_SCHEDULED=False
+@app.teardown_request
+def teardown_request(exception=None):
+    if SERVER_RESTART_SCHEDULED:
+        SERVER_RESTART_SCHEDULED=False
+        reload_server()
+########
+
+
 @app.route('/')
 @app.route('/<path:path>')
 def home(path="index.html"):
@@ -113,8 +124,9 @@ def handle_system_update():
     sys.stderr.write("Requested system update\n")
     try: 
         subprocess.check_call(['../install/update.sh'], stderr=sys.stderr, stdout=sys.stderr)
-        stop_server()
-        os.execv(__file__, sys.argv)
+        SERVER_RESTART_SCHEDULED = True
+        #stop_server()
+        #os.execv(__file__, sys.argv)
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) })
 
@@ -122,8 +134,9 @@ def handle_system_update():
 def handle_restart_services():
     sys.stderr.write("Requested services restart\n")
     try:
-        stop_server()
-        os.execv(__file__, sys.argv)
+        SERVER_RESTART_SCHEDULED = True
+        #stop_server()
+        #os.execv(__file__, sys.argv)
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
     
@@ -233,6 +246,9 @@ def stop_server():
     global server
     server.close()
 
+def reload_server():
+    stop_server()
+    os.execv(__file__, sys.argv)
 
 
 if __name__ == "__main__":
