@@ -36,6 +36,7 @@ SERVER_RESTART_SCHEDULED=False
 @app.teardown_request
 def teardown_request(exception=None):
     global SERVER_RESTART_SCHEDULED
+    sys.stderr.write('SERVER_RESTART_SCHEDULED = {}\n'.format(SERVER_RESTART_SCHEDULED))
     if SERVER_RESTART_SCHEDULED:
         sys.stderr.write('Saw that restart was scheduled, restarting...\n')
         reload_server()
