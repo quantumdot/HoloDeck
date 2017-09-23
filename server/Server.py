@@ -124,6 +124,7 @@ def handle_system_heartbeat():
     
 @app.route('/system/update', methods=['POST'])
 def handle_system_update():
+    global SERVER_RESTART_SCHEDULED
     sys.stderr.write("Requested system update\n")
     try: 
         subprocess.check_call(['../install/update.sh'], stderr=sys.stderr, stdout=sys.stderr)
@@ -136,6 +137,7 @@ def handle_system_update():
 
 @app.route('/system/restart_services', methods=['POST'])
 def handle_restart_services():
+    global SERVER_RESTART_SCHEDULED
     sys.stderr.write("Requested services restart\n")
     try:
         SERVER_RESTART_SCHEDULED = True
