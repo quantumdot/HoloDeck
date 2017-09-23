@@ -87,7 +87,6 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.watchHeartBeatThenReload = function (rsp) {
         if (rsp) {
-            this.prog.close();
             this.reloadApp();
         }
     };

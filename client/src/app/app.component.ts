@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
   }
   private watchHeartBeatThenReload(rsp): void {
   	if (rsp) {
-	  this.prog.close();
 	  this.reloadApp();
 	}
   }
