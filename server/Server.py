@@ -128,7 +128,7 @@ def handle_system_update():
         SERVER_RESTART_SCHEDULED = True
         #stop_server()
         #os.execv(__file__, sys.argv)
-        jsonify({'success':True})
+        return jsonify({'success':True})
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) })
 
@@ -139,7 +139,7 @@ def handle_restart_services():
         SERVER_RESTART_SCHEDULED = True
         #stop_server()
         #os.execv(__file__, sys.argv)
-        jsonify({'success':True})
+        return jsonify({'success':True})
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
     
@@ -148,7 +148,7 @@ def handle_system_restart():
     sys.stderr.write("Requested system restart\n")
     try:
         subprocess.check_call(['reboot'], stderr=sys.stderr, stdout=sys.stderr)
-        jsonify({'success':True})
+        return jsonify({'success':True})
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
     
@@ -157,7 +157,7 @@ def handle_system_shutdown():
     sys.stderr.write("Requested system shutdown\n")
     try:
         subprocess.check_call(['shutdown'], stderr=sys.stderr, stdout=sys.stderr)
-        jsonify({'success':True})
+        return jsonify({'success':True})
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
         
