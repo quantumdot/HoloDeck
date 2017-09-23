@@ -36,7 +36,7 @@ SERVER_RESTART_SCHEDULED=False
 @app.teardown_request
 def teardown_request(exception=None):
     global SERVER_RESTART_SCHEDULED
-    sys.stderr.write('SERVER_RESTART_SCHEDULED = {}\n'.format(SERVER_RESTART_SCHEDULED))
+    #sys.stderr.write('SERVER_RESTART_SCHEDULED = {}\n'.format(SERVER_RESTART_SCHEDULED))
     if SERVER_RESTART_SCHEDULED:
         sys.stderr.write('Saw that restart was scheduled, restarting...\n')
         reload_server()
@@ -129,8 +129,6 @@ def handle_system_update():
     try: 
         subprocess.check_call(['../install/update.sh'], stderr=sys.stderr, stdout=sys.stderr)
         SERVER_RESTART_SCHEDULED = True
-        #stop_server()
-        #os.execv(__file__, sys.argv)
         return jsonify({'success':True})
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) })
@@ -141,8 +139,6 @@ def handle_restart_services():
     sys.stderr.write("Requested services restart\n")
     try:
         SERVER_RESTART_SCHEDULED = True
-        #stop_server()
-        #os.execv(__file__, sys.argv)
         return jsonify({'success':True})
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
