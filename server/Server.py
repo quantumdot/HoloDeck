@@ -32,11 +32,12 @@ vid_manager.set_source(vid_library.items[0])
 ########
 ########
 SERVER_RESTART_SCHEDULED=False
+
 @app.teardown_request
 def teardown_request(exception=None):
     global SERVER_RESTART_SCHEDULED
     if SERVER_RESTART_SCHEDULED:
-        SERVER_RESTART_SCHEDULED=False
+        sys.stderr.write('Saw that restart was scheduled, restarting...\n')
         reload_server()
 ########
 
