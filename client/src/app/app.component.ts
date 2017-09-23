@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   reloadApp(): void {
-    // window.location.replace('/'); // reload the app
+	window.location.replace('/'); // reload the app
   }
 
   showAddMediaDialog(): void {

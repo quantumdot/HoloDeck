@@ -74,7 +74,7 @@ var AppComponent = (function () {
         // this.overlayContainer.themeClass = newThemeClass;
     };
     AppComponent.prototype.reloadApp = function () {
-        // window.location.replace('/'); // reload the app
+        window.location.replace('/'); // reload the app
     };
     AppComponent.prototype.showAddMediaDialog = function () {
         this.dialog.showAddMediaDialog();
