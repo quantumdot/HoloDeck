@@ -85,6 +85,16 @@ var AppComponent = (function () {
     AppComponent.prototype.showWifiSettingsDialog = function () {
         this.dialog.showWifiSettingsDialog();
     };
+    AppComponent.prototype.watchHeartBeatThenReload = function (rsp) {
+        if (rsp) {
+            this.prog.close();
+            this.reloadApp();
+        }
+    };
+    AppComponent.prototype.watchHeartBeatError = function (err) {
+        var _this = this;
+        this.sysCtrlService.requestSystemUpdate().subscribe(function (res) { return _this.watchHeartBeatThenReload(res); }, function (err) { return _this.watchHeartBeatError(err); });
+    };
     AppComponent.prototype.updateApplication = function () {
         var _this = this;
         var title = 'Update System?';
@@ -94,16 +104,20 @@ var AppComponent = (function () {
         var cancel_button = 'Cancel';
         this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe(function (data) {
             if (data) {
-                var prog_1;
-                prog_1 = _this.dialog.progress('Updating System....', '', '');
-                _this.sysCtrlService.requestSystemUpdate().subscribe(function (rsp) {
+                var prog = void 0;
+                prog = _this.dialog.progress('Updating System....', '', '');
+                _this.sysCtrlService.requestSystemUpdate().subscribe(function (res) { return _this.watchHeartBeatThenReload(res); }, function (err) { return _this.watchHeartBeatError(err); });
+                /*this.sysCtrlService.requestSystemUpdate().subscribe(
+                  (rsp) => {
                     if (rsp) {
-                        prog_1.close();
-                        _this.reloadApp();
+                      prog.close();
+                      this.reloadApp();
                     }
-                }, function (err) {
+                  },
+                  (err) => {
                     // do nothing
-                });
+                  }
+                );*/
             }
         });
     };
@@ -116,11 +130,11 @@ var AppComponent = (function () {
         var cancel_button = 'Cancel';
         this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe(function (data) {
             if (data) {
-                var prog_2;
-                prog_2 = _this.dialog.progress('Restarting Services....', '', '');
+                var prog_1;
+                prog_1 = _this.dialog.progress('Restarting Services....', '', '');
                 _this.sysCtrlService.requestRestartServices().subscribe(function (rsp) {
                     if (rsp) {
-                        prog_2.close();
+                        prog_1.close();
                         _this.reloadApp();
                     }
                 }, function (err) {
@@ -138,11 +152,11 @@ var AppComponent = (function () {
         var cancel_button = 'Cancel';
         this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe(function (data) {
             if (data) {
-                var prog_3;
-                prog_3 = _this.dialog.progress('Restarting System....', '', '');
+                var prog_2;
+                prog_2 = _this.dialog.progress('Restarting System....', '', '');
                 _this.sysCtrlService.requestRestartSystem().subscribe(function (rsp) {
                     if (rsp) {
-                        prog_3.close();
+                        prog_2.close();
                         _this.reloadApp();
                     }
                 }, function (err) {
@@ -160,11 +174,11 @@ var AppComponent = (function () {
         var cancel_button = 'Cancel';
         this.dialog.confirm(title, message, icon, confirm_button, cancel_button).subscribe(function (data) {
             if (data) {
-                var prog_4;
-                prog_4 = _this.dialog.progress('Shutting System Down....', '', '');
+                var prog_3;
+                prog_3 = _this.dialog.progress('Shutting System Down....', '', '');
                 _this.sysCtrlService.requestShutdownSystem().subscribe(function (rsp) {
                     if (rsp) {
-                        prog_4.close();
+                        prog_3.close();
                         _this.reloadApp();
                     }
                 }, function (err) {
@@ -1526,7 +1540,7 @@ var SystemControlService = (function () {
     };
     SystemControlService.prototype.requestSystemHeartbeat = function (interval) {
         var _this = this;
-        if (interval === void 0) { interval = 500; }
+        if (interval === void 0) { interval = 1000; }
         return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].interval(interval)
             .switchMap(function () { return _this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + '/system/heartbeat'); })
             .catch(function (err) { return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].empty(); })

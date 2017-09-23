@@ -16,6 +16,7 @@ import { SystemControlService } from './services/system-control.service';
 export class AppComponent implements OnInit {
   title = 'HoloDeck';
   themeClass: string;
+  prog: MdDialogRef<ProgressDialogComponent>;
 
   constructor(public dialog: DialogsService, private sysCtrlService: SystemControlService) {}
 
@@ -39,6 +40,15 @@ export class AppComponent implements OnInit {
   showWifiSettingsDialog(): void {
     this.dialog.showWifiSettingsDialog();
   }
+  private watchHeartBeatThenReload(rsp): void {
+  	if (rsp) {
+	  this.prog.close();
+	  this.reloadApp();
+	}
+  }
+  private watchHeartBeatError(err): void {
+  	this.sysCtrlService.requestSystemUpdate().subscribe(res => this.watchHeartBeatThenReload(res), err => this.watchHeartBeatError(err))
+  }
   updateApplication(): void {
     const title = 'Update System?';
     const message = 'Are you sure that you want to update the system?';
@@ -49,7 +59,8 @@ export class AppComponent implements OnInit {
       if (data) {
         let prog: MdDialogRef<ProgressDialogComponent>;
         prog = this.dialog.progress('Updating System....', '', '');
-        this.sysCtrlService.requestSystemUpdate().subscribe(
+        this.sysCtrlService.requestSystemUpdate().subscribe(res => this.watchHeartBeatThenReload(res), err => this.watchHeartBeatError(err))
+        /*this.sysCtrlService.requestSystemUpdate().subscribe(
           (rsp) => {
             if (rsp) {
               prog.close();
@@ -59,7 +70,7 @@ export class AppComponent implements OnInit {
           (err) => {
             // do nothing
           }
-        );
+        );*/
       }
     });
   }
