@@ -58,8 +58,8 @@ export class AppComponent implements OnInit {
       if (data) {
         let prog: MdDialogRef<ProgressDialogComponent>;
         prog = this.dialog.progress('Updating System....', '', '');
-        this.sysCtrlService.requestSystemUpdate().subscribe(res => this.watchHeartBeatThenReload(res), err => this.watchHeartBeatError(err))
-        /*this.sysCtrlService.requestSystemUpdate().subscribe(
+        //this.sysCtrlService.requestSystemUpdate().subscribe(res => this.watchHeartBeatThenReload(res), err => this.watchHeartBeatError(err))
+        this.sysCtrlService.requestSystemUpdate().subscribe(
           (rsp) => {
             if (rsp) {
               prog.close();
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
           (err) => {
             // do nothing
           }
-        );*/
+        );
       }
     });
   }
