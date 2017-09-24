@@ -2,58 +2,113 @@ from omxplayer.player import OMXPlayer
 
 p = OMXPlayer('/home/pi/HoloDeck/server/assets/d3Eelj9Pkvw.mp4')
 
-print "control"
-p.can_control()
+try:
+    print "can_control"
+    p.can_control()
+except:
+    print "FAILED!"
 
-print "go_next"
-p.can_go_next()
+try:
+    print "can_go_next"
+    p.can_go_next()
+except:
+    print "FAILED!"
 
-print "go_previous"
-p.can_go_previous()
+try:    
+    print "can_go_previous"
+    p.can_go_previous()
+except:
+    print "FAILED!"
 
-print "pause"
-p.can_pause()
+try:    
+    print "can_pause"
+    p.can_pause()
+except:
+    print "FAILED!"
 
-print "play"
-p.can_play()
+try:    
+    print "can_play"
+    p.can_play()
+except:
+    print "FAILED!"
 
-print "quit"
-p.can_quit()
+try:    
+    print "can_quit"
+    p.can_quit()
+except:
+    print "FAILED!"
 
-print "seek"
-p.can_seek()
+try:    
+    print "can_seek"
+    p.can_seek()
+except:
+    print "FAILED!"
 
-print "set_fullscreen"
-p.can_set_fullscreen()
+try:    
+    print "can_set_fullscreen"
+    p.can_set_fullscreen()
+except:
+    print "FAILED!"
 
-print "maximum_rate"
-p.maximum_rate()
+try:    
+    print "maximum_rate"
+    p.maximum_rate()
+except:
+    print "FAILED!"
 
-print "minimum_rate"
-p.minimum_rate()
+try:    
+    print "minimum_rate"
+    p.minimum_rate()
+except:
+    print "FAILED!"
 
-print "source"
-p.get_source()
+try:    
+    print "get_source"
+    p.get_source()
+except:
+    print "FAILED!"
 
-print "is_playing"
-p.is_playing()
+try:    
+    print "is_playing"
+    p.is_playing()
+except:
+    print "FAILED!"
 
-print "playback_status"
-p.playback_status()
+try:    
+    print "playback_status"
+    p.playback_status()
+except:
+    print "FAILED!"
 
-print "duration"
-p.duration()
+try:    
+    print "duration"
+    p.duration()
+except:
+    print "FAILED!"
 
-print "position"
-p.position()
+try:    
+    print "position"
+    p.position()
+except:
+    print "FAILED!"
 
-print "rate"
-p.rate()
+try:    
+    print "rate"
+    p.rate()
+except:
+    print "FAILED!"
 
-print "fullscreen"
-p.fullscreen()
+try:    
+    print "fullscreen"
+    p.fullscreen()
+except:
+    print "FAILED!"
 
-print "volume"
-p.volume()
+try:    
+    print "volume"
+    p.volume()
+except:
+    print "FAILED!"
 
+try:
 
