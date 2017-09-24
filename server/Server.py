@@ -248,6 +248,7 @@ def handle_wifilist():
 
 def stop_server():
     global server
+    vid_manager.player.quit()
     server.close()
 
 def reload_server():
