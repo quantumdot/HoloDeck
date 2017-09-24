@@ -25,9 +25,8 @@ app = Flask(__name__)
 CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
 sockets = Sockets(app)
-vid_library = VideoLibrary('conf/assets.json')
-vid_manager = VideoManager()
-vid_manager.set_source(vid_library.items[0])
+vid_manager = VideoManager(VideoLibrary('conf/assets.json'))
+
 
 ########
 ########
@@ -58,12 +57,12 @@ def send_assets(path):
 @app.route('/getmediaitems')
 def handle_getmediaitems():
     sys.stderr.write("Requested getmediaitems\n")
-    return jsonify([itm.serialize() for itm in vid_library.items])
+    return jsonify([itm.serialize() for itm in vid_manager.library.items])
 
 @app.route('/playitem/<int:id>', )
 def handle_playrequest(id):
     sys.stderr.write("Requested /playitem/{}\n".format(id))
-    itm = vid_library.find_id(id)
+    itm = vid_manager.library.find_id(id)
     if itm is not None:
         vid_manager.set_source(itm)
         return jsonify({'success':True})
@@ -96,7 +95,7 @@ def handle_addmedia(video_id):
     sys.stderr.write("Requested /addmedia/{}\n".format(video_id))
     helper = DownloadHelper(video_id)
     def add_cbk(d):
-        vid_library.add_source(d.create_source())
+        vid_manager.library.add_source(d.create_source())
     helper.run(add_cbk)
     return jsonify({'success':True}) 
 

@@ -17,7 +17,7 @@ if not module_exists('dbus'):
     sys.stderr.write('loading MockOMXPlayer Interface because dbus was not found...')
     from MockOMXPlayer import MockOMXPlayer as OMXPlayer
 else:
-    from omxplayer import OMXPlayer
+    from omxplayer.player import OMXPlayer
 
 
 class PlayerStatus(object):
@@ -59,16 +59,21 @@ class PlayerStatus(object):
 
 class VideoManager(object):
     
-    def __init__(self):
-        self.player = OMXPlayer()
-        self.currentItem = None;
+    def __init__(self, library):
+        self.library = library
+        self.player = None
+        self.currentItem = None
+        self.set_source(self.library.items[0])
     
     def get_status(self):
         return PlayerStatus(self.player, self.currentItem)
 
     def set_source(self, video_source):
         self.currentItem = video_source
-        self.player.load(video_source.source)
+        if self.player is None:
+            self.player = OMXPlayer(video_source.source)
+        else:
+            self.player.load(video_source.source)
         
     def toggle_mute(self):
         status = self.get_status()

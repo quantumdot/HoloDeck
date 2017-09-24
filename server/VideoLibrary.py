@@ -30,6 +30,9 @@ class VideoLibrary(object):
         self.items = self.__load_items(self.source)
     #end __init__()
     
+    def reload(self):
+        self.items = self.__load_items(self.source)
+    
     def add_source(self, video_source, allow_duplicates=False):
         if not allow_duplicates:
             pre_existing = self.find_id(video_source.id)
@@ -50,6 +53,7 @@ class VideoLibrary(object):
     def save(self, manifest):
         with open(manifest, 'w') as mfp:
             json.dump([i.serialize() for i in self.items], mfp, indent=4)
+        self.reload()
     
     def __load_items(self, manifest):
         with open(manifest, 'r') as mfp:
