@@ -53,8 +53,8 @@ class PlayerStatus(object):
             "playback_status": self.player.playback_status(),
             "duration": self.player.duration(),
             "position": self.player.position(),
-            "rate": self.player.rate(),
-            "fullscreen": self.player.fullscreen(),
+            "rate": 1, #self.player.rate(),
+            "fullscreen": True, #self.player.fullscreen(),
             "volume": self.player.volume()
         }
     #end serialize()
