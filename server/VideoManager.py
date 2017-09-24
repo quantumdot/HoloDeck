@@ -27,6 +27,7 @@ class PlayerStatus(object):
         self.currentMedia = currentMedia
     
     def __getitem__(self, attr):
+        sys.stderr.write('getting attribute {} from player'.format(attr))
         try:
             return getattr(self.player, attr)()
         except BaseException as e:
