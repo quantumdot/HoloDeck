@@ -9,6 +9,7 @@ def module_exists(mod):
         found = True
     except ImportError:
         found = False
+    return found
 #end module_exists()
 
 
