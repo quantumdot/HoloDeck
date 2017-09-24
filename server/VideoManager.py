@@ -27,7 +27,10 @@ class PlayerStatus(object):
         self.currentMedia = currentMedia
     
     def __getitem__(self, attr):
-        return getattr(self.player, attr)()
+        try:
+            return getattr(self.player, attr)()
+        except BaseException as e:
+            sys.stderr.write('Error trying to get attribute {} from player!\n{}\n'.format(attr, str(e)))
     
     def serialize(self):  
         return {
