@@ -25,6 +25,10 @@
 	</div>
 
 	<md-list *ngIf="state == 'list'">
+		<div *ngIf="networks == null">
+			<h3>Loading...</h3>
+			<md-progress-bar mode="indeterminate"></md-progress-bar>
+		</div>
 		<md-list-item *ngFor="let cell of networks" (click)="start_connect($event, cell);">
 			<md-icon mdListIcon>{{ cell.encrypted ? 'wifi_lock' : 'network_wifi' }}</md-icon>
 			<h3 mdLine> {{cell.ssid}} <span class="saved" *ngIf="cell.saved">(saved)</span></h3>

@@ -13,6 +13,7 @@ def module_exists(mod):
 
 
 if not module_exists('dbus'):
+    sys.stderr.write('loading MockOMXPlayer Interface because dbus was not found...')
     from MockOMXPlayer import MockOMXPlayer as OMXPlayer
 else:
     from omxplayer import OMXPlayer

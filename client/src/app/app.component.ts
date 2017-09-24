@@ -40,14 +40,14 @@ export class AppComponent implements OnInit {
   showWifiSettingsDialog(): void {
     this.dialog.showWifiSettingsDialog();
   }
-  private watchHeartBeatThenReload(rsp): void {
+  /*private watchHeartBeatThenReload(rsp): void {
   	if (rsp) {
 	  this.reloadApp();
 	}
   }
   private watchHeartBeatError(err): void {
   	this.sysCtrlService.requestSystemUpdate().subscribe(res => this.watchHeartBeatThenReload(res), err => this.watchHeartBeatError(err))
-  }
+  }*/
   updateApplication(): void {
     const title = 'Update System?';
     const message = 'Are you sure that you want to update the system?';
