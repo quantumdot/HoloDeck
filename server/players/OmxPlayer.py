@@ -7,6 +7,7 @@ class OMXPlayer(PlayerAdapter):
     def __init__(self, source):
         super(OMXPlayer, self).__init__(source)
         self.player = None
+        self.load(source)
         
     def load(self, source, pause=False):    
         if self.player is None:
