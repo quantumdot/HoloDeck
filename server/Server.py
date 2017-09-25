@@ -7,6 +7,7 @@ import logging
 import argparse
 
 from gevent import pywsgi, sleep as sock_sleep
+from geventwebsocket import WebSocketError
 from geventwebsocket.handler import WebSocketHandler
 from flask import Flask, request, Response, jsonify, send_from_directory, stream_with_context
 from flask_sockets import Sockets
