@@ -37,9 +37,11 @@ class DownloadHelper(object):
     
     processes = {}
     
-    def __init__(self, video_id, ):
+    def __init__(self, video_id):
         self.id = video_id
         self.progress = DownloadProgress()
+        self.vfname = ""
+        self.thumbs = []
         DownloadHelper.processes[self.id] = self
 
     @property
@@ -86,18 +88,18 @@ class DownloadHelper(object):
     def extract_thumbs(self):
         self.progress.task = "thumbnail"
         duration = self.__to_seconds(self.video.duration)
-        self.progress.total = int(duration * 0.1)
+        self.progress.total = int(duration * 0.2)
         self.progress.recieved = 0
         self.progress.ratio = 0
         args = [
             ffmpeg_path,
             '-i', self.vfname,
-            '-vf', 'fps=1/10',
+            '-vf', 'fps=1/5',
             'assets/{}_%03d.png'.format(self.id)
         ]
         sys.stderr.write(" ".join(args))
         sys.stderr.flush()
-        p = subprocess.Popen(args, stderr=sys.stderr, stdout=sys.stderr)
+        p = subprocess.Popen(args)
         while p.poll() is None:
             self.thumbs = glob.glob('assets/{}_*.png'.format(self.id))
             self.progress.recieved = len(self.thumbs)

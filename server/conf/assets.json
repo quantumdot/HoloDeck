@@ -9,16 +9,7 @@
         ], 
         "id": 0, 
         "name": "Pika Default"
-    }, 
-    {
-        "source": "assets/Pikachu Hologram 3 side electric effects Extra.mp4", 
-        "description": "Watch Pikachu thow thunder bolts and lightning... Very, very frightning!", 
-        "thumbs": [
-            "assets/hqdefault.jpg"
-        ], 
-        "id": 1, 
-        "name": "Pika 1"
-    }, 
+    },
     {
         "source": "assets/d3Eelj9Pkvw.mp4", 
         "description": "More Video Contents:\nhttps://www.facebook.com/projectholotech/\n\nGet more Figures:\nwww.projectholo.tech/gift-shop", 
@@ -35,7 +26,21 @@
             "assets\\d3Eelj9Pkvw_010.png", 
             "assets\\d3Eelj9Pkvw_011.png", 
             "assets\\d3Eelj9Pkvw_012.png", 
-            "assets\\d3Eelj9Pkvw_013.png"
+            "assets\\d3Eelj9Pkvw_013.png", 
+            "assets\\d3Eelj9Pkvw_014.png", 
+            "assets\\d3Eelj9Pkvw_015.png", 
+            "assets\\d3Eelj9Pkvw_016.png", 
+            "assets\\d3Eelj9Pkvw_017.png", 
+            "assets\\d3Eelj9Pkvw_018.png", 
+            "assets\\d3Eelj9Pkvw_019.png", 
+            "assets\\d3Eelj9Pkvw_020.png", 
+            "assets\\d3Eelj9Pkvw_021.png", 
+            "assets\\d3Eelj9Pkvw_022.png", 
+            "assets\\d3Eelj9Pkvw_023.png", 
+            "assets\\d3Eelj9Pkvw_024.png", 
+            "assets\\d3Eelj9Pkvw_025.png", 
+            "assets\\d3Eelj9Pkvw_026.png", 
+            "assets\\d3Eelj9Pkvw_027.png"
         ], 
         "id": "d3Eelj9Pkvw", 
         "name": "Pikachu Hologram 3 side electric effects Extra"

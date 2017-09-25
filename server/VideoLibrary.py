@@ -1,3 +1,4 @@
+import os
 import json
 
 
@@ -27,7 +28,7 @@ class VideoSource(object):
 class VideoLibrary(object):
     def __init__(self, manifest):
         self.source = manifest
-        self.items = self.__load_items(self.source)
+        self.reload()
     #end __init__()
     
     def reload(self):
@@ -35,11 +36,19 @@ class VideoLibrary(object):
     
     def add_source(self, video_source, allow_duplicates=False):
         if not allow_duplicates:
-            pre_existing = self.find_id(video_source.id)
-            if pre_existing is not None:
-                self.items.remove(pre_existing)
+            self.remove_source(video_source)
         self.items.append(video_source)
-        self.save(self.source)
+        self.save()
+    
+    def remove_source(self, video_source):
+        pre_existing = self.find_id(video_source.id)
+        if pre_existing is not None:
+            os.remove(pre_existing.source)
+            for thumb in pre_existing.thumbs:
+                os.remove(thumb)
+            self.items.remove(pre_existing)   
+            self.save()
+            self.reload()             
     
     def find_id(self, id):
         for itm in self.items:
@@ -47,10 +56,9 @@ class VideoLibrary(object):
                 return itm
         return None
     
-    def get_youtube_source(self, video_id):
-        return VideoSource.from_source(video_id)
-    
-    def save(self, manifest):
+    def save(self, manifest=None):
+        if manifest is None:
+            manifest = self.source
         with open(manifest, 'w') as mfp:
             json.dump([i.serialize() for i in self.items], mfp, indent=4)
         self.reload()
@@ -61,7 +69,7 @@ class VideoLibrary(object):
 
         items = []
         for itm in data:
-            items.append(VideoSource(len(items), 
+            items.append(VideoSource(itm['id'], 
                                      itm['name'], 
                                      itm['description'],
                                      itm['thumbs'],

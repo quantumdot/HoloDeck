@@ -3,6 +3,9 @@
 	<form>
 		<md-form-field class="">
 	    	<input mdInput type="url" name="source" placeholder="Source" [(ngModel)]="media_url" [disabled]="is_submitted">
+	    	<div *ngIf="media_url_error">
+	    		<span>{{media_url_error}}</span>
+	    	</div>
 		</md-form-field>
 	</form>
 

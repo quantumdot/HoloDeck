@@ -108,15 +108,15 @@ class MockOMXPlayerAdaptor(PlayerAdapter):
         else:
             self._position += relative_position
         return None
-    def set_alpha(self):
+    def set_alpha(self, alpha):
         return None
-    def set_aspect_mode(self):
+    def set_aspect_mode(self, mode):
         return None
-    def set_position(self):
+    def set_position(self, position):
         return None
-    def set_video_crop(self):
+    def set_video_crop(self, x1, y1, x2, y2):
         return None
-    def set_video_pos(self):
+    def set_video_pos(self, x1, y1, x2, y2):
         return None
     def set_volume(self, volume):
         self._volume = volume

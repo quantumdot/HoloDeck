@@ -109,7 +109,8 @@ class OMXPlayerAdaptor(PlayerAdapter):
         return self.player.quit()
 
     def seek(self, relative_position):
-        return self.player.seek(relative_position)
+        #return self.player.seek(relative_position)
+        self.set_position(self.position() + relative_position)
 
     def set_alpha(self):
         return self.player.set_alpha()
@@ -117,14 +118,14 @@ class OMXPlayerAdaptor(PlayerAdapter):
     def set_aspect_mode(self):
         return self.player.set_aspect_mode()
 
-    def set_position(self):
-        return self.player.set_position()
+    def set_position(self, position):
+        return self.player.set_position(position)
 
-    def set_video_crop(self):
-        return self.player.set_video_crop()
+    def set_video_crop(self, x1, y1, x2, y2):
+        return self.player.set_video_crop(x1, y1, x2, y2)
 
-    def set_video_pos(self):
-        return self.player.set_video_pos()
+    def set_video_pos(self, x1, y1, x2, y2):
+        return self.player.set_video_pos(x1, y1, x2, y2)
 
     def set_volume(self, volume):
         return self.player.set_volume(volume)

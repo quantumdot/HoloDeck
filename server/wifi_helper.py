@@ -18,6 +18,9 @@ def serialize_cell(cell):
         'encryption_type': cell.encryption_type,
         'saved': (scheme is not None)
     }
+    
+def connected_ssid():
+    
 
 
     

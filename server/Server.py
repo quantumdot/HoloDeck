@@ -36,13 +36,18 @@ SERVER_RESTART_SCHEDULED=False
 @app.teardown_request
 def teardown_request(exception=None):
     global SERVER_RESTART_SCHEDULED
-    #sys.stderr.write('SERVER_RESTART_SCHEDULED = {}\n'.format(SERVER_RESTART_SCHEDULED))
     if SERVER_RESTART_SCHEDULED:
         sys.stderr.write('Saw that restart was scheduled, restarting...\n')
         reload_server()
 ########
 
 
+
+####################################################################################
+#                                                                                  #
+# The following routes serve static client application assets (HTML/JS/CSS/IMAGES) #
+#                                                                                  #
+####################################################################################
 @app.route('/')
 @app.route('/<path:path>')
 def home(path="index.html"):
@@ -55,6 +60,34 @@ def send_assets(path):
     return send_from_directory('assets', path)
 
 
+
+#################################################################################
+#                                                                               #
+# The following route serves the player status websocket                        #
+#                                                                               #
+#################################################################################
+@sockets.route('/status')
+def update_player_status(socket):
+    try:
+        sys.stderr.write("Requested status socket....\n")
+        while not socket.closed:
+            try:
+                #sys.stderr.write("Sending status....\n")
+                socket.send(json.dumps(vid_manager.get_status().serialize()))
+                sock_sleep(0.5)
+            except WebSocketError:
+                raise
+            except BaseException as e:
+                sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
+    except BaseException as e:
+        sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
+
+
+#################################################################################
+#                                                                               #
+# The following routes serve client API requests                                #
+#                                                                               #
+#################################################################################
 @app.route('/getmediaitems')
 def handle_getmediaitems():
     sys.stderr.write("Requested getmediaitems\n")
@@ -94,6 +127,11 @@ def handle_actionrequest(action):
 @app.route('/addmedia/<string:video_id>')
 def handle_addmedia(video_id):
     sys.stderr.write("Requested /addmedia/{}\n".format(video_id))
+    itm_search = vid_manager.library.find_id(video_id)
+    print itm_search
+    if itm_search is not None:
+        sys.stderr.write('Video ID exists... removing previous entry...\n')
+        vid_manager.library.remove_source(itm_search)
     helper = DownloadHelper(video_id)
     def add_cbk(d):
         vid_manager.library.add_source(d.create_source())
@@ -104,24 +142,10 @@ def handle_addmedia(video_id):
 def handle_addmediaprogress(video_id):
     try:
         return jsonify(DownloadHelper.processes[video_id].progress.serialize())
-    except:
+    except BaseException as e:
         return jsonify({'success':False, 'message': str(e) })
     
-@sockets.route('/status')
-def update_player_status(socket):
-    try:
-        sys.stderr.write("Requested status socket....\n")
-        while not socket.closed:
-            try:
-                #sys.stderr.write("Sending status....\n")
-                socket.send(json.dumps(vid_manager.get_status().serialize()))
-                sock_sleep(0.5)
-            except WebSocketError:
-                raise
-            except BaseException as e:
-                sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
-    except BaseException as e:
-        sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
+
 
 @app.route('/system/heartbeat')
 def handle_system_heartbeat():
@@ -175,7 +199,7 @@ def handle_wifi_connect():
         data = json.loads(request.data)
         s = Scheme.find('wlan0', data.ssid) 
         if s is None:
-            s = Scheme.for_cell('wlan0', Cell.where('wlan0', lambda c: c.ssid == ssid), data.pswd)
+            s = Scheme.for_cell('wlan0', Cell.where('wlan0', lambda c: c.ssid == data.ssid), data.pswd)
             s.save()
         else:
             raise ValueError("Already connected!")

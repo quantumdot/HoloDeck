@@ -1,6 +1,22 @@
 import sys
 from VideoLibrary import VideoSource
-from players.OmxPlayer import OMXPlayerAdaptor as Player
+
+def module_exists(mod):
+    import imp
+    try:
+        imp.find_module(mod)
+        found = True
+    except ImportError:
+        found = False
+    return found
+#end module_exists()
+
+if not module_exists('dbus'):
+    sys.stderr.write('loading MockOMXPlayer Interface because dbus was not found...\n')
+    from players.MockOMXPlayer import MockOMXPlayerAdaptor as Player
+else:
+    from players.OmxPlayer import OMXPlayerAdaptor as Player
+
 
 
 def to_int_or_default(value, default=0):

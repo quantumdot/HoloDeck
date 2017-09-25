@@ -16,6 +16,7 @@ import { MediaInventoryService, AddMediaProgress } from '../../services/media-in
 export class AddMediaComponent implements OnInit {
 
   media_url: string;
+  media_url_error: string;
   is_submitted: boolean;
   progressSub: Subscription;
   progress: AddMediaProgress;
@@ -47,11 +48,28 @@ export class AddMediaComponent implements OnInit {
     }
   }
   add_media(): void {
+    let video_id: string;
+    if (this.media_url.length === 11) {
+      // looks like just the video id
+      video_id = this.media_url;
+    } else if (this.media_url.length > 11) {
+      // looks like its probably a URL to the video
+      const video_match = this.media_url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+      if (video_match != null) {
+        video_id = video_match[1];
+      }
+    }
+
+    if (video_id.length !== 11)  {
+      this.media_url_error = 'The media source you entered does not look like a valid YouTube Video Id!';
+      return;
+    }
+
     this.is_submitted = true;
   	// 'd3Eelj9Pkvw'
-    console.log(this.media_url);
+    console.log(video_id);
     console.log(this);
-    this.progressSub = this.mediaItemService.requestAdd(this.media_url).subscribe((data) => {
+    this.progressSub = this.mediaItemService.requestAdd(video_id).subscribe((data) => {
       this.progress = data;
       this.check_complete();
       console.log(data); // see console you get output every 5 sec

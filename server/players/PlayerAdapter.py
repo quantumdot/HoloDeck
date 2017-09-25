@@ -108,19 +108,19 @@ class PlayerAdapter(object):
     def seek(self, relative_position):
         pass
     @abc.abstractmethod
-    def set_alpha(self):
+    def set_alpha(self, alpha):
         pass
     @abc.abstractmethod
-    def set_aspect_mode(self):
+    def set_aspect_mode(self, mode):
         pass
     @abc.abstractmethod
-    def set_position(self):
+    def set_position(self, position):
         pass
     @abc.abstractmethod
-    def set_video_crop(self):
+    def set_video_crop(self, x1, y1, x2, y2):
         pass
     @abc.abstractmethod
-    def set_video_pos(self):
+    def set_video_pos(self, x1, y1, x2, y2):
         pass
     @abc.abstractmethod
     def set_volume(self, volume):
