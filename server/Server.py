@@ -108,17 +108,19 @@ def handle_addmediaprogress(video_id):
     
 @sockets.route('/status')
 def update_player_status(socket):
-    #try:
+    try:
         sys.stderr.write("Requested status socket....\n")
         while not socket.closed:
-            #try:
+            try:
                 #sys.stderr.write("Sending status....\n")
                 socket.send(json.dumps(vid_manager.get_status().serialize()))
                 sock_sleep(0.5)
-            #except BaseException as e:
-            #    sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
-    #except BaseException as e:
-    #    sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
+            except WebSocketError:
+                raise
+            except BaseException as e:
+                sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
+    except BaseException as e:
+        sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
 
 @app.route('/system/heartbeat')
 def handle_system_heartbeat():
