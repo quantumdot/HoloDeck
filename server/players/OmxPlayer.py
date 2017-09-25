@@ -25,106 +25,106 @@ class OMXPlayerAdaptor(PlayerAdapter):
             
     
     def can_control(self):
-        self.player.can_control()
+        return self.player.can_control()
 
     def can_go_next(self):
-        self.player.can_go_next()
+        return self.player.can_go_next()
 
     def can_go_previous(self):
-        self.player.can_go_previous()
+        return self.player.can_go_previous()
 
     def can_pause(self):
-        self.player.can_pause()
+        return self.player.can_pause()
 
     def can_play(self):
-        self.player.can_play()
+        return self.player.can_play()
 
     def can_quit(self):
-        self.player.can_quit()
+        return self.player.can_quit()
 
     def can_seek(self):
-        self.player.can_seek()
+        return self.player.can_seek()
 
     def can_set_fullscreen(self):
-        self.player.can_set_fullscreen()
+        return self.player.can_set_fullscreen()
 
     
     def duration(self):
-        self.player.duration()
+        return self.player.duration()
 
     def get_source(self):
-        self.player.get_source()
+        return self.player.get_source()
 
     def identity(self):
-        self.player.identity()
+        return self.player.identity()
 
     def is_playing(self):
-        self.player.is_playing()
+        return self.player.is_playing()
 
     def maximum_rate(self):
-        self.player.maximum_rate()
+        return self.player.maximum_rate()
 
     def minimum_rate(self):
-        self.player.minimum_rate()
+        return self.player.minimum_rate()
 
     def playback_status(self):
-        self.player.playback_status()
+        return self.player.playback_status()
 
     def position(self):
-        self.player.position()
+        return self.player.position()
 
     def volume(self):
-        self.player.volume()
+        return self.player.volume()
 
     def rate(self):
-        self.player.rate()
+        return self.player.rate()
 
     def fullscreen(self):
-        self.player.fullscreen()
+        return self.player.fullscreen()
 
     
     #actions
     def action(self, code):
-        self.player.action(code)
+        return self.player.action(code)
 
     def mute(self):
-        self.player.mute()
+        return self.player.mute()
 
     def unmute(self):
-        self.player.unmute()
+        return self.player.unmute()
 
     def pause(self):
-        self.player.pause()
+        return self.player.pause()
 
     def play(self):
-        self.player.play()
+        return self.player.play()
 
     def play_pause(self):
-        self.player.play_pause()
+        return self.player.play_pause()
 
     def stop(self):
-        self.player.stop()
+        return self.player.stop()
 
     def quit(self):
-        self.player.quit()
+        return self.player.quit()
 
     def seek(self, relative_position):
-        self.player.seek(relative_position)
+        return self.player.seek(relative_position)
 
     def set_alpha(self):
-        self.player.set_alpha()
+        return self.player.set_alpha()
 
     def set_aspect_mode(self):
-        self.player.set_aspect_mode()
+        return self.player.set_aspect_mode()
 
     def set_position(self):
-        self.player.set_position()
+        return self.player.set_position()
 
     def set_video_crop(self):
-        self.player.set_video_crop()
+        return self.player.set_video_crop()
 
     def set_video_pos(self):
-        self.player.set_video_pos()
+        return self.player.set_video_pos()
 
     def set_volume(self, volume):
-        self.player.set_volume(volume)
+        return self.player.set_volume(volume)
