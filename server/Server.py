@@ -111,9 +111,12 @@ def update_player_status(socket):
     try:
         sys.stderr.write("Requested status socket....\n")
         while not socket.closed:
-            #sys.stderr.write("Sending status....\n")
-            socket.send(json.dumps(vid_manager.get_status().serialize()))
-            sock_sleep(0.5)
+            try:
+                #sys.stderr.write("Sending status....\n")
+                socket.send(json.dumps(vid_manager.get_status().serialize()))
+                sock_sleep(0.5)
+            except BaseException as e:
+                sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
     except BaseException as e:
         sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
 
