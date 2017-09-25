@@ -14,7 +14,7 @@ class MockOMXPlayerAdaptor(PlayerAdapter):
     """
     
     def __init__(self, source):
-        super(MockOMXPlayer, self).__init__(source)
+        super(MockOMXPlayerAdaptor, self).__init__(source)
         self._duration = 300.0
         self._position = 0
         self._state = 1 # 0: stop; 1: play; 2: pause;

@@ -6,7 +6,7 @@ import vlc
 class VlcPlayerAdaptor(object):
     
     def __init__(self, source):
-        super(VlcPlayer, self).__init__(source)
+        super(VlcPlayerAdaptor, self).__init__(source)
         self.instance = Instance([])
         self.player = self.instance.media_player_new()
         self.media = None
