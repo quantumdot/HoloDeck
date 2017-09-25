@@ -248,11 +248,13 @@ def handle_wifilist():
 
 def stop_server():
     global server
+    sys.stderr.write('Stopping services...')
     vid_manager.player.quit()
     server.close()
 
 def reload_server():
     stop_server()
+    sys.stderr.write('Reloading server...')
     os.execv(__file__, sys.argv)
 
 
