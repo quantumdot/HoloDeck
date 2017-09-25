@@ -34,8 +34,8 @@ class PlayerStatus(object):
             # "source": self.player.get_source(),
             "is_playing": self.player.is_playing(),
             "playback_status": self.player.playback_status(),
-            "duration": self.player.duration(),
-            "position": self.player.position(),
+            "duration": int(self.player.duration()),
+            "position": int(self.player.position()),
             "rate": 1, #self.player.rate(),
             "fullscreen": True, #self.player.fullscreen(),
             "volume": self.player.volume()
