@@ -13,9 +13,9 @@ class PlayerAdapter(object):
             - volume control
             - playback rate
     """
-    
-    def __init__(self):
-        pass
+    @abc.abstractmethod
+    def __init__(self, source):
+        self.source = source
     
     @abc.abstractmethod
     def load(self, source, pause=False):    
