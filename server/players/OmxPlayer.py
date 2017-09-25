@@ -11,7 +11,7 @@ class OMXPlayerAdaptor(PlayerAdapter):
         
     def load(self, source, pause=False):    
         if self.player is None:
-            self.player = OMXPlayer(source)
+            self.player = OMXPlayer(source, ['--loop'])
         else:
             self.player.load(source, pause)
             

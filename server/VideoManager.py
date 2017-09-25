@@ -3,6 +3,13 @@ from VideoLibrary import VideoSource
 from players.OmxPlayer import OMXPlayerAdaptor as Player
 
 
+def to_int_or_default(value, default=0):
+    try:
+        return int(value)
+    except:
+        return default
+
+
 class PlayerStatus(object):
     
     def __init__(self, player, currentMedia):
@@ -34,8 +41,8 @@ class PlayerStatus(object):
             # "source": self.player.get_source(),
             "is_playing": self.player.is_playing(),
             "playback_status": self.player.playback_status(),
-            "duration": int(self.player.duration()),
-            "position": int(self.player.position()),
+            "duration": to_int_or_default(self.player.duration(), 1),
+            "position": to_int_or_default(self.player.position(), 0),
             "rate": 1, #self.player.rate(),
             "fullscreen": True, #self.player.fullscreen(),
             "volume": self.player.volume()
