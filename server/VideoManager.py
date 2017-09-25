@@ -1,6 +1,6 @@
 import sys
 from VideoLibrary import VideoSource
-from players.OmxPlayer import OMXPlayer as Player
+from players.OmxPlayer import OMXPlayerAdaptor as Player
 
 
 class PlayerStatus(object):

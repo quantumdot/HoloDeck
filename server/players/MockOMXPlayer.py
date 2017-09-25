@@ -2,7 +2,7 @@ import time
 import threading
 from PlayerAdapter import PlayerAdapter
 
-class MockOMXPlayer(PlayerAdapter):
+class MockOMXPlayerAdaptor(PlayerAdapter):
     """ Mock OMXPlayer for use during development, particularly on machines where 
         OMXPlayer is not readily available (i.e. windows).
         
@@ -13,8 +13,8 @@ class MockOMXPlayer(PlayerAdapter):
             - playback rate
     """
     
-    def __init__(self, library):
-        self.library = library
+    def __init__(self, source):
+        super(MockOMXPlayer, self).__init__(source)
         self._duration = 300.0
         self._position = 0
         self._state = 1 # 0: stop; 1: play; 2: pause;

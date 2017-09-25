@@ -1,7 +1,7 @@
 from players.PlayerAdapter import PlayerAdapter
 from omxplayer.player import OMXPlayer
 
-class OMXPlayer(PlayerAdapter):
+class OMXPlayerAdaptor(PlayerAdapter):
     
     
     def __init__(self, source):

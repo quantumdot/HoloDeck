@@ -3,7 +3,7 @@ import time
 import threading
 import vlc
 
-class VlcPlayer(object):
+class VlcPlayerAdaptor(object):
     
     def __init__(self, source):
         super(VlcPlayer, self).__init__(source)
