@@ -47,9 +47,9 @@ class PlayerStatus(object):
                 "go_previous": self.player.can_go_previous(),
                 "pause": self.player.can_pause(),
                 "play": self.player.can_play(),
-                "quit": True, #self.player.can_quit(),
+                "quit": self.player.can_quit(),
                 "seek": self.player.can_seek(),
-                "set_fullscreen": True, # self.player.can_set_fullscreen(),
+                "set_fullscreen": self.player.can_set_fullscreen(),
                 "maximum_rate": self.player.maximum_rate(),
                 "minimum_rate": self.player.minimum_rate(),
             },
@@ -59,8 +59,8 @@ class PlayerStatus(object):
             "playback_status": self.player.playback_status(),
             "duration": to_int_or_default(self.player.duration(), 1),
             "position": to_int_or_default(self.player.position(), 0),
-            "rate": 1, #self.player.rate(),
-            "fullscreen": True, #self.player.fullscreen(),
+            "rate": self.player.rate(),
+            "fullscreen": self.player.fullscreen(),
             "volume": self.player.volume()
         }
     #end serialize()
