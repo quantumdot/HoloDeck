@@ -67,12 +67,12 @@ calls = [
 ]
 
 for c in calls:
-    try:
-        print "{}({})".format(c['method'], args)
-        r = getattr(p, c['method'])(*args)
+    #try:
+        print "{}({})".format(c['method'], c['args'])
+        r = getattr(p, c['method'])(*c['args'])
         print " -> {}".format(r)
-    except:
-        print " => FAILED! <="
+    #except:
+    #    print " => FAILED! <="
 
 
 
