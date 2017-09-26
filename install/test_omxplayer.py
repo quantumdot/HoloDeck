@@ -2,112 +2,81 @@ from omxplayer.player import OMXPlayer
 
 p = OMXPlayer('/home/pi/HoloDeck/server/assets/d3Eelj9Pkvw.mp4')
 
-try:
-    print "can_control"
-    p.can_control()
-except:
-    print " -> FAILED!"
 
-try:
-    print "can_go_next"
-    p.can_go_next()
-except:
-    print " -> FAILED!"
+calls = [
+    #getters
+    {'method': 'aspect_ratio', 'args': [], 'expect': None },
+    {'method': 'can_control', 'args': [], 'expect': None },
+    {'method': 'can_go_next', 'args': [], 'expect': None },
+    {'method': 'can_go_previous', 'args': [], 'expect': None },
+    {'method': 'can_pause', 'args': [], 'expect': None },
+    {'method': 'can_play', 'args': [], 'expect': None },
+    {'method': 'can_quit', 'args': [], 'expect': None },
+    {'method': 'can_raise', 'args': [], 'expect': None },
+    {'method': 'can_seek', 'args': [], 'expect': None },
+    {'method': 'can_set_fullscreen', 'args': [], 'expect': None },
+    {'method': 'duration', 'args': [], 'expect': None },
+    {'method': 'fullscreen', 'args': [], 'expect': None },
+    {'method': 'get_filename', 'args': [], 'expect': None },
+    {'method': 'get_source', 'args': [], 'expect': None },
+    {'method': 'has_track_list', 'args': [], 'expect': None },
+    {'method': 'height', 'args': [], 'expect': None },
+    {'method': 'identity', 'args': [], 'expect': None },
+    {'method': 'is_playing', 'args': [], 'expect': None },
+    {'method': 'list_audio', 'args': [], 'expect': None },
+    {'method': 'list_subtitles', 'args': [], 'expect': None },
+    {'method': 'list_video', 'args': [], 'expect': None },
+    {'method': 'maximum_rate', 'args': [], 'expect': None },
+    {'method': 'metadata', 'args': [], 'expect': None },
+    {'method': 'minimum_rate', 'args': [], 'expect': None },
+    {'method': 'playback_status', 'args': [], 'expect': None },
+    {'method': 'position', 'args': [], 'expect': None },
+    {'method': 'rate', 'args': [], 'expect': None },
+    {'method': 'supported_uri_schemes', 'args': [], 'expect': None },
+    {'method': 'video_pos', 'args': [], 'expect': None },
+    {'method': 'video_stream_count', 'args': [], 'expect': None },
+    {'method': 'volume', 'args': [], 'expect': None },
+    {'method': 'width', 'args': [], 'expect': None },
+    
+    #actions
+#     {'method': 'hide_subtitles', 'args': [], 'expect': None },
+#     {'method': 'hide_video', 'args': [], 'expect': None },
+#     {'method': 'load', 'args': [], 'expect': None },
+#     {'method': 'mute', 'args': [], 'expect': None },
+#     {'method': 'next', 'args': [], 'expect': None },
+#     {'method': 'pause', 'args': [], 'expect': None },
+#     {'method': 'play', 'args': [], 'expect': None },
+#     {'method': 'play_pause', 'args': [], 'expect': None },
+#     {'method': 'play_sync', 'args': [], 'expect': None },
+#     {'method': 'previous', 'args': [], 'expect': None },
+#     {'method': 'quit', 'args': [], 'expect': None },
+#     {'method': 'seek', 'args': [], 'expect': None },
+#     {'method': 'select_audio', 'args': [], 'expect': None },
+#     {'method': 'select_subtitle', 'args': [], 'expect': None },
+#     {'method': 'set_alpha', 'args': [], 'expect': None },
+#     {'method': 'set_aspect_mode', 'args': [], 'expect': None },
+#     {'method': 'set_position', 'args': [], 'expect': None },
+#     {'method': 'set_rate', 'args': [], 'expect': None },
+#     {'method': 'set_video_crop', 'args': [], 'expect': None },
+#     {'method': 'set_video_pos', 'args': [], 'expect': None },
+#     {'method': 'set_volume', 'args': [], 'expect': None },
+#     {'method': 'show_subtitles', 'args': [], 'expect': None },
+#     {'method': 'show_video', 'args': [], 'expect': None },
+#     {'method': 'stop', 'args': [], 'expect': None },
+#     {'method': 'unmute', 'args': [], 'expect': None },
+]
 
-try:    
-    print "can_go_previous"
-    p.can_go_previous()
-except:
-    print " -> FAILED!"
+for c in calls:
+    try:
+        print "{}({})".format(c['method'], args)
+        r = getattr(p, c['method'])(*args)
+        print " -> {}".format(r)
+    except:
+        print " => FAILED! <="
 
-try:    
-    print "can_pause"
-    p.can_pause()
-except:
-    print " -> FAILED!"
 
-try:    
-    print "can_play"
-    p.can_play()
-except:
-    print " -> FAILED!"
 
-try:    
-    print "can_quit"
-    p.can_quit()
-except:
-    print " -> FAILED!"
 
-try:    
-    print "can_seek"
-    p.can_seek()
-except:
-    print " -> FAILED!"
 
-try:    
-    print "can_set_fullscreen"
-    p.can_set_fullscreen()
-except:
-    print " -> FAILED!"
-
-try:    
-    print "maximum_rate"
-    p.maximum_rate()
-except:
-    print " -> FAILED!"
-
-try:    
-    print "minimum_rate"
-    p.minimum_rate()
-except:
-    print " -> FAILED!"
-
-try:    
-    print "get_source"
-    p.get_source()
-except:
-    print " -> FAILED!"
-
-try:    
-    print "is_playing"
-    p.is_playing()
-except:
-    print " -> FAILED!"
-
-try:    
-    print "playback_status"
-    p.playback_status()
-except:
-    print " -> FAILED!"
-
-try:    
-    print "duration"
-    p.duration()
-except:
-    print " -> FAILED!"
-
-try:    
-    print "position"
-    p.position()
-except:
-    print " -> FAILED!"
-
-try:    
-    print "rate"
-    p.rate()
-except:
-    print " -> FAILED!"
-
-try:    
-    print "fullscreen"
-    p.fullscreen()
-except:
-    print " -> FAILED!"
-
-try:    
-    print "volume"
-    p.volume()
-except:
-    print " -> FAILED!"
 
 
