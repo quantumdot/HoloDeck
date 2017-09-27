@@ -23,6 +23,12 @@
 		<span>Success!</span>
 		<p>Successfully connected to {{selectedSource.ssid}}</p>
 	</div>
+	
+	<div *ngIf="state == 'listerror'" class="error">
+		<md-icon class="md-36" aria-label="Error!" color="warn">error</md-icon>
+		<span>Error retrieving available networks</span>
+		<p>{{error_data}}</p>
+	</div>
 
 	<md-list *ngIf="state == 'list'">
 		<div *ngIf="networks == null">

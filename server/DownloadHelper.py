@@ -67,7 +67,6 @@ class DownloadHelper(object):
             self.extract_thumbs()
             self.progress.task = "success"
             time.sleep(3)
-            self.progress.complete = True
             #del DownloadHelper.processes[self.id]
             
         except BaseException as e:
@@ -76,6 +75,7 @@ class DownloadHelper(object):
             
         finally:
             self.__callback(self)
+            self.progress.complete = True
 
     def download(self):
         self.progress.task = "download"

@@ -34,12 +34,10 @@ export class WifiManagementService {
   }
 
   listConnections(): Observable<WifiCell[]> {
-    return this.http.get(config.Endpoints.Main + 'wifi/list')
-              .map(result => result as WifiCell[])
-               .catch(this.handleError);
+    return this.http.get<WifiCell[]>(config.Endpoints.Main + 'wifi/list');
   }
-  
-  connect(ssid, passphrase=null): Observable<any> {
+
+  connect(ssid, passphrase = null): Observable<any> {
     return this.http.post(config.Endpoints.Main + 'wifi/connect', {'ssid': ssid, 'pswd': passphrase})
                 .map(result => result)
                 .catch(this.handleError);

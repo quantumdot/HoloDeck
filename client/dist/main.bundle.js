@@ -514,7 +514,7 @@ var _a;
 /***/ "../../../../../src/app/dialogs/manage-wifi/manage-wifi.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 md-dialog-title>Manage WiFi</h1>\n<md-dialog-content>\n\t<form *ngIf=\"state == 'config'\" class=\"config\">\n\t\t<h2>Connect to {{selectedSource.ssid}}</h2>\n\t\t<md-form-field class=\"\">\n\t    \t<input mdInput type=\"url\" name=\"source\" placeholder=\"Passphrase\" [(ngModel)]=\"media_url\" [disabled]=\"is_submitted\">\n\t\t</md-form-field>\n\t</form>\n\t\n\t<div *ngIf=\"state == 'connecting'\" class=\"connecting\">\n\t\t<h3>Connecting to {{selectedSource.ssid}}</h3>\n\t\t<md-progress-bar mode=\"indeterminate\"></md-progress-bar>\n\t</div>\n\t\n\t<div *ngIf=\"state == 'error'\" class=\"error\">\n\t\t<md-icon class=\"md-36\" aria-label=\"Error!\" color=\"warn\">error</md-icon>\n\t\t<span>Error Connecting to {{selectedSource.ssid}}</span>\n\t\t<p>{{error_data}}</p>\n\t</div>\n\t\n\t<div *ngIf=\"state == 'success'\" class=\"success\">\n\t\t<md-icon class=\"md-36\" aria-label=\"Success!\" color=\"primary\">done</md-icon>\n\t\t<span>Success!</span>\n\t\t<p>Successfully connected to {{selectedSource.ssid}}</p>\n\t</div>\n\n\t<md-list *ngIf=\"state == 'list'\">\n\t\t<div *ngIf=\"networks == null\">\n\t\t\t<h3>Loading...</h3>\n\t\t\t<md-progress-bar mode=\"indeterminate\"></md-progress-bar>\n\t\t</div>\n\t\t<md-list-item *ngFor=\"let cell of networks\" (click)=\"start_connect($event, cell);\">\n\t\t\t<md-icon mdListIcon>{{ cell.encrypted ? 'wifi_lock' : 'network_wifi' }}</md-icon>\n\t\t\t<h3 mdLine> {{cell.ssid}} <span class=\"saved\" *ngIf=\"cell.saved\">(saved)</span></h3>\n\t\t\t<p mdLine>\n\t\t\t\t\n\t\t\t\t<span class=\"encryption\">{{ cell.encrypted ? 'protected with ' + cell.encryption_type : 'unprotected'}}</span>\n\t\t\t</p>\n\t\t</md-list-item>\n\t</md-list>\n\n\n\t<!-- <md-table #table [dataSource]=\"networks\" >\n\t\t<ng-container mdColumnDef=\"ssid\">\n\t      <md-header-cell *mdHeaderCellDef>SSID</md-header-cell>\n\t      <md-cell *mdCellDef=\"let row\"> {{row.ssid}}</md-cell>\n\t    </ng-container>\n\t    <ng-container mdColumnDef=\"saved\">\n\t      <md-header-cell *mdHeaderCellDef>Saved</md-header-cell>\n\t      <md-cell *mdCellDef=\"let row\"> {{ row.saved ? 'yes' : 'no' }}</md-cell>\n\t    </ng-container>\n\t    \n\t    <md-header-row *mdHeaderRowDef=\"displayedColumns\"></md-header-row>\n    \t<md-row *mdRowDef=\"let row; columns: displayedColumns;\" (click)=\"start_connect($event, row);\"></md-row>\n\t</md-table>-->\n</md-dialog-content>\n<md-dialog-actions *ngIf=\"state == 'config'\">\n\t<button md-raised-button color=\"primary\" (click)=\"connect()\">Connect</button>\n\t<button md-raised-button color=\"primary\" (click)=\"cancel()\">Cancel</button>\n</md-dialog-actions>\n"
+module.exports = "<h1 md-dialog-title>Manage WiFi</h1>\n<md-dialog-content>\n\t<form *ngIf=\"state == 'config'\" class=\"config\">\n\t\t<h2>Connect to {{selectedSource.ssid}}</h2>\n\t\t<md-form-field class=\"\">\n\t    \t<input mdInput type=\"url\" name=\"source\" placeholder=\"Passphrase\" [(ngModel)]=\"media_url\" [disabled]=\"is_submitted\">\n\t\t</md-form-field>\n\t</form>\n\t\n\t<div *ngIf=\"state == 'connecting'\" class=\"connecting\">\n\t\t<h3>Connecting to {{selectedSource.ssid}}</h3>\n\t\t<md-progress-bar mode=\"indeterminate\"></md-progress-bar>\n\t</div>\n\t\n\t<div *ngIf=\"state == 'error'\" class=\"error\">\n\t\t<md-icon class=\"md-36\" aria-label=\"Error!\" color=\"warn\">error</md-icon>\n\t\t<span>Error Connecting to {{selectedSource.ssid}}</span>\n\t\t<p>{{error_data}}</p>\n\t</div>\n\t\n\t<div *ngIf=\"state == 'success'\" class=\"success\">\n\t\t<md-icon class=\"md-36\" aria-label=\"Success!\" color=\"primary\">done</md-icon>\n\t\t<span>Success!</span>\n\t\t<p>Successfully connected to {{selectedSource.ssid}}</p>\n\t</div>\n\t\n\t<div *ngIf=\"state == 'listerror'\" class=\"error\">\n\t\t<md-icon class=\"md-36\" aria-label=\"Error!\" color=\"warn\">error</md-icon>\n\t\t<span>Error retrieving available networks</span>\n\t\t<p>{{error_data}}</p>\n\t</div>\n\n\t<md-list *ngIf=\"state == 'list'\">\n\t\t<div *ngIf=\"networks == null\">\n\t\t\t<h3>Loading...</h3>\n\t\t\t<md-progress-bar mode=\"indeterminate\"></md-progress-bar>\n\t\t</div>\n\t\t<md-list-item *ngFor=\"let cell of networks\" (click)=\"start_connect($event, cell);\">\n\t\t\t<md-icon mdListIcon>{{ cell.encrypted ? 'wifi_lock' : 'network_wifi' }}</md-icon>\n\t\t\t<h3 mdLine> {{cell.ssid}} <span class=\"saved\" *ngIf=\"cell.saved\">(saved)</span></h3>\n\t\t\t<p mdLine>\n\t\t\t\t\n\t\t\t\t<span class=\"encryption\">{{ cell.encrypted ? 'protected with ' + cell.encryption_type : 'unprotected'}}</span>\n\t\t\t</p>\n\t\t</md-list-item>\n\t</md-list>\n\n\n\t<!-- <md-table #table [dataSource]=\"networks\" >\n\t\t<ng-container mdColumnDef=\"ssid\">\n\t      <md-header-cell *mdHeaderCellDef>SSID</md-header-cell>\n\t      <md-cell *mdCellDef=\"let row\"> {{row.ssid}}</md-cell>\n\t    </ng-container>\n\t    <ng-container mdColumnDef=\"saved\">\n\t      <md-header-cell *mdHeaderCellDef>Saved</md-header-cell>\n\t      <md-cell *mdCellDef=\"let row\"> {{ row.saved ? 'yes' : 'no' }}</md-cell>\n\t    </ng-container>\n\t    \n\t    <md-header-row *mdHeaderRowDef=\"displayedColumns\"></md-header-row>\n    \t<md-row *mdRowDef=\"let row; columns: displayedColumns;\" (click)=\"start_connect($event, row);\"></md-row>\n\t</md-table>-->\n</md-dialog-content>\n<md-dialog-actions *ngIf=\"state == 'config'\">\n\t<button md-raised-button color=\"primary\" (click)=\"connect()\">Connect</button>\n\t<button md-raised-button color=\"primary\" (click)=\"cancel()\">Cancel</button>\n</md-dialog-actions>\n"
 
 /***/ }),
 
@@ -541,21 +541,9 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ManageWifiComponent; });
-/* unused harmony export WifiDataSource */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_cdk_collections__ = __webpack_require__("../../../cdk/@angular/cdk/collections.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/@angular/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_wifi_management_service__ = __webpack_require__("../../../../../src/app/services/wifi-management.service.ts");
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/@angular/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_wifi_management_service__ = __webpack_require__("../../../../../src/app/services/wifi-management.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -568,19 +556,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var ManageWifiComponent = (function () {
     function ManageWifiComponent(dialogRef, wifiService) {
         this.dialogRef = dialogRef;
         this.wifiService = wifiService;
         this.displayedColumns = ['ssid', 'saved'];
-        //this.networks = new WifiDataSource(wifiService);
+        // this.networks = new WifiDataSource(wifiService);
         this.state = 'list';
         this.passphrase = '';
     }
     ManageWifiComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.wifiService.listConnections().toPromise().then(function (networks) { return _this.networks = networks; });
+        this.wifiService.listConnections().subscribe(function (data) { _this.networks = data; }, function (err) { _this.state = 'listerror'; console.log(err); });
+        // .toPromise()
+        // .then(networks => this.networks = networks)
+        // .catch(() => this.state = 'listerror')
+        ;
     };
     ManageWifiComponent.prototype.start_connect = function (event, wsource) {
         this.selectedSource = wsource;
@@ -622,22 +613,8 @@ ManageWifiComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/dialogs/manage-wifi/manage-wifi.component.html"),
         styles: [__webpack_require__("../../../../../src/app/dialogs/manage-wifi/manage-wifi.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MdDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MdDialogRef */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services_wifi_management_service__["a" /* WifiManagementService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_wifi_management_service__["a" /* WifiManagementService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["e" /* MdDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["e" /* MdDialogRef */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_wifi_management_service__["a" /* WifiManagementService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_wifi_management_service__["a" /* WifiManagementService */]) === "function" && _b || Object])
 ], ManageWifiComponent);
-
-var WifiDataSource = (function (_super) {
-    __extends(WifiDataSource, _super);
-    function WifiDataSource(wifiService) {
-        var _this = _super.call(this) || this;
-        _this.wifiService = wifiService;
-        return _this;
-    }
-    WifiDataSource.prototype.connect = function () {
-        return this.wifiService.listConnections();
-    };
-    WifiDataSource.prototype.disconnect = function () { };
-    return WifiDataSource;
-}(__WEBPACK_IMPORTED_MODULE_1__angular_cdk_collections__["a" /* DataSource */]));
 
 var _a, _b;
 //# sourceMappingURL=manage-wifi.component.js.map
@@ -1662,9 +1639,7 @@ var WifiManagementService = (function () {
         this.suggestRequery.subscribe(function () { return console.log('service saw requery request'); });
     }
     WifiManagementService.prototype.listConnections = function () {
-        return this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + 'wifi/list')
-            .map(function (result) { return result; })
-            .catch(this.handleError);
+        return this.http.get(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + 'wifi/list');
     };
     WifiManagementService.prototype.connect = function (ssid, passphrase) {
         if (passphrase === void 0) { passphrase = null; }

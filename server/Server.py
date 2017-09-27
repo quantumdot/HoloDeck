@@ -16,6 +16,7 @@ from flask_cors import CORS, cross_origin
 from VideoManager import VideoManager
 from VideoLibrary import VideoLibrary
 from DownloadHelper import DownloadHelper
+import wifi_helper
 import subprocess
 
 
@@ -37,9 +38,28 @@ SERVER_RESTART_SCHEDULED=False
 def teardown_request(exception=None):
     global SERVER_RESTART_SCHEDULED
     if SERVER_RESTART_SCHEDULED:
-        sys.stderr.write('Saw that restart was scheduled, restarting...\n')
+        sys.stderr.write('Saw that a restart was scheduled, restarting...\n')
         reload_server()
 ########
+
+server_instance = None;
+def stop_server():
+    global server_instance
+    sys.stderr.write('Stopping services...')
+    vid_manager.player.quit()
+    server_instance.close()
+
+def reload_server():
+    stop_server()
+    sys.stderr.write('Reloading server...')
+    os.execv(__file__, sys.argv)
+    
+def start_server(host, port, debug):
+    global server_instance
+    app.debug = debug
+    server_instance = pywsgi.WSGIServer((host, port), app, handler_class=WebSocketHandler)
+    sys.stderr.write("Server listening on {} port {}\n".format(host, port))
+    server_instance.serve_forever()
 
 
 
@@ -54,10 +74,12 @@ def home(path="index.html"):
     sys.stderr.write("Requested /client/{}\n".format(path))
     return send_from_directory('../client/dist/', path)
 
+
 @app.route('/assets/<path:path>')
 def send_assets(path):
     sys.stderr.write("Requested /assets/{}\n".format(path))
     return send_from_directory('assets', path)
+
 
 
 
@@ -83,15 +105,18 @@ def update_player_status(socket):
         sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
 
 
+
+
 #################################################################################
 #                                                                               #
-# The following routes serve client API requests                                #
+# The following routes serve player API requests for the client                 #
 #                                                                               #
 #################################################################################
 @app.route('/getmediaitems')
 def handle_getmediaitems():
-    sys.stderr.write("Requested getmediaitems\n")
+    sys.stderr.write("Requested /getmediaitems\n")
     return jsonify([itm.serialize() for itm in vid_manager.library.items])
+
 
 @app.route('/playitem/<int:id>', )
 def handle_playrequest(id):
@@ -101,6 +126,7 @@ def handle_playrequest(id):
         vid_manager.set_source(itm)
         return jsonify({'success':True})
     return jsonify({'success':False, 'message': 'Video with id {} not found!'.format(id) })
+
 
 @app.route('/action/<string:action>', methods=['POST'])
 def handle_actionrequest(action):
@@ -124,6 +150,11 @@ def handle_actionrequest(action):
 
 
 
+#################################################################################
+#                                                                               #
+# The following routes serve requests to add media and track progress           #
+#                                                                               #
+#################################################################################
 @app.route('/addmedia/<string:video_id>')
 def handle_addmedia(video_id):
     sys.stderr.write("Requested /addmedia/{}\n".format(video_id))
@@ -138,6 +169,7 @@ def handle_addmedia(video_id):
     helper.run(add_cbk)
     return jsonify({'success':True}) 
 
+
 @app.route('/addmediaprogress/<string:video_id>')
 def handle_addmediaprogress(video_id):
     try:
@@ -147,9 +179,16 @@ def handle_addmediaprogress(video_id):
     
 
 
+
+#################################################################################
+#                                                                               #
+# The following routes serve System level requests (update, restart, shutdown)  #
+#                                                                               #
+#################################################################################
 @app.route('/system/heartbeat')
 def handle_system_heartbeat():
     return jsonify({'alive':True})
+
     
 @app.route('/system/update', methods=['POST'])
 def handle_system_update():
@@ -162,6 +201,7 @@ def handle_system_update():
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) })
 
+
 @app.route('/system/restart_services', methods=['POST'])
 def handle_restart_services():
     global SERVER_RESTART_SCHEDULED
@@ -171,6 +211,7 @@ def handle_restart_services():
         return jsonify({'success':True})
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
+
     
 @app.route('/system/restart_system', methods=['POST'])
 def handle_system_restart():
@@ -180,6 +221,7 @@ def handle_system_restart():
         return jsonify({'success':True})
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
+
     
 @app.route('/system/shutdown_system', methods=['POST'])
 def handle_system_shutdown():
@@ -192,18 +234,26 @@ def handle_system_shutdown():
         
 
 
+
+#################################################################################
+#                                                                               #
+# The following routes serve WIFI connection requests                           #
+#                                                                               #
+#################################################################################
+@app.route('/wifi/list')
+def handle_wifilist():
+    try:
+        return jsonify(wifi_helper.list_wifi_aps())
+    except BaseException as e:
+        return jsonify({'success':False, 'message': str(e) }) 
+
+
 @app.route('/wifi/connect', methods=['POST'])
 def handle_wifi_connect():
     try:
-        from wifi import Cell, Scheme
         data = json.loads(request.data)
-        s = Scheme.find('wlan0', data.ssid) 
-        if s is None:
-            s = Scheme.for_cell('wlan0', Cell.where('wlan0', lambda c: c.ssid == data.ssid), data.pswd)
-            s.save()
-        else:
-            raise ValueError("Already connected!")
-        s.activate()
+        wifi_helper.add_ap(data.ssid, data.pswd)
+        wifi_helper.connect_ap(data.ssid)
         return jsonify({'success':True})
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
@@ -212,80 +262,17 @@ def handle_wifi_connect():
 @app.route('/wifi/forget', methods=['POST'])
 def handle_wifi_forget():
     try:
-        from wifi import Cell, Scheme
         data = json.loads(request.data)
-        s = Scheme.find('wlan0', data.ssid) 
-        if s is not None:
-            s.delete()
-            return jsonify({'success':True})
-        else:
-            raise ValueError("Could not find ssid {}".format(data.ssid))
+        wifi_helper.forget_ap(data.ssid)
+        return jsonify({'success':True})
     except BaseException as e:
         return jsonify({'success': False, 'message': str(e) }) 
     
-@app.route('/wifi/list')
-def handle_wifilist():
-#     items = [
-#         {
-#             'ssid': "ssid1",
-#             'signal': "signal",
-#             'quality': "quality",
-#             'frequency': "frequency",
-#             'bitrates': "bitrates",
-#             'encrypted': True,
-#             'channel': 1,
-#             'address': "address",
-#             'mode': "WPA",
-#             'encryption_type': "WPA",
-#             'saved':True
-#         },
-#         {
-#             'ssid': "ssid1",
-#             'signal': "signal",
-#             'quality': "quality",
-#             'frequency': "frequency",
-#             'bitrates': "bitrates",
-#             'encrypted': True,
-#             'channel': 1,
-#             'address': "address",
-#             'mode': "WPA",
-#             'encryption_type': "WPA",
-#             'saved':False
-#         },
-#         {
-#             'ssid': "ssid2",
-#             'signal': "signal",
-#             'quality': "quality",
-#             'frequency': "frequency",
-#             'bitrates': "bitrates",
-#             'encrypted': False,
-#             'channel': 1,
-#             'address': "address",
-#             'mode': "WPA",
-#             'encryption_type': "WPA",
-#             'saved': False
-#         }    
-#          
-#     ]
-#     return jsonify(items)
-    import wifi_helper
-    from wifi import Cell
-    cells = Cell.where('wlan0', lambda c: c.ssid  != "")
-    return jsonify([wifi_helper.serialize_cell(c) for c in cells])
 
 
 
 
-def stop_server():
-    global server
-    sys.stderr.write('Stopping services...')
-    vid_manager.player.quit()
-    server.close()
 
-def reload_server():
-    stop_server()
-    sys.stderr.write('Reloading server...')
-    os.execv(__file__, sys.argv)
 
 
 if __name__ == "__main__":
@@ -296,10 +283,6 @@ if __name__ == "__main__":
     parser.add_argument('--port', type=int, default=5000, help="Port to listen on")
     parser.add_argument('--debug', action='store_true', help="Enable debug mode on the server")
     args = parser.parse_args()
+    start_server(args.host, args.port, args.debug)
     
-    app.debug = args.debug
-    server = pywsgi.WSGIServer((args.host, args.port), app, handler_class=WebSocketHandler)
-    
-    sys.stderr.write("Server listening on {} port {}\n".format(args.host, args.port))
-    server.serve_forever()
     

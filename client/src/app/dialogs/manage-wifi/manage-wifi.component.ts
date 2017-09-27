@@ -25,13 +25,19 @@ export class ManageWifiComponent implements OnInit {
   error_data: string;
 
   constructor(public dialogRef: MdDialogRef<ManageWifiComponent>, private wifiService: WifiManagementService) {
-    //this.networks = new WifiDataSource(wifiService);
+    // this.networks = new WifiDataSource(wifiService);
     this.state = 'list';
     this.passphrase = '';
   }
 
   ngOnInit() {
-    this.wifiService.listConnections().toPromise().then(networks => this.networks = networks);
+    this.wifiService.listConnections().subscribe(
+      data => { this.networks = data; },
+      (err) => { this.state = 'listerror'; console.log(err); });
+                    // .toPromise()
+                    // .then(networks => this.networks = networks)
+                    // .catch(() => this.state = 'listerror')
+      ;
   }
 
   start_connect(event, wsource): void {
@@ -62,17 +68,4 @@ export class ManageWifiComponent implements OnInit {
   cancel(): void {
     this.dialogRef.close();
   }
-}
-
-
-export class WifiDataSource extends DataSource<any> {
-  constructor(private wifiService: WifiManagementService) {
-    super();
-  }
-
-  connect(): Observable<WifiCell[]> {
-    return this.wifiService.listConnections();
-  }
-
-  disconnect() {}
 }
