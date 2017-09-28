@@ -1,0 +1,30 @@
+#!/bin/bash
+# /etc/init.d/holodeckd
+
+### BEGIN INIT INFO
+# Provides:          holodeckd
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Example initscript
+# Description:       This service is used to manage the holodeck server
+### END INIT INFO
+
+
+case "$1" in 
+    start)
+        echo "Starting holodeck"
+        /home/pi/HoloDeck/server/HoloServer.py --port 80
+        ;;
+    stop)
+        echo "Stopping holodeck"
+        pkill -f HoloServer.py
+        ;;
+    *)
+        echo "Usage: /etc/init.d/holodeck start|stop"
+        exit 1
+        ;;
+esac
+
+exit 0

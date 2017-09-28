@@ -6,4 +6,6 @@ cd ../
 git reset --hard
 git pull
 
+cp install/holodeckd /etc/init.d/holodeckd
+
 cd "$prevdir"
