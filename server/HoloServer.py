@@ -21,13 +21,15 @@ import subprocess
 
 
 logger = logging.getLogger('HoloServe')
+module_directory = os.path.dirname(os.path.realpath(__file__))
+pkg_directory = os.path.dirname(module_directory)
 
 
 app = Flask(__name__)
 CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
 sockets = Sockets(app)
-vid_manager = VideoManager(VideoLibrary('conf/assets.json'))
+vid_manager = VideoManager(VideoLibrary(os.path.join(module_directory, 'conf/assets.json')))
 
 
 ########
@@ -72,13 +74,14 @@ def start_server(host, port, debug):
 @app.route('/<path:path>')
 def home(path="index.html"):
     sys.stderr.write("Requested /client/{}\n".format(path))
-    return send_from_directory('../client/dist/', path)
+    
+    return send_from_directory(os.path.join(pkg_directory, '/client/dist/'), path)
 
 
 @app.route('/assets/<path:path>')
 def send_assets(path):
     sys.stderr.write("Requested /assets/{}\n".format(path))
-    return send_from_directory('assets', path)
+    return send_from_directory(os.path.join(module_directory, 'assets'), path)
 
 
 
@@ -163,7 +166,7 @@ def handle_addmedia(video_id):
     if itm_search is not None:
         sys.stderr.write('Video ID exists... removing previous entry...\n')
         vid_manager.library.remove_source(itm_search)
-    helper = DownloadHelper(video_id)
+    helper = DownloadHelper(video_id, os.path.join(module_directory, 'assets'))
     def add_cbk(d):
         vid_manager.library.add_source(d.create_source())
     helper.run(add_cbk)
@@ -195,7 +198,7 @@ def handle_system_update():
     global SERVER_RESTART_SCHEDULED
     sys.stderr.write("Requested system update\n")
     try: 
-        subprocess.check_call(['../install/update.sh'], stderr=sys.stderr, stdout=sys.stderr)
+        subprocess.check_call([os.path.join(pkg_directory, 'install', 'update.sh')], stderr=sys.stderr, stdout=sys.stderr)
         SERVER_RESTART_SCHEDULED = True
         return jsonify({'success':True})
     except BaseException as e:

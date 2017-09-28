@@ -37,7 +37,8 @@ class DownloadHelper(object):
     
     processes = {}
     
-    def __init__(self, video_id):
+    def __init__(self, video_id, dest_dir):
+        self.dest_dir = dest_dir
         self.id = video_id
         self.progress = DownloadProgress()
         self.vfname = ""
@@ -81,7 +82,7 @@ class DownloadHelper(object):
         self.progress.task = "download"
         self.video = pafy.new("https://www.youtube.com/watch?v={}".format(self.id))
         best = self.video.getbest()
-        self.vfname = "assets/{}.{}".format(self.id, best.extension)
+        self.vfname = os.path.join(self.dest_dir, "{}.{}".format(self.id, best.extension))
         best.download(filepath=self.vfname, quiet=True, callback=self._update_progress)
     
     
@@ -95,13 +96,13 @@ class DownloadHelper(object):
             ffmpeg_path,
             '-i', self.vfname,
             '-vf', 'fps=1/5',
-            'assets/{}_%03d.png'.format(self.id)
+            os.path.join(self.dest_dir, '{}_%03d.png'.format(self.id))
         ]
         sys.stderr.write(" ".join(args))
         sys.stderr.flush()
         p = subprocess.Popen(args)
         while p.poll() is None:
-            self.thumbs = glob.glob('assets/{}_*.png'.format(self.id))
+            self.thumbs = glob.glob(os.path.join(self.dest_dir, '{}_*.png'.format(self.id)))
             self.progress.recieved = len(self.thumbs)
             self.progress.ratio = float(self.progress.recieved) / float(self.progress.total)
             time.sleep(0.1)
