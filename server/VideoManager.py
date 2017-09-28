@@ -1,4 +1,6 @@
+import os
 import sys
+import glob
 from VideoLibrary import VideoSource
 
 def module_exists(mod):
@@ -80,10 +82,15 @@ class VideoManager(object):
 
     def set_source(self, video_source):
         self.currentItem = video_source
-        if self.player is None:
-            self.player = Player(video_source.source)
-        else:
-            self.player.load(video_source.source)
+        try:
+            if self.player is None:
+                self.player = Player(video_source.source)
+            else:
+                self.player.load(video_source.source)
+        except SystemError:
+            for f in glob.glob('/tmp/omxplayer*'):
+                os.remove(f)
+            self.set_source(video_source)
         
     def toggle_mute(self):
         status = self.get_status()
