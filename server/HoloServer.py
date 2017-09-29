@@ -74,8 +74,8 @@ def start_server(host, port, debug):
 @app.route('/<path:path>')
 def home(path="index.html"):
     sys.stderr.write("Requested /client/{}\n".format(path))
-    sys.stderr.write("Serving {}\n".format(os.path.join(pkg_directory, '/client/dist/', path)))
-    return send_from_directory(os.path.join(pkg_directory, '/client/dist/'), path)
+    sys.stderr.write("Serving {}\n".format(os.path.join(pkg_directory, 'client', 'dist', path)))
+    return send_from_directory(os.path.join(pkg_directory, 'client', 'dist'), path)
 
 
 @app.route('/assets/<path:path>')
