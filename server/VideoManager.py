@@ -111,7 +111,7 @@ class VideoManager(object):
     def set_source(self, video_source):
         self.currentItem = video_source
         try:
-            sys.stderr('attempting to load {}'.format(video_source.source))
+            sys.stderr.write('attempting to load {}\n'.format(video_source.source))
             if self.player is None:
                 self.player = Player(video_source.source)
             else:
