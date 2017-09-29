@@ -24,7 +24,7 @@ logger = logging.getLogger('HoloServe')
 module_directory = os.path.dirname(os.path.realpath(__file__))
 pkg_directory = os.path.dirname(module_directory)
 os.chdir(module_directory)
-sys.stderr.write('$PWD = {}'.format(os.getcwd()))
+sys.stderr.write('$PWD = {}\n'.format(os.getcwd()))
 
 app = Flask(__name__)
 CORS(app)
@@ -123,7 +123,7 @@ def handle_getmediaitems():
     return jsonify([itm.serialize() for itm in vid_manager.library.items])
 
 
-@app.route('/playitem/<int:id>', )
+@app.route('/playitem/<string:id>')
 def handle_playrequest(id):
     sys.stderr.write("Requested /playitem/{}\n".format(id))
     itm = vid_manager.library.find_id(id)
