@@ -1,11 +1,12 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { OverlayContainer } from '@angular/material';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { SystemControlService } from './services/system-control.service';
 import { DialogsService } from './services/dialogs.service';
 import { ProgressDialogComponent } from './dialogs/progress-dialog/progress-dialog.component';
 import { AddMediaComponent } from './dialogs/add-media/add-media.component';
 import { VideoSettingsComponent } from './dialogs/video-settings/video-settings.component';
-import { SystemControlService } from './services/system-control.service';
+
 
 
 @Component({
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit {
   }
 
   reloadApp(): void {
-	window.location.replace('/'); // reload the app
+    window.location.replace('/'); // reload the app
   }
 
   showAddMediaDialog(): void {

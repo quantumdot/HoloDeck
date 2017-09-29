@@ -41,7 +41,7 @@ export class VideoSettingsComponent implements OnInit {
   }
 
   settingsValueChanged(action: string, event: any): void {
-    console.log(action, event);
+    // console.log(action, event);
     this.mediaControlService.requestAction(action, [event.value]);
   }
 

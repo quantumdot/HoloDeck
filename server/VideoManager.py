@@ -1,6 +1,7 @@
 import os
 import sys
 import glob
+import logging
 from VideoLibrary import VideoSource
 
 def module_exists(mod):
@@ -14,7 +15,7 @@ def module_exists(mod):
 #end module_exists()
 
 if not module_exists('dbus'):
-    sys.stderr.write('loading MockOMXPlayer Interface because dbus was not found...\n')
+    logging.warn('loading MockOMXPlayer Interface because dbus was not found...')
     from players.MockOMXPlayer import MockOMXPlayerAdaptor as Player
 else:
     from players.OmxPlayer import OMXPlayerAdaptor as Player
@@ -35,11 +36,11 @@ class PlayerStatus(object):
         self.currentMedia = currentMedia
     
     def __getitem__(self, attr):
-        sys.stderr.write('getting attribute {} from player'.format(attr))
+        logging.debug('getting attribute {} from player'.format(attr))
         try:
             return getattr(self.player, attr)()
         except BaseException as e:
-            sys.stderr.write('Error trying to get attribute {} from player!\n{}\n'.format(attr, str(e)))
+            logging.error('Error trying to get attribute {} from player!\n{}\n'.format(attr, str(e)))
     
     def serialize(self):
         if self.player is None:
@@ -111,15 +112,16 @@ class VideoManager(object):
     def set_source(self, video_source):
         self.currentItem = video_source
         try:
-            sys.stderr.write('attempting to load {}\n'.format(video_source.source))
+            logging.debug('attempting to load {}\n'.format(video_source.source))
             if self.player is None:
                 self.player = Player(video_source.source)
             else:
                 self.player.load(video_source.source)
         except SystemError:
-            for f in glob.glob('/tmp/omxplayer*'):
-                os.remove(f)
-            self.set_source(video_source)
+            logging.error("SystemError: {}".format(str(e)))
+            #for f in glob.glob('/tmp/omxplayer*'):
+            #    os.remove(f)
+            #self.set_source(video_source)
         
     def toggle_mute(self):
         status = self.get_status()

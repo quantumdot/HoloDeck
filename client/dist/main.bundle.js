@@ -48,8 +48,8 @@ module.exports = module.exports.toString();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_dialogs_service__ = __webpack_require__("../../../../../src/app/services/dialogs.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_system_control_service__ = __webpack_require__("../../../../../src/app/services/system-control.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_system_control_service__ = __webpack_require__("../../../../../src/app/services/system-control.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_dialogs_service__ = __webpack_require__("../../../../../src/app/services/dialogs.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -190,7 +190,7 @@ AppComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_dialogs_service__["a" /* DialogsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_dialogs_service__["a" /* DialogsService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_system_control_service__["a" /* SystemControlService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_system_control_service__["a" /* SystemControlService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services_dialogs_service__["a" /* DialogsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_dialogs_service__["a" /* DialogsService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_system_control_service__["a" /* SystemControlService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_system_control_service__["a" /* SystemControlService */]) === "function" && _b || Object])
 ], AppComponent);
 
 var _a, _b;
@@ -378,7 +378,7 @@ var AddMediaComponent = (function () {
         this.mediaItemService = mediaItemService;
     }
     AddMediaComponent.prototype.ngOnInit = function () {
-        console.log(this);
+        // console.log(this);
         this.is_submitted = false;
         this.media_url = '';
         this.progress = {
@@ -395,7 +395,7 @@ var AddMediaComponent = (function () {
     AddMediaComponent.prototype.check_complete = function () {
         if (this.progress.complete) {
             this.progressSub.unsubscribe();
-            console.log('Notifying service to requery!');
+            // console.log('Notifying service to requery!');
             this.mediaItemService.suggestInventoryQuery.emit(null);
             this.dialogRef.close();
         }
@@ -420,12 +420,12 @@ var AddMediaComponent = (function () {
         }
         this.is_submitted = true;
         // 'd3Eelj9Pkvw'
-        console.log(video_id);
-        console.log(this);
+        // console.log(video_id);
+        // console.log(this);
         this.progressSub = this.mediaItemService.requestAdd(video_id).subscribe(function (data) {
             _this.progress = data;
             _this.check_complete();
-            console.log(data); // see console you get output every 5 sec
+            // console.log(data); // see console you get output every 5 sec
         });
     };
     AddMediaComponent.prototype.cancel = function () {
@@ -581,7 +581,7 @@ var ManageWifiComponent = (function () {
         else {
             this.state = 'config';
         }
-        console.log(event, wsource);
+        // console.log(event, wsource);
     };
     ManageWifiComponent.prototype.connect = function () {
         var _this = this;
@@ -589,7 +589,7 @@ var ManageWifiComponent = (function () {
         var obsv;
         obsv = this.wifiService.connect(this.selectedSource.ssid, this.passphrase);
         obsv.subscribe(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.success) {
                 _this.dialogRef.close();
                 _this.state = 'success';
@@ -755,7 +755,7 @@ var VideoSettingsComponent = (function () {
         });
     };
     VideoSettingsComponent.prototype.settingsValueChanged = function (action, event) {
-        console.log(action, event);
+        // console.log(action, event);
         this.mediaControlService.requestAction(action, [event.value]);
     };
     return VideoSettingsComponent;
@@ -1004,7 +1004,6 @@ var MediaControllerComponent = (function () {
         this.vover_open = false;
     };
     MediaControllerComponent.prototype.volume_slider_changed = function (event) {
-        console.log(event);
         this.requestAction('set_volume', [event.value]);
     };
     MediaControllerComponent.prototype.requestAction = function (action, args) {
@@ -1091,7 +1090,7 @@ var MediaItemsComponent = (function () {
     MediaItemsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.mediaItemService.suggestInventoryQuery.subscribe(function () {
-            console.log('I heard that you want a media requery');
+            // console.log('I heard that you want a media requery');
             _this.fetchMedia();
         });
         this.fetchMedia();
@@ -1271,13 +1270,13 @@ var DialogsService = (function () {
         return dialogRef;
     };
     DialogsService.prototype.showAddMediaDialog = function () {
-        console.log('opening add dialog!');
+        // console.log('opening add dialog!');
         var dialogRef;
         dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_1__dialogs_add_media_add_media_component__["a" /* AddMediaComponent */], {});
         return dialogRef.afterClosed();
     };
     DialogsService.prototype.showVideoSettingsDialog = function () {
-        console.log('opening video settings!');
+        // console.log('opening video settings!');
         var dialogRef;
         dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_3__dialogs_video_settings_video_settings_component__["a" /* VideoSettingsComponent */], {
             // height: '400px',
@@ -1286,7 +1285,7 @@ var DialogsService = (function () {
         return dialogRef.afterClosed();
     };
     DialogsService.prototype.showWifiSettingsDialog = function () {
-        console.log('opening video settings!');
+        // console.log('opening video settings!');
         var dialogRef;
         dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_2__dialogs_manage_wifi_manage_wifi_component__["a" /* ManageWifiComponent */], {});
         return dialogRef.afterClosed();
@@ -1310,12 +1309,14 @@ var _a;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MediaControlService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__("../../../../../src/app/config.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__websocket_service__ = __webpack_require__("../../../../../src/app/services/websocket.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_filter__ = __webpack_require__("../../../../rxjs/add/operator/filter.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_filter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_filter__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/BehaviorSubject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__websocket_service__ = __webpack_require__("../../../../../src/app/services/websocket.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_filter__ = __webpack_require__("../../../../rxjs/add/operator/filter.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_filter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_filter__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1331,19 +1332,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var MediaControlService = (function () {
     function MediaControlService(wsService, http) {
+        var _this = this;
         this.wsService = wsService;
         this.http = http;
-        // this.State = new BehaviorSubject<PlayerState>(this.getEmptyState());
-        this.State = this.wsService
+        this.State = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["BehaviorSubject"](this.getEmptyState());
+        this.wsService
             .connect(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.ControlStatus)
-            .map(function (response) {
-            // console.log(response);
-            var data = JSON.parse(response.data);
-            // console.log(data);
-            return data;
-        });
+            .subscribe(function (response) { _this.State.next(JSON.parse(response.data)); }, function (e) { _this.State.next(_this.getEmptyState()); }, function () { console.log('complete'); });
+        /*        .map(
+                  // console.log(response);
+                  let data = JSON.parse(response.data);
+                  this.State = data;
+                  // console.log(data);
+                  return data;
+            });*/
     }
     MediaControlService.prototype.requestAction = function (action, data) {
         this.http.post(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* config */].Endpoints.Main + 'action/' + action, data)
@@ -1388,7 +1393,7 @@ var MediaControlService = (function () {
 }());
 MediaControlService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__websocket_service__["a" /* WebSocketService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__websocket_service__["a" /* WebSocketService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__websocket_service__["a" /* WebSocketService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__websocket_service__["a" /* WebSocketService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HttpClient */]) === "function" && _b || Object])
 ], MediaControlService);
 
 var _a, _b;

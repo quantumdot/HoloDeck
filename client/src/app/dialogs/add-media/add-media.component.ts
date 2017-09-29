@@ -24,7 +24,7 @@ export class AddMediaComponent implements OnInit {
   constructor(public dialogRef: MdDialogRef<AddMediaComponent>, private mediaItemService: MediaInventoryService) { }
 
   ngOnInit() {
-    console.log(this);
+    // console.log(this);
     this.is_submitted = false;
     this.media_url = '';
     this.progress = {
@@ -42,7 +42,7 @@ export class AddMediaComponent implements OnInit {
   private check_complete(): void {
     if (this.progress.complete) {
       this.progressSub.unsubscribe();
-      console.log('Notifying service to requery!');
+      // console.log('Notifying service to requery!');
       this.mediaItemService.suggestInventoryQuery.emit(null);
       this.dialogRef.close();
     }
@@ -67,12 +67,12 @@ export class AddMediaComponent implements OnInit {
 
     this.is_submitted = true;
   	// 'd3Eelj9Pkvw'
-    console.log(video_id);
-    console.log(this);
+    // console.log(video_id);
+    // console.log(this);
     this.progressSub = this.mediaItemService.requestAdd(video_id).subscribe((data) => {
       this.progress = data;
       this.check_complete();
-      console.log(data); // see console you get output every 5 sec
+      // console.log(data); // see console you get output every 5 sec
     });
   }
   cancel(): void {

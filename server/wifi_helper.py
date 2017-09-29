@@ -1,4 +1,5 @@
 import re
+import logging
 import subprocess
 from wifi import Cell, Scheme
 

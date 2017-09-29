@@ -47,14 +47,14 @@ export class ManageWifiComponent implements OnInit {
     } else {
       this.state = 'config';
     }
-    console.log(event, wsource);
+    // console.log(event, wsource);
   }
   connect(): void {
     this.state = 'connecting';
     let obsv: Observable<any>;
     obsv = this.wifiService.connect(this.selectedSource.ssid, this.passphrase);
     obsv.subscribe((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.success) {
         this.dialogRef.close();
         this.state = 'success';

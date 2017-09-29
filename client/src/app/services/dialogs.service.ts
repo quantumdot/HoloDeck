@@ -33,7 +33,7 @@ export class DialogsService {
         return dialogRef;
     }
     showAddMediaDialog(): Observable<any> {
-      console.log('opening add dialog!');
+      // console.log('opening add dialog!');
       let dialogRef: MdDialogRef<AddMediaComponent>;
       dialogRef = this.dialog.open(AddMediaComponent, {
         // height: '400px',
@@ -43,7 +43,7 @@ export class DialogsService {
     }
 
     showVideoSettingsDialog(): Observable<any> {
-      console.log('opening video settings!');
+      // console.log('opening video settings!');
       let dialogRef: MdDialogRef<VideoSettingsComponent>;
       dialogRef = this.dialog.open(VideoSettingsComponent, {
         // height: '400px',
@@ -52,7 +52,7 @@ export class DialogsService {
       return dialogRef.afterClosed();
     }
     showWifiSettingsDialog(): Observable<any> {
-      console.log('opening video settings!');
+      // console.log('opening video settings!');
       let dialogRef: MdDialogRef<ManageWifiComponent>;
       dialogRef = this.dialog.open(ManageWifiComponent, {
         // height: '400px',

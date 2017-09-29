@@ -41,7 +41,7 @@ export class MediaItemsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.mediaItemService.suggestInventoryQuery.subscribe(() => {
-      console.log('I heard that you want a media requery');
+      // console.log('I heard that you want a media requery');
       this.fetchMedia();
     });
     this.fetchMedia();

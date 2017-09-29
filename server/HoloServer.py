@@ -3,8 +3,9 @@ import os
 import sys
 import json
 import time
-import logging
 import argparse
+import subprocess
+import logging, logging.config
 
 from gevent import pywsgi, sleep as sock_sleep
 from geventwebsocket import WebSocketError
@@ -17,14 +18,15 @@ from VideoManager import VideoManager
 from VideoLibrary import VideoLibrary
 from DownloadHelper import DownloadHelper
 import wifi_helper
-import subprocess
 
 
-logger = logging.getLogger('HoloServe')
 module_directory = os.path.dirname(os.path.realpath(__file__))
 pkg_directory = os.path.dirname(module_directory)
 os.chdir(module_directory)
-sys.stderr.write('$PWD = {}\n'.format(os.getcwd()))
+
+logging.config.fileConfig('conf/logging.conf')
+logger = logging.getLogger('HoloServe')
+logger.debug('$PWD = {}'.format(os.getcwd()))
 
 app = Flask(__name__)
 CORS(app)
@@ -41,27 +43,27 @@ SERVER_RESTART_SCHEDULED=False
 def teardown_request(exception=None):
     global SERVER_RESTART_SCHEDULED
     if SERVER_RESTART_SCHEDULED:
-        sys.stderr.write('Saw that a restart was scheduled, restarting...\n')
+        logger.info('Saw that a restart was scheduled, restarting...')
         reload_server()
 ########
 
 server_instance = None;
 def stop_server():
     global server_instance
-    sys.stderr.write('Stopping services...')
+    logger.info('Stopping services...')
     vid_manager.player.quit()
     server_instance.close()
 
 def reload_server():
     stop_server()
-    sys.stderr.write('Reloading server...')
+    logger.info('Reloading server...')
     os.execv(__file__, sys.argv)
     
 def start_server(host, port, debug):
     global server_instance
     app.debug = debug
     server_instance = pywsgi.WSGIServer((host, port), app, handler_class=WebSocketHandler)
-    sys.stderr.write("Server listening on {} port {}\n".format(host, port))
+    logger.info("Server listening on {} port {}".format(host, port))
     server_instance.serve_forever()
 
 
@@ -74,15 +76,15 @@ def start_server(host, port, debug):
 @app.route('/')
 @app.route('/<path:path>')
 def home(path="index.html"):
-    sys.stderr.write("Requested /client/{}\n".format(path))
-    sys.stderr.write("Serving {}\n".format(os.path.join(pkg_directory, 'client', 'dist', path)))
+    logger.info("Requested /client/{}".format(path))
+    logger.debug("Serving {}".format(os.path.join(pkg_directory, 'client', 'dist', path)))
     return send_from_directory(os.path.join(pkg_directory, 'client', 'dist'), path)
 
 
 @app.route('/assets/<path:path>')
 def send_assets(path):
-    sys.stderr.write("Requested /assets/{}\n".format(path))
-    sys.stderr.write("Serving {}\n".format(os.path.join(module_directory, 'assets', path)))
+    logger.info("Requested /assets/{}".format(path))
+    logger.debug("Serving {}".format(os.path.join(module_directory, 'assets', path)))
     return send_from_directory(os.path.join(module_directory, 'assets'), path)
 
 
@@ -96,18 +98,18 @@ def send_assets(path):
 @sockets.route('/status')
 def update_player_status(socket):
     try:
-        sys.stderr.write("Requested status socket....\n")
+        logger.info("Requested status socket....")
         while not socket.closed:
             try:
-                #sys.stderr.write("Sending status....\n")
+                #sys.stderr.write("Sending status....")
                 socket.send(json.dumps(vid_manager.get_status().serialize()))
                 sock_sleep(0.5)
             except WebSocketError:
                 raise
             except BaseException as e:
-                sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
+                logger.error("SOCKET ERROR: {}".format(str(e)))
     except BaseException as e:
-        sys.stderr.write("SOCKET ERROR: {}\n".format(str(e)))
+        logger.error("SOCKET ERROR: {}".format(str(e)))
 
 
 
@@ -119,13 +121,13 @@ def update_player_status(socket):
 #################################################################################
 @app.route('/getmediaitems')
 def handle_getmediaitems():
-    sys.stderr.write("Requested /getmediaitems\n")
+    logger.info("Requested /getmediaitems")
     return jsonify([itm.serialize() for itm in vid_manager.library.items])
 
 
 @app.route('/playitem/<string:id>')
 def handle_playrequest(id):
-    sys.stderr.write("Requested /playitem/{}\n".format(id))
+    logger.info("Requested /playitem/{}".format(id))
     itm = vid_manager.library.find_id(id)
     if itm is not None:
         vid_manager.set_source(itm)
@@ -135,16 +137,16 @@ def handle_playrequest(id):
 
 @app.route('/action/<string:action>', methods=['POST'])
 def handle_actionrequest(action):
-    sys.stderr.write("Requested /action/{} with args ({})\n".format(action, request.data))
+    logger.info("Requested /action/{} with args ({})".format(action, request.data))
     try:
         data = list(json.loads(request.data))
         if hasattr(vid_manager, action) and callable(getattr(vid_manager, action)):
-            sys.stderr.write("  -> Caught by VideoManager\n")
+            logger.debug("  -> Caught by VideoManager")
             getattr(vid_manager, action)(*data)
             return jsonify({'success':True})
         
         elif hasattr(vid_manager.player, action) and callable(getattr(vid_manager.player, action)):
-            sys.stderr.write("  -> Caught by OMXPlayer\n")
+            logger.debug("  -> Caught by OMXPlayer")
             getattr(vid_manager.player, action)(*data)
             return jsonify({'success':True})
     
@@ -162,11 +164,11 @@ def handle_actionrequest(action):
 #################################################################################
 @app.route('/addmedia/<string:video_id>')
 def handle_addmedia(video_id):
-    sys.stderr.write("Requested /addmedia/{}\n".format(video_id))
+    logger.info("Requested /addmedia/{}".format(video_id))
     itm_search = vid_manager.library.find_id(video_id)
     #print itm_search
     if itm_search is not None:
-        sys.stderr.write('Video ID exists... removing previous entry...\n')
+        logger.debug('Video ID exists... removing previous entry...')
         vid_manager.library.remove_source(itm_search)
     helper = DownloadHelper(video_id, os.path.join(module_directory, 'assets'))
     def add_cbk(d):
@@ -198,7 +200,7 @@ def handle_system_heartbeat():
 @app.route('/system/update', methods=['POST'])
 def handle_system_update():
     global SERVER_RESTART_SCHEDULED
-    sys.stderr.write("Requested system update\n")
+    logger.info("Requested system update")
     try: 
         subprocess.check_call([os.path.join(pkg_directory, 'install', 'update.sh')], stderr=sys.stderr, stdout=sys.stderr)
         SERVER_RESTART_SCHEDULED = True
@@ -210,7 +212,7 @@ def handle_system_update():
 @app.route('/system/restart_services', methods=['POST'])
 def handle_restart_services():
     global SERVER_RESTART_SCHEDULED
-    sys.stderr.write("Requested services restart\n")
+    logger.info("Requested services restart")
     try:
         SERVER_RESTART_SCHEDULED = True
         return jsonify({'success':True})
@@ -220,7 +222,7 @@ def handle_restart_services():
     
 @app.route('/system/restart_system', methods=['POST'])
 def handle_system_restart():
-    sys.stderr.write("Requested system restart\n")
+    logger.info("Requested system restart")
     try:
         subprocess.check_call(['reboot'], stderr=sys.stderr, stdout=sys.stderr)
         return jsonify({'success':True})
@@ -230,7 +232,7 @@ def handle_system_restart():
     
 @app.route('/system/shutdown_system', methods=['POST'])
 def handle_system_shutdown():
-    sys.stderr.write("Requested system shutdown\n")
+    logger.info("Requested system shutdown")
     try:
         subprocess.check_call(['shutdown'], stderr=sys.stderr, stdout=sys.stderr)
         return jsonify({'success':True})
@@ -281,7 +283,7 @@ def handle_wifi_forget():
 
 
 if __name__ == "__main__":
-    sys.stderr.write("Starting server...\n")
+    logger.info("Starting server...")
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', default="0.0.0.0", help="hostname to run the server on")

@@ -39,14 +39,9 @@ export class MediaControllerComponent implements OnInit {
   close_volume_controls(): void {
     this.vover_open = false;
   }
-  
-  
-  
   volume_slider_changed(event: MdSliderChange): void {
-    console.log(event);
     this.requestAction('set_volume', [event.value]);
   }
-
   requestAction(action: string, args: any[]): void {
     this.mediaControlService.requestAction(action, args);
   }

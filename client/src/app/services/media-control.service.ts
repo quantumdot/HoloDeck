@@ -39,15 +39,21 @@ export class MediaControlService {
   public State: BehaviorSubject<PlayerState>;
 
   constructor(private wsService: WebSocketService, private http: HttpClient) {
-    // this.State = new BehaviorSubject<PlayerState>(this.getEmptyState());
-    this.State = <BehaviorSubject<PlayerState>>this.wsService
-      .connect(config.Endpoints.ControlStatus)
-      .map((response: MessageEvent): PlayerState => {
-        // console.log(response);
-        let data = JSON.parse(response.data);
-        // console.log(data);
-        return data;
-      });
+    this.State = new BehaviorSubject<PlayerState>(this.getEmptyState());
+    this.wsService
+        .connect(config.Endpoints.ControlStatus)
+        .subscribe(
+          (response: MessageEvent) => { this.State.next(JSON.parse(response.data)); },
+          (e) => { this.State.next(this.getEmptyState()); },
+          () => { console.log('complete'); }
+        );
+/*        .map(
+          // console.log(response);
+          let data = JSON.parse(response.data);
+          this.State = data;
+          // console.log(data);
+          return data;
+    });*/
   }
   requestAction(action: string, data: any[]): void {
     this.http.post(config.Endpoints.Main + 'action/' + action, data)

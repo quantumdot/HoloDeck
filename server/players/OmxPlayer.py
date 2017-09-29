@@ -1,5 +1,6 @@
 from players.PlayerAdapter import PlayerAdapter
 from omxplayer.player import OMXPlayer
+import logging
 
 class OMXPlayerAdaptor(PlayerAdapter):
     
@@ -17,11 +18,11 @@ class OMXPlayerAdaptor(PlayerAdapter):
             
     
     def __getitem__(self, attr):
-        sys.stderr.write('getting attribute {} from player'.format(attr))
+        logging.debug('getting attribute {} from player'.format(attr))
         try:
             return getattr(self.player, attr)()
         except BaseException as e:
-            sys.stderr.write('Error trying to get attribute {} from player!\n{}\n'.format(attr, str(e)))
+            logging.error('Error trying to get attribute {} from player!\n{}'.format(attr, str(e)))
             
     
     def can_control(self):

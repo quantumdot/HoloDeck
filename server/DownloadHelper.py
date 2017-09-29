@@ -3,6 +3,7 @@ import json
 import glob
 import time
 import pafy
+import logging
 import threading
 import subprocess
 from conf import ffmpeg_path
@@ -98,8 +99,7 @@ class DownloadHelper(object):
             '-vf', 'fps=1/5',
             os.path.join(self.dest_dir, '{}_%03d.png'.format(self.id))
         ]
-        sys.stderr.write(" ".join(args))
-        sys.stderr.flush()
+        logging.debug(" ".join(args))
         p = subprocess.Popen(args)
         while p.poll() is None:
             self.thumbs = glob.glob(os.path.join(self.dest_dir, '{}_*.png'.format(self.id)))
