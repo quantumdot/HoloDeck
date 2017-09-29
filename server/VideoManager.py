@@ -41,31 +41,59 @@ class PlayerStatus(object):
         except BaseException as e:
             sys.stderr.write('Error trying to get attribute {} from player!\n{}\n'.format(attr, str(e)))
     
-    def serialize(self):  
+    def serialize(self):
+        if self.player is None:
+            return self.empty()
+        else:
+            return {
+                "able": {
+                    "control": self.player.can_control(),
+                    "go_next": self.player.can_go_next(),
+                    "go_previous": self.player.can_go_previous(),
+                    "pause": self.player.can_pause(),
+                    "play": self.player.can_play(),
+                    "quit": self.player.can_quit(),
+                    "seek": self.player.can_seek(),
+                    "set_fullscreen": self.player.can_set_fullscreen(),
+                    "maximum_rate": self.player.maximum_rate(),
+                    "minimum_rate": self.player.minimum_rate(),
+                },
+                "media": self.currentMedia.serialize(),
+                # "source": self.player.get_source(),
+                "is_playing": self.player.is_playing(),
+                "playback_status": self.player.playback_status(),
+                "duration": to_int_or_default(self.player.duration(), 1),
+                "position": to_int_or_default(self.player.position(), 0),
+                "rate": self.player.rate(),
+                "fullscreen": self.player.fullscreen(),
+                "volume": self.player.volume()
+            }
+    #end serialize()
+    
+    def empty(self):
         return {
             "able": {
-                "control": self.player.can_control(),
-                "go_next": self.player.can_go_next(),
-                "go_previous": self.player.can_go_previous(),
-                "pause": self.player.can_pause(),
-                "play": self.player.can_play(),
-                "quit": self.player.can_quit(),
-                "seek": self.player.can_seek(),
-                "set_fullscreen": self.player.can_set_fullscreen(),
-                "maximum_rate": self.player.maximum_rate(),
-                "minimum_rate": self.player.minimum_rate(),
+                "control": True,
+                "go_next": True,
+                "go_previous": True,
+                "pause": True,
+                "play": True,
+                "quit": True,
+                "seek": True,
+                "set_fullscreen": True,
+                "maximum_rate": 1,
+                "minimum_rate": 1
             },
-            "media": self.currentMedia.serialize(),
+            "media": None,
             # "source": self.player.get_source(),
-            "is_playing": self.player.is_playing(),
-            "playback_status": self.player.playback_status(),
-            "duration": to_int_or_default(self.player.duration(), 1),
-            "position": to_int_or_default(self.player.position(), 0),
-            "rate": self.player.rate(),
-            "fullscreen": self.player.fullscreen(),
-            "volume": self.player.volume()
+            "is_playing": False,
+            "playback_status": 'Stopped',
+            "duration": 1,
+            "position": 0,
+            "rate": 1,
+            "fullscreen": True,
+            "volume": 0
         }
-    #end serialize()
 #end PlayerStatus()
 
 
