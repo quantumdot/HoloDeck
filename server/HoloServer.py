@@ -24,6 +24,7 @@ logger = logging.getLogger('HoloServe')
 module_directory = os.path.dirname(os.path.realpath(__file__))
 pkg_directory = os.path.dirname(module_directory)
 os.chdir(module_directory)
+sys.stderr.write('$PWD = {}'.format(os.getcwd()))
 
 app = Flask(__name__)
 CORS(app)
