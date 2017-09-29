@@ -23,7 +23,7 @@ class VideoSource(object):
     #end serialize()
     
     @staticmethod
-    def empty(self):
+    def empty():
         return {
             'id': "",
             'name': "",
