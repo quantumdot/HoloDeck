@@ -23,7 +23,7 @@ import subprocess
 logger = logging.getLogger('HoloServe')
 module_directory = os.path.dirname(os.path.realpath(__file__))
 pkg_directory = os.path.dirname(module_directory)
-
+os.chdir(module_directory)
 
 app = Flask(__name__)
 CORS(app)
@@ -163,7 +163,7 @@ def handle_actionrequest(action):
 def handle_addmedia(video_id):
     sys.stderr.write("Requested /addmedia/{}\n".format(video_id))
     itm_search = vid_manager.library.find_id(video_id)
-    print itm_search
+    #print itm_search
     if itm_search is not None:
         sys.stderr.write('Video ID exists... removing previous entry...\n')
         vid_manager.library.remove_source(itm_search)

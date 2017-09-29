@@ -1,6 +1,6 @@
 import time
 import threading
-from PlayerAdapter import PlayerAdapter
+from players.PlayerAdapter import PlayerAdapter
 
 class MockOMXPlayerAdaptor(PlayerAdapter):
     """ Mock OMXPlayer for use during development, particularly on machines where 

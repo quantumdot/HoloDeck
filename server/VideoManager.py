@@ -84,7 +84,7 @@ class PlayerStatus(object):
                 "maximum_rate": 1,
                 "minimum_rate": 1
             },
-            "media": None,
+            "media": VideoSource.empty(),
             # "source": self.player.get_source(),
             "is_playing": False,
             "playback_status": 'Stopped',

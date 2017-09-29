@@ -20,7 +20,17 @@ class VideoSource(object):
             'thumbs': self.thumbs,
             'source': self.source
         }
-    #end serialize()    
+    #end serialize()
+    
+    @staticmethod
+    def empty(self):
+        return {
+            'id': "",
+            'name': "",
+            'description': "",
+            'thumbs': [],
+            'source': ""
+        }
 #end class VideoSource
 
 

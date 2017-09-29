@@ -2,6 +2,7 @@ import abc
 import time
 import threading
 import vlc
+from players.PlayerAdapter import PlayerAdapter
 
 class VlcPlayerAdaptor(object):
     
