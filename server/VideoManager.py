@@ -104,7 +104,7 @@ class VideoManager(object):
         self.library = library
         self.player = None
         self.currentItem = None
-        #self.set_source(self.library.items[0])
+        self.set_source(self.library.items[0])
     
     def get_status(self):
         return PlayerStatus(self.player, self.currentItem)
