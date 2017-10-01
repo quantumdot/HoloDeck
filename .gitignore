@@ -44,4 +44,4 @@ Thumbs.db
 #server
 *.pyc
 __pycache__/*
-server/logs/*
+#server/logs/*
