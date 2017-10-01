@@ -25,7 +25,7 @@ pkg_directory = os.path.dirname(module_directory)
 os.chdir(module_directory)
 
 log_dir = os.path.join(module_directory, 'logs')
-if os.path.exists(log_dir):
+if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
 logging.config.fileConfig('conf/logging.conf')
