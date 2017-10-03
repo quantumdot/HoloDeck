@@ -4,16 +4,19 @@ import logging
 
 class OMXPlayerAdaptor(PlayerAdapter):
     
-    OMXPLAYER_ARGS = ['--loop', '--adev', 'alsa']
     
     def __init__(self, source):
         super(OMXPlayerAdaptor, self).__init__(source)
         self.player = None
         self.load(source)
+    
+    @staticmethod
+    def GetPlayerArgs():
+        return  ['--loop', '--adev', 'alsa']
         
     def load(self, source, pause=False):    
         if self.player is None:
-            self.player = OMXPlayer(source, OMXPlayerAdaptor.OMXPLAYER_ARGS)
+            self.player = OMXPlayer(source, OMXPlayerAdaptor.GetPlayerArgs())
         else:
             self.player.load(source, pause)
             
