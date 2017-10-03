@@ -13,7 +13,7 @@ class OMXPlayerAdaptor(PlayerAdapter):
         
     def load(self, source, pause=False):    
         if self.player is None:
-            self.player = OMXPlayer(source, OMXPLAYER_ARGS)
+            self.player = OMXPlayer(source, OMXPlayerAdaptor.OMXPLAYER_ARGS)
         else:
             self.player.load(source, pause)
             
