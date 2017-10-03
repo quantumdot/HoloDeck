@@ -238,7 +238,7 @@ def handle_system_restart():
 def handle_system_shutdown():
     logger.info("Requested system shutdown")
     try:
-        subprocess.check_call(['shutdown'], stderr=sys.stderr, stdout=sys.stderr)
+        subprocess.check_call(['shutdown', 'now'], stderr=sys.stderr, stdout=sys.stderr)
         return jsonify({'success':True})
     except BaseException as e:
         return jsonify({'success':False, 'message': str(e) }) 
