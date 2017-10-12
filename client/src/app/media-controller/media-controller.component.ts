@@ -1,3 +1,4 @@
+import { config } from '../config';
 import { WebSocketService } from '../services/websocket.service';
 import { MediaControlService, PlayerState } from '../services/media-control.service';
 import { Component, OnInit } from '@angular/core';
