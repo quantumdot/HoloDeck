@@ -26,7 +26,7 @@
 				</button>
 				
 				<div *ngIf="vover_open" id="volume_overlay" (clickOutside)="vover_open = false" [delayClickOutsideInit]="true">
-					<md-slider thumbLabel="true" vertical="true" min="0" max="1" value="{{currentState.volume}}" color="primary" (change)="volume_slider_changed($event)" ></md-slider>
+					<md-slider  vertical="true" min="0" max="1" step="0.01" value="{{currentState.volume}}" color="primary" (change)="volume_slider_changed($event)" ></md-slider>
 					<button md-icon-button>
 						<md-icon class="md-36 md-light" aria-label="Toggle Mute" (click)="requestAction('toggle_mute',[])">{{currentState.volume == 0 ? 'volume_mute' : 'volume_off'}}</md-icon>
 					</button>
