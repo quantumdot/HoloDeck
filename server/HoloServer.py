@@ -141,7 +141,7 @@ def handle_actionrequest(message):
 		action = message['action']
 		data = message['data']
 		logger.info("Requested action '{}' with args ({})".format(action, data))
-		sockets.sleep(1.5)
+		# sockets.sleep(1.5)
 		if hasattr(vid_manager, action) and callable(getattr(vid_manager, action)):
 			logger.debug("  -> Caught by VideoManager")
 			getattr(vid_manager, action)(*data)

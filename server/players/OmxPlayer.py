@@ -134,4 +134,6 @@ class OMXPlayerAdaptor(PlayerAdapter):
         return self.player.set_video_pos(x1, y1, x2, y2)
 
     def set_volume(self, volume):
-        return self.player.set_volume(2000.0 * math.log(volume, 10))
+        v = 2000.0 * math.log(volume, 10)
+        logging.debug("Setting volume to {}".format(v))
+        return self.player.set_volume(v)
