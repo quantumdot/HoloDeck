@@ -1,5 +1,6 @@
 from players.PlayerAdapter import PlayerAdapter
 from omxplayer.player import OMXPlayer
+import math
 import logging
 
 class OMXPlayerAdaptor(PlayerAdapter):
