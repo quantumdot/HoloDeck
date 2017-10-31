@@ -119,11 +119,11 @@ class OMXPlayerAdaptor(PlayerAdapter):
         #return self.player.seek(relative_position)
         self.set_position(self.position() + relative_position)
 
-    def set_alpha(self):
-        return self.player.set_alpha()
+    def set_alpha(self, alpha):
+        return self.player.set_alpha(alpha)
 
-    def set_aspect_mode(self):
-        return self.player.set_aspect_mode()
+    def set_aspect_mode(self, mode):
+        return self.player.set_aspect_mode(mode)
 
     def set_position(self, position):
         return self.player.set_position(position)
@@ -135,6 +135,9 @@ class OMXPlayerAdaptor(PlayerAdapter):
         return self.player.set_video_pos(x1, y1, x2, y2)
 
     def set_volume(self, volume):
-        v = 2000.0 * math.log(volume, 10)
+        if volume == 0:
+            v = 0
+        else:
+            v = 2000.0 * math.log(volume, 10)
         logging.debug("Setting volume to {}".format(v))
         return self.player.set_volume(v)

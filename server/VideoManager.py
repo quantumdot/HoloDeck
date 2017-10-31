@@ -34,6 +34,7 @@ class PlayerStatus(object):
     def __init__(self, player, currentMedia):
         self.player = player
         self.currentMedia = currentMedia
+        self.read_state()
     
     def __getitem__(self, attr):
         logging.debug('getting attribute {} from player'.format(attr))
@@ -43,10 +44,13 @@ class PlayerStatus(object):
             logging.error('Error trying to get attribute {} from player!\n{}\n'.format(attr, str(e)))
     
     def serialize(self):
+        return self._data
+        
+    def read_state(self):
         if self.player is None:
-            return self.empty()
+            self._data =  self.empty()
         else:
-            return {
+            self._data = {
                 "able": {
                     "control": self.player.can_control(),
                     "go_next": self.player.can_go_next(),
@@ -104,10 +108,13 @@ class VideoManager(object):
         self.library = library
         self.player = None
         self.currentItem = None
+        self.is_muted = False
         self.set_source(self.library.items[0])
     
     def get_status(self):
-        return PlayerStatus(self.player, self.currentItem)
+        s = PlayerStatus(self.player, self.currentItem)
+        s._data['is_muted'] = self.is_muted
+        return s
 
     def set_source(self, video_source):
         self.currentItem = video_source
@@ -124,11 +131,12 @@ class VideoManager(object):
             #self.set_source(video_source)
         
     def toggle_mute(self):
-        status = self.get_status()
-        if status["volume"] == 0:
+        if self.is_muted:
             self.player.unmute()
+            self.is_muted = False
         else:
             self.player.mute()
+            self.is_muted = True
 #end class VideoManager
 
 
