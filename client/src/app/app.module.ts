@@ -8,8 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 //third-party stuff
 import { MaterialModule } from './material.module';
 import { SwiperModule } from 'angular2-useful-swiper';
-// import { ImageCropperComponent } from 'ng2-img-cropper';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 
 //my stuff
 import { AppComponent } from './app.component';
@@ -25,7 +25,7 @@ import { VideoSettingsComponent } from './dialogs/video-settings/video-settings.
 import { DialogsService } from './services/dialogs.service';
 import { MediaControlService } from './services/media-control.service';
 import { MediaInventoryService } from './services/media-inventory.service';
-import { WebSocketService } from './services/websocket.service';
+import { MediaSocket } from './services/websocket.service';
 import { WifiManagementService } from './services/wifi-management.service';
 import { SystemControlService } from './services/system-control.service';
 import { ProgressDialogComponent } from './dialogs/progress-dialog/progress-dialog.component';
@@ -53,7 +53,6 @@ import { ProgressDialogComponent } from './dialogs/progress-dialog/progress-dial
     BrowserAnimationsModule,
     MaterialModule,
     SwiperModule,
-    // ImageCropperComponent,
     ClickOutsideModule,
     FormsModule
   ],
@@ -64,7 +63,7 @@ import { ProgressDialogComponent } from './dialogs/progress-dialog/progress-dial
     ManageWifiComponent,
     ProgressDialogComponent
   ],
-  providers: [MediaInventoryService, WebSocketService, MediaControlService, DialogsService, WifiManagementService, SystemControlService],
+  providers: [MediaInventoryService, MediaSocket, MediaControlService, DialogsService, WifiManagementService, SystemControlService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

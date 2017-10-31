@@ -19,7 +19,7 @@ class MockOMXPlayerAdaptor(PlayerAdapter):
         self._position = 0
         self._state = 1 # 0: stop; 1: play; 2: pause;
         self._statemap = ['Stopped', 'Playing', 'Paused']
-        self._volume = 25.0
+        self._volume = 1
         self._rate = 1
         
         thread = threading.Thread(target=self.__run_background, args=())
@@ -85,7 +85,7 @@ class MockOMXPlayerAdaptor(PlayerAdapter):
         self._volume = 0
         return None
     def unmute(self):
-        self._volume = 25.0
+        self._volume = 1
         return None
     def pause(self):
         self._state = 2

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WebSocketService } from '../../services/websocket.service';
+import { MediaSocket } from '../../services/websocket.service';
 import { MediaControlService, PlayerState } from '../../services/media-control.service';
 
 // import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
@@ -31,7 +31,7 @@ export class VideoSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.pstate = this.mediaControlService.getEmptyState();
-    this.mediaControlService.State.subscribe(s => {
+    this.mediaControlService.GetState().subscribe(s => {
       if (s == null) {
         this.pstate = this.mediaControlService.getEmptyState();
       } else {
@@ -42,7 +42,7 @@ export class VideoSettingsComponent implements OnInit {
 
   settingsValueChanged(action: string, event: any): void {
     // console.log(action, event);
-    this.mediaControlService.requestAction(action, [event.value]);
+    this.mediaControlService.RequestAction(action, [event.value]);
   }
 
 }

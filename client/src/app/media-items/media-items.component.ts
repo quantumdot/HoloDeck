@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, AfterViewInit, QueryList, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Media, MediaInventoryService } from '../services/media-inventory.service';
 import { SwiperModule } from 'angular2-useful-swiper';
 import { ImgCyclerComponent } from '../img-cycler/img-cycler.component';
@@ -15,7 +15,7 @@ import { ImgCyclerComponent } from '../img-cycler/img-cycler.component';
   ]
 })
 
-export class MediaItemsComponent implements OnInit, AfterViewInit {
+export class MediaItemsComponent implements OnInit {
 
   mediaItems: Media[];
 
@@ -45,8 +45,5 @@ export class MediaItemsComponent implements OnInit, AfterViewInit {
       this.fetchMedia();
     });
     this.fetchMedia();
-  }
-  ngAfterViewInit(): void {
-    // console.log(this);
   }
 }

@@ -1,11 +1,12 @@
 import { config } from '../config';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { WebSocketService } from './websocket.service';
+import { MediaSocket } from './websocket.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import { Media } from './media-inventory.service';
+import { Subject, Observable } from 'rxjs';
 
 
 export interface PlayerState {
@@ -36,29 +37,15 @@ export interface PlayerAbilities {
 
 @Injectable()
 export class MediaControlService {
-  public State: BehaviorSubject<PlayerState>;
 
-  constructor(private wsService: WebSocketService, private http: HttpClient) {
-    this.State = new BehaviorSubject<PlayerState>(this.getEmptyState());
-    this.wsService
-        .connect(config.Endpoints.ControlStatus)
-        .subscribe(
-          (response: MessageEvent) => { this.State.next(JSON.parse(response.data)); },
-          (e) => { this.State.next(this.getEmptyState()); },
-          () => { console.log('complete'); }
-        );
-/*        .map(
-          // console.log(response);
-          let data = JSON.parse(response.data);
-          this.State = data;
-          // console.log(data);
-          return data;
-    });*/
+  constructor(private wsService: MediaSocket, private http: HttpClient) {
+    // this.State = new BehaviorSubject<PlayerState>(this.getEmptyState());
   }
-  requestAction(action: string, data: any[]): void {
-    this.http.post(config.Endpoints.Main + 'action/' + action, data)
-               .toPromise()
-               .catch(this.handleError);
+  public GetState(): Observable<PlayerState> {
+      return this.wsService.fromEvent('state').map<any, PlayerState>(data => data.status);
+  }
+  public RequestAction(action: string, data: any[]): void {
+      this.wsService.emit('control', {'action': action, 'data': data});
   }
 
   private handleError(error: any): Promise<any> {

@@ -6,13 +6,21 @@ import time
 import argparse
 import subprocess
 import logging, logging.config
+from threading import Lock
 
-from gevent import pywsgi, sleep as sock_sleep
-from geventwebsocket import WebSocketError
-from geventwebsocket.handler import WebSocketHandler
-from flask import Flask, request, Response, jsonify, send_from_directory, stream_with_context
-from flask_sockets import Sockets
-from flask_cors import CORS, cross_origin
+#mimetypes by default sees js and css as text/plain
+#important to set mime-type correctly for Compress module
+#to automatically compress these resources
+import mimetypes
+mimetypes.init()
+mimetypes.add_type('application/javascript', '.js', strict=True)
+mimetypes.add_type('text/css', '.css', strict=True)
+
+
+from flask import Flask, jsonify, send_from_directory, request
+from flask_cors import CORS
+from flask_compress import Compress
+from flask_socketio import SocketIO, send, emit
 
 from VideoManager import VideoManager
 from VideoLibrary import VideoLibrary
@@ -33,10 +41,16 @@ logger = logging.getLogger('HoloServe')
 logger.debug('$PWD = {}'.format(os.getcwd()))
 
 app = Flask(__name__)
-CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
-sockets = Sockets(app)
+
+CORS(app) #enable cross-origin requests
+sockets = SocketIO(app) #add websocket
+Compress(app) #enable compression
+
 vid_manager = VideoManager(VideoLibrary(os.path.join(module_directory, 'conf/assets.json')))
+
+
+
 
 
 ########
@@ -66,9 +80,10 @@ def reload_server():
 def start_server(host, port, debug):
     global server_instance
     app.debug = debug
-    server_instance = pywsgi.WSGIServer((host, port), app, handler_class=WebSocketHandler)
+    sockets.run(app, host=host, port=port, debug=debug)
+    #server_instance = pywsgi.WSGIServer((host, port), app, handler_class=WebSocketHandler)
     logger.info("Server listening on {} port {}".format(host, port))
-    server_instance.serve_forever()
+    #server_instance.serve_forever()
 
 
 
@@ -98,22 +113,49 @@ def send_assets(path):
 #                                                                               #
 # The following route serves the player status websocket                        #
 #                                                                               #
-#################################################################################
-@sockets.route('/status')
-def update_player_status(socket):
-    try:
-        logger.info("Requested status socket....")
-        while not socket.closed:
-            try:
-                #sys.stderr.write("Sending status....")
-                socket.send(json.dumps(vid_manager.get_status().serialize()))
-                sock_sleep(0.5)
-            except WebSocketError:
-                raise
-            except BaseException as e:
-                logger.error("SOCKET ERROR: {}".format(str(e)))
-    except BaseException as e:
-        logger.error("SOCKET ERROR: {}".format(str(e)))
+#################################################################################	
+status_thread = None #global thread that emits status updates
+status_thread_lock = Lock() #lock for global thread that emits status updates
+
+@sockets.on('connect')
+def socket_connect():
+	logger.debug('In connect')
+	try:
+		global status_thread, status_thread_lock
+		with status_thread_lock:
+			if status_thread is None:
+				status_thread = sockets.start_background_task(target=background_status)
+		return True
+	except BaseException as e:
+		logger.critical("ERROR: "+str(e))
+		
+def background_status():
+	logger.debug('In background_status')
+	while True:
+		sockets.emit('state', {'status': vid_manager.get_status().serialize()})
+		sockets.sleep(0.5)
+
+@sockets.on('control')
+def handle_actionrequest(message):
+	try:
+		action = message['action']
+		data = message['data']
+		logger.info("Requested action '{}' with args ({})".format(action, data))
+		sockets.sleep(1.5)
+		if hasattr(vid_manager, action) and callable(getattr(vid_manager, action)):
+			logger.debug("  -> Caught by VideoManager")
+			getattr(vid_manager, action)(*data)
+			return send({'success':True})
+        
+		elif hasattr(vid_manager.player, action) and callable(getattr(vid_manager.player, action)):
+			logger.debug("  -> Caught by OMXPlayer")
+			getattr(vid_manager.player, action)(*data)
+			return send({'success':True})
+    
+		else:
+			raise ValueError('Action {} is not valid!'.format(action))
+	except BaseException as e:
+		return send({'success':False, 'message': str(e) })
 
 
 
@@ -137,27 +179,6 @@ def handle_playrequest(id):
         vid_manager.set_source(itm)
         return jsonify({'success':True})
     return jsonify({'success':False, 'message': 'Video with id {} not found!'.format(id) })
-
-
-@app.route('/action/<string:action>', methods=['POST'])
-def handle_actionrequest(action):
-    logger.info("Requested /action/{} with args ({})".format(action, request.data))
-    try:
-        data = list(json.loads(request.data))
-        if hasattr(vid_manager, action) and callable(getattr(vid_manager, action)):
-            logger.debug("  -> Caught by VideoManager")
-            getattr(vid_manager, action)(*data)
-            return jsonify({'success':True})
-        
-        elif hasattr(vid_manager.player, action) and callable(getattr(vid_manager.player, action)):
-            logger.debug("  -> Caught by OMXPlayer")
-            getattr(vid_manager.player, action)(*data)
-            return jsonify({'success':True})
-    
-        else:
-            raise ValueError('Action {} is not valid!'.format(action))
-    except BaseException as e:
-        return jsonify({'success':False, 'message': str(e) })
 
 
 

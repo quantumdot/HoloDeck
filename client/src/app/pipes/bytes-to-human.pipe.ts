@@ -5,25 +5,18 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class BytesToHumanPipe implements PipeTransform {
 
-	private units = [
-	    'bytes',
-	    'KB',
-	    'MB',
-	    'GB',
-	    'TB',
-	    'PB'
-	  ];
+  private units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
 
   transform(bytes: number, precision: number = 2): string {
-    if ( isNaN( parseFloat( String(bytes) )) || ! isFinite( bytes ) ) return '?';
+    if (isNaN(parseFloat(String(bytes))) || !isFinite(bytes)) { return '?'; }
 
     let unit = 0;
 
     while ( bytes >= 1024 ) {
       bytes /= 1024;
-      unit ++;
+      unit++;
     }
 
-    return bytes.toFixed( + precision ) + ' ' + this.units[ unit ];
+    return bytes.toFixed( + precision ) + ' ' + this.units[unit];
   }
 }

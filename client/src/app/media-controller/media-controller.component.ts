@@ -1,5 +1,5 @@
 import { config } from '../config';
-import { WebSocketService } from '../services/websocket.service';
+import { MediaSocket } from '../services/websocket.service';
 import { MediaControlService, PlayerState } from '../services/media-control.service';
 import { Component, OnInit } from '@angular/core';
 import { MdIconRegistry, MdSliderChange } from '@angular/material';
@@ -23,7 +23,7 @@ export class MediaControllerComponent implements OnInit {
 
   ngOnInit() {
     this.currentState = this.mediaControlService.getEmptyState();
-    this.mediaControlService.State.subscribe(s => {
+    this.mediaControlService.GetState().subscribe(s => {
       if (s == null) {
         this.currentState = this.mediaControlService.getEmptyState();
       } else {
@@ -44,7 +44,7 @@ export class MediaControllerComponent implements OnInit {
     this.requestAction('set_volume', [event.value]);
   }
   requestAction(action: string, args: any[]): void {
-    this.mediaControlService.requestAction(action, args);
+    this.mediaControlService.RequestAction(action, args);
   }
 
 }
