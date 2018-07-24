@@ -70,7 +70,7 @@ def stop_server():
     global server_instance
     logger.info('Stopping services...')
     vid_manager.player.quit()
-    server_instance.close()
+    sockets.stop()
 
 def reload_server():
     stop_server()
@@ -80,9 +80,9 @@ def reload_server():
 def start_server(host, port, debug):
     global server_instance
     app.debug = debug
+    logger.info("Server starting on {} port {}".format(host, port))
     sockets.run(app, host=host, port=port, debug=debug)
     #server_instance = pywsgi.WSGIServer((host, port), app, handler_class=WebSocketHandler)
-    logger.info("Server listening on {} port {}".format(host, port))
     #server_instance.serve_forever()
 
 

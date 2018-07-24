@@ -2275,3 +2275,49 @@
 2017-10-30 20:03:34,839 - geventwebsocket.handler - DEBUG - Attempting to upgrade connection
 2017-10-30 20:03:34,839 - geventwebsocket.handler - DEBUG - WebSocket request accepted, switching protocols
 2017-10-30 20:03:34,842 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2017-10-30 20:03:34] "GET /socket.io/?EIO=3&transport=polling&t=LzllOuD&sid=75aa89ce6f954b6aaafe197adb40e9c6 HTTP/1.1" 200 191 0.299000
+2017-11-02 14:25:22,726 - HoloServe - DEBUG - $PWD = C:\Users\sresearch\git\HoloDeck\server
+2017-11-02 14:25:22,782 - root - DEBUG - attempting to load assets/Pikachu Hologram 3 side electric effects Extra.mp4
+
+2017-11-02 14:26:00,013 - werkzeug - INFO -  * Restarting with stat
+2017-11-02 14:26:42,742 - HoloServe - DEBUG - $PWD = C:\Users\sresearch\git\HoloDeck\server
+2017-11-02 14:26:42,782 - root - DEBUG - attempting to load assets/Pikachu Hologram 3 side electric effects Extra.mp4
+
+2017-11-02 14:26:42,785 - HoloServe - INFO - Starting server...
+2017-11-02 14:26:48,979 - geventwebsocket.handler - DEBUG - Initializing WebSocket
+2017-11-02 14:26:48,980 - geventwebsocket.handler - DEBUG - Validating WebSocket request
+2017-11-02 14:26:48,980 - HoloServe - DEBUG - In connect
+2017-11-02 14:26:48,980 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2017-11-02 14:26:48] "GET /socket.io/?EIO=3&transport=polling&t=Lzz_53Y HTTP/1.1" 200 357 0.002000
+2017-11-02 14:26:48,982 - HoloServe - DEBUG - In background_status
+2017-11-02 14:26:49,019 - geventwebsocket.handler - DEBUG - Initializing WebSocket
+2017-11-02 14:26:49,019 - geventwebsocket.handler - DEBUG - Validating WebSocket request
+2017-11-02 14:26:49,020 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2017-11-02 14:26:49] "GET /socket.io/?EIO=3&transport=polling&t=Lzz_58v&sid=13a1db6b262a4595aeab2f7c3f6b85b9 HTTP/1.1" 200 782 0.001000
+2017-11-02 14:26:49,051 - geventwebsocket.handler - DEBUG - Initializing WebSocket
+2017-11-02 14:26:49,051 - geventwebsocket.handler - DEBUG - Validating WebSocket request
+2017-11-02 14:26:49,319 - geventwebsocket.handler - DEBUG - Initializing WebSocket
+2017-11-02 14:26:49,319 - geventwebsocket.handler - DEBUG - Validating WebSocket request
+2017-11-02 14:26:49,319 - geventwebsocket.handler - DEBUG - Attempting to upgrade connection
+2017-11-02 14:26:49,319 - geventwebsocket.handler - DEBUG - WebSocket request accepted, switching protocols
+2017-11-02 14:26:49,322 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2017-11-02 14:26:49] "GET /socket.io/?EIO=3&transport=polling&t=Lzz_59O&sid=13a1db6b262a4595aeab2f7c3f6b85b9 HTTP/1.1" 200 191 0.272000
+2017-11-02 14:27:31,628 - HoloServe - DEBUG - $PWD = C:\Users\sresearch\git\HoloDeck\server
+2017-11-02 14:27:31,667 - root - DEBUG - attempting to load assets/Pikachu Hologram 3 side electric effects Extra.mp4
+
+2017-11-02 14:27:31,671 - HoloServe - INFO - Starting server...
+2017-11-02 14:27:31,671 - HoloServe - INFO - Server starting on 0.0.0.0 port 5000
+2017-11-02 14:27:31,984 - geventwebsocket.handler - DEBUG - Initializing WebSocket
+2017-11-02 14:27:31,984 - geventwebsocket.handler - DEBUG - Validating WebSocket request
+2017-11-02 14:27:31,986 - HoloServe - DEBUG - In connect
+2017-11-02 14:27:31,986 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2017-11-02 14:27:31] "GET /socket.io/?EIO=3&transport=polling&t=Lzz_FZV HTTP/1.1" 200 357 0.001000
+2017-11-02 14:27:31,986 - HoloServe - DEBUG - In background_status
+2017-11-02 14:27:31,990 - geventwebsocket.handler - DEBUG - Initializing WebSocket
+2017-11-02 14:27:31,990 - geventwebsocket.handler - DEBUG - Validating WebSocket request
+2017-11-02 14:27:31,990 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2017-11-02 14:27:31] "GET /socket.io/?EIO=3&transport=polling&t=Lzz_FeJ&sid=34457008482c49cc978817f12d92a0ea HTTP/1.1" 200 782 0.001000
+2017-11-02 14:27:31,993 - geventwebsocket.handler - DEBUG - Initializing WebSocket
+2017-11-02 14:27:31,993 - geventwebsocket.handler - DEBUG - Validating WebSocket request
+2017-11-02 14:27:32,289 - geventwebsocket.handler - DEBUG - Initializing WebSocket
+2017-11-02 14:27:32,290 - geventwebsocket.handler - DEBUG - Validating WebSocket request
+2017-11-02 14:27:32,290 - geventwebsocket.handler - DEBUG - Attempting to upgrade connection
+2017-11-02 14:27:32,290 - geventwebsocket.handler - DEBUG - WebSocket request accepted, switching protocols
+2017-11-02 14:27:32,292 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2017-11-02 14:27:32] "GET /socket.io/?EIO=3&transport=polling&t=Lzz_FeN&sid=34457008482c49cc978817f12d92a0ea HTTP/1.1" 200 191 0.299000
+2017-11-13 18:59:10,369 - geventwebsocket.handler - DEBUG - Closed WebSocket
+2017-11-13 18:59:10,371 - geventwebsocket.handler - DEBUG - Failed to write closing frame -> closing socket
+2017-11-13 18:59:10,371 - geventwebsocket.handler - DEBUG - Closed WebSocket
